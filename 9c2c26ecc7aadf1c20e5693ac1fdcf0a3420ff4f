@@ -16,6 +16,23 @@
       "message": "Tests are hopefully fixed now",
       "revId": "9c2c26ecc7aadf1c20e5693ac1fdcf0a3420ff4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0893607_b972e485",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-10-29T10:27:12Z",
+      "side": 1,
+      "message": "ah, now we have a similar issue with node tests. I\u0027ll disable them temporarily in the next days so that we can land this CL",
+      "revId": "9c2c26ecc7aadf1c20e5693ac1fdcf0a3420ff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
