@@ -51,6 +51,24 @@
       "parentUuid": "c33cf19d_1ab8fdb8",
       "revId": "89a3288450e06fb350af85952ec677e0b8a02211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "990651d8_29f993c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2024-10-29T12:10:53Z",
+      "side": 1,
+      "message": "Sure, if the fix lands and fixes it, I\u0027ll just abandon this.",
+      "parentUuid": "25e25543_b7ca6802",
+      "revId": "89a3288450e06fb350af85952ec677e0b8a02211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
