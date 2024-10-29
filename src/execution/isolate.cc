@@ -334,6 +334,12 @@ void Isolate::SetEmbeddedBlob(const uint8_t* code, uint32_t code_size,
 #ifdef DEBUG
   // Verify that the contents of the embedded blob are unchanged from
   // serialization-time, just to ensure the compiler isn't messing with us.
+  // TODO(Wenqin): we only check it once, because in some test the check may
+  // fail due to we update embedded blob for ISX builtins. Another solution, we
+  // may store two hashes for both original and ISX verion hash.
+  static bool have_checked = false;
+  if (have_checked) return;
+  have_checked = true;
   EmbeddedData d = EmbeddedData::FromBlob();
   if (d.EmbeddedBlobDataHash() != d.CreateEmbeddedBlobDataHash()) {
     FATAL(
@@ -5008,6 +5014,10 @@ void Isolate::InitializeDefaultEmbeddedBlob() {
     CHECK_EQ(0, data_size);
   } else {
     SetEmbeddedBlob(code, code_size, data, data_size);
+#if V8_ENABLE_ISX_BUILTIN
+    EmbeddedData d = EmbeddedData::FromBlob();
+    d.UpdateForISXBuiltin();
+#endif  // V8_ENABLE_ISX_BUILTIN
   }
 }
 

@@ -21,6 +21,10 @@ namespace internal {
 #define IF_TSA(TSA_MACRO, CSA_MACRO, ...) EXPAND(CSA_MACRO(__VA_ARGS__))
 #endif
 
+#define IF_ISX(MACRO, MACRO_ISX, NAME, ...) \
+  MACRO(NAME, __VA_ARGS__)                  \
+  MACRO_ISX(NAME, __VA_ARGS__)
+
 // CPP: Builtin in C++. Entered via BUILTIN_EXIT frame.
 //      Args: name, formal parameter count
 // TFJ: Builtin in Turbofan, with JS linkage (callable as Javascript function).
@@ -68,7 +72,8 @@ namespace internal {
   /* It should be removed. */                                               \
   CPP(DummyBuiltin, kDontAdaptArgumentsSentinel)
 
-#define BUILTIN_LIST_BASE_TIER1(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, ASM)        \
+#define BUILTIN_LIST_BASE_TIER1(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, ASM,        \
+                                TFH_ISX)                                       \
   /* GC write barriers */                                                      \
   TFC(IndirectPointerBarrierSaveFP, IndirectPointerWriteBarrier)               \
   TFC(IndirectPointerBarrierIgnoreFP, IndirectPointerWriteBarrier)             \
@@ -340,7 +345,7 @@ namespace internal {
   TFH(KeyedStoreIC_SloppyArguments_NoTransitionIgnoreTypedArrayOOB,            \
       StoreWithVector)                                                         \
   TFH(KeyedStoreIC_SloppyArguments_NoTransitionHandleCOW, StoreWithVector)     \
-  TFH(StoreFastElementIC_InBounds, StoreWithVector)                            \
+  IF_ISX(TFH, TFH_ISX, StoreFastElementIC_InBounds, StoreWithVector)           \
   TFH(StoreFastElementIC_NoTransitionGrowAndHandleCOW, StoreWithVector)        \
   TFH(StoreFastElementIC_NoTransitionIgnoreTypedArrayOOB, StoreWithVector)     \
   TFH(StoreFastElementIC_NoTransitionHandleCOW, StoreWithVector)               \
@@ -1943,9 +1948,9 @@ namespace internal {
   TFJ(TemporalInstantFixedArrayFromIterable, kJSArgcReceiverSlots + 1,         \
       kReceiver, kIterable)
 
-#define BUILTIN_LIST_BASE(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, ASM) \
-  BUILTIN_LIST_BASE_TIER0(CPP, TFJ, TFC, TFS, TFH, ASM)           \
-  BUILTIN_LIST_BASE_TIER1(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, ASM)
+#define BUILTIN_LIST_BASE(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, ASM, TFH_ISX) \
+  BUILTIN_LIST_BASE_TIER0(CPP, TFJ, TFC, TFS, TFH, ASM)                    \
+  BUILTIN_LIST_BASE_TIER1(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, ASM, TFH_ISX)
 
 #ifdef V8_INTL_SUPPORT
 #define BUILTIN_LIST_INTL(CPP, TFJ, TFS)                                       \
@@ -2187,10 +2192,10 @@ namespace internal {
   CPP(StringPrototypeToUpperCase, kDontAdaptArgumentsSentinel)
 #endif  // V8_INTL_SUPPORT
 
-#define BUILTIN_LIST(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, BCH, ASM) \
-  BUILTIN_LIST_BASE(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, ASM)       \
-  BUILTIN_LIST_FROM_TORQUE(CPP, TFJ, TFC, TFS, TFH, ASM)          \
-  BUILTIN_LIST_INTL(CPP, TFJ, TFS)                                \
+#define BUILTIN_LIST(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, BCH, ASM, TFH_ISX) \
+  BUILTIN_LIST_BASE(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, ASM, TFH_ISX)       \
+  BUILTIN_LIST_FROM_TORQUE(CPP, TFJ, TFC, TFS, TFH, ASM)                   \
+  BUILTIN_LIST_INTL(CPP, TFJ, TFS)                                         \
   BUILTIN_LIST_BYTECODE_HANDLERS(BCH)
 
 // See the comment on top of BUILTIN_LIST_BASE_TIER0 for an explanation of
@@ -2227,47 +2232,56 @@ namespace internal {
 #define BUILTIN_LIST_C(V)                                                      \
   BUILTIN_LIST(V, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN,              \
                IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
-               IGNORE_BUILTIN)
+               IGNORE_BUILTIN, IGNORE_BUILTIN)
 
 #define BUILTIN_LIST_TSJ(V)                                                    \
   BUILTIN_LIST(IGNORE_BUILTIN, V, IGNORE_BUILTIN, IGNORE_BUILTIN,              \
                IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
-               IGNORE_BUILTIN)
+               IGNORE_BUILTIN, IGNORE_BUILTIN)
 
 #define BUILTIN_LIST_TFJ(V)                                                    \
   BUILTIN_LIST(IGNORE_BUILTIN, IGNORE_BUILTIN, V, IGNORE_BUILTIN,              \
                IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
-               IGNORE_BUILTIN)
+               IGNORE_BUILTIN, IGNORE_BUILTIN)
 
 #define BUILTIN_LIST_TSC(V)                                                    \
   BUILTIN_LIST(IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, V,              \
                IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
-               IGNORE_BUILTIN)
+               IGNORE_BUILTIN, IGNORE_BUILTIN)
 
 #define BUILTIN_LIST_TFC(V)                                                    \
   BUILTIN_LIST(IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
                V, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN,              \
-               IGNORE_BUILTIN)
+               IGNORE_BUILTIN, IGNORE_BUILTIN)
 
 #define BUILTIN_LIST_TFS(V)                                                    \
   BUILTIN_LIST(IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
                IGNORE_BUILTIN, V, IGNORE_BUILTIN, IGNORE_BUILTIN,              \
-               IGNORE_BUILTIN)
+               IGNORE_BUILTIN, IGNORE_BUILTIN)
 
 #define BUILTIN_LIST_TFH(V)                                                    \
   BUILTIN_LIST(IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
                IGNORE_BUILTIN, IGNORE_BUILTIN, V, IGNORE_BUILTIN,              \
-               IGNORE_BUILTIN)
+               IGNORE_BUILTIN, IGNORE_BUILTIN)
 
 #define BUILTIN_LIST_BCH(V)                                                    \
   BUILTIN_LIST(IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
                IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, V,              \
-               IGNORE_BUILTIN)
+               IGNORE_BUILTIN, IGNORE_BUILTIN)
 
 #define BUILTIN_LIST_A(V)                                                      \
   BUILTIN_LIST(IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
                IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
-               V)
+               V, IGNORE_BUILTIN)
+
+// TODO(Wenqin): Is it extensionable? If we woule like to add ISX for another
+// kind of builtins, we may have to redefine anthoer macro, and add a new
+// argument slot for it, it may make this macro very long? And we also have to
+// modify any place whcih we use `BUILTIN_LIST` macro.
+#define BUILTIN_LIST_ISX(V)                                                    \
+  BUILTIN_LIST(IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
+               IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, \
+               IGNORE_BUILTIN, V)
 
 }  // namespace internal
 }  // namespace v8
