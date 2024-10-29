@@ -198,6 +198,14 @@ RelocIterator::RelocIterator(EmbeddedData* embedded_data, Tagged<Code> code,
                     code->constant_pool(), code->relocation_end(),
                     code->relocation_start(), mode_mask) {}
 
+#if V8_ENABLE_ISX_BUILTIN
+RelocIterator::RelocIterator(EmbeddedData* embedded_data, Tagged<Code> code,
+                             size_t isx_idx, int mode_mask)
+    : RelocIterator(embedded_data->InstructionStartOfISX(isx_idx),
+                    code->constant_pool(), code->relocation_end(),
+                    code->relocation_start(), mode_mask) {}
+#endif  // V8_ENABLE_ISX_BUILTIN
+
 RelocIterator::RelocIterator(base::Vector<uint8_t> instructions,
                              base::Vector<const uint8_t> reloc_info,
                              Address const_pool, int mode_mask)

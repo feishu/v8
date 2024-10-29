@@ -215,6 +215,10 @@ declare_args() {
   #    in step 3 or 4.
   v8_builtins_profiling_log_file = "default"
 
+  # Enable extended instruction set for builtins.
+  # Sets -dV8_BUILTINS_INSTRUCTION_SET_EXTENSION
+  v8_enable_builtins_instruction_set_extension = true
+
   # Enables various testing features.
   v8_enable_test_features = ""
 
@@ -1248,6 +1252,12 @@ config("features") {
   }
   if (v8_enable_fuzztest) {
     defines += [ "V8_ENABLE_FUZZTEST" ]
+  }
+
+  # We only support builtin instruction set extension for not enable builtin PGO yet.
+  if (v8_builtins_profiling_log_file == "" &&
+      v8_enable_builtins_instruction_set_extension) {
+    defines += [ "V8_BUILTINS_INSTRUCTION_SET_EXTENSION" ]
   }
   if (v8_enable_short_builtin_calls) {
     defines += [ "V8_SHORT_BUILTIN_CALLS" ]

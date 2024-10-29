@@ -5008,6 +5008,10 @@ void Isolate::InitializeDefaultEmbeddedBlob() {
     CHECK_EQ(0, data_size);
   } else {
     SetEmbeddedBlob(code, code_size, data, data_size);
+#if V8_ENABLE_ISX_BUILTIN
+    EmbeddedData d = EmbeddedData::FromBlob();
+    d.UpdateForISXBuiltin();
+#endif  // V8_ENABLE_ISX_BUILTIN
   }
 }
 
