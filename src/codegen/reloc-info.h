@@ -573,6 +573,11 @@ class V8_EXPORT_PRIVATE RelocIterator : public RelocIteratorBase<RelocInfo> {
   // For FinalizeEmbeddedCodeTargets when creating embedded builtins.
   explicit RelocIterator(EmbeddedData* embedded_data, Tagged<Code> code,
                          int mode_mask);
+#if V8_ENABLE_ISX_BUILTIN
+  // For obtaining the relociterator for ISX builtins
+  explicit RelocIterator(EmbeddedData* embedded_data, Tagged<Code> code,
+                         size_t isx_idx, int mode_mask);
+#endif  // V8_ENABLE_ISX_BUILTIN
 
   RelocIterator(RelocIterator&&) V8_NOEXCEPT = default;
   RelocIterator(const RelocIterator&) = delete;
