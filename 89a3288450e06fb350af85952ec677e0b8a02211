@@ -33,6 +33,24 @@
       "message": "I just got a fix ready (sorry for the delay!). Should we land this instead?",
       "revId": "89a3288450e06fb350af85952ec677e0b8a02211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25e25543_b7ca6802",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-10-29T12:04:14Z",
+      "side": 1,
+      "message": "This should be the proper fix: https://crrev.com/c/5973196",
+      "parentUuid": "c33cf19d_1ab8fdb8",
+      "revId": "89a3288450e06fb350af85952ec677e0b8a02211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
