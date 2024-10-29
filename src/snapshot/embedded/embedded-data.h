@@ -57,6 +57,10 @@ class EmbeddedData final {
   // Create the embedded blob from the given Isolate's heap state.
   static EmbeddedData NewFromIsolate(Isolate* isolate);
 
+#if V8_ENABLE_ISX_BUILTIN
+  void UpdateForISXBuiltin();
+#endif  // V8_ENABLE_ISX_BUILTIN
+
   // Returns the global embedded blob (usually physically located in .text and
   // .rodata).
   static EmbeddedData FromBlob() {
@@ -153,6 +157,13 @@ class EmbeddedData final {
   // Padded with kCodeAlignment.
   inline uint32_t PaddedInstructionSizeOf(Builtin builtin) const;
 
+#if V8_ENABLE_ISX_BUILTIN
+  inline Address InstructionStartOfISX(size_t isx_idx) const;
+  inline uint32_t InstructionSizeOfISX(size_t isx_idx) const;
+  inline Address MetadataStartOfISX(size_t isx_idx) const;
+  inline uint32_t PaddedInstructionSizeOfISX(size_t isx_idx) const;
+#endif  // V8_ENABLE_ISX_BUILTIN
+
   size_t CreateEmbeddedBlobDataHash() const;
   size_t CreateEmbeddedBlobCodeHash() const;
   size_t EmbeddedBlobDataHash() const {
@@ -217,6 +228,7 @@ class EmbeddedData final {
   // [2] hash of embedded-blob-relevant heap objects
   // [3] layout description of builtin 0
   // ... layout descriptions (builtin id order)
+  // ... layout descriptions for ISX builtin.
   // [n] builtin lookup table where entries are sorted by offset_end in
   //     ascending order. (embedded snapshot order)
   // [x] metadata section of builtin 0
@@ -241,7 +253,8 @@ class EmbeddedData final {
     return IsolateHashOffset() + IsolateHashSize();
   }
   static constexpr uint32_t LayoutDescriptionTableSize() {
-    return sizeof(struct LayoutDescription) * kTableSize;
+    return sizeof(struct LayoutDescription) *
+           (kTableSize + static_cast<uint32_t>(Builtins::kBuiltinISXCount));
   }
   static constexpr uint32_t BuiltinLookupEntryTableOffset() {
     return LayoutDescriptionTableOffset() + LayoutDescriptionTableSize();
@@ -276,6 +289,17 @@ class EmbeddedData final {
             data_ + LayoutDescriptionTableOffset());
     return descs[static_cast<int>(builtin)];
   }
+
+#if V8_ENABLE_ISX_BUILTIN
+  const struct LayoutDescription& LayoutDescriptionForISX(size_t idx) const {
+    const struct LayoutDescription* descs =
+        reinterpret_cast<const struct LayoutDescription*>(
+            data_ + LayoutDescriptionTableOffset());
+    return descs[static_cast<int>(Builtins::kBuiltinCount + idx)];
+  }
+#endif  // V8_ENABLE_ISX_BUILTIN
+
+  void UpdateForISXBuiltinImpl(Builtin b);
 
   const BuiltinLookupEntry* BuiltinLookupEntry(
       ReorderedBuiltinIndex index) const {
