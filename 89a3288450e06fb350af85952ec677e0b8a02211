@@ -69,6 +69,24 @@
       "parentUuid": "25e25543_b7ca6802",
       "revId": "89a3288450e06fb350af85952ec677e0b8a02211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b65e8b85_bb15df7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1524899
+      },
+      "writtenOn": "2024-10-29T20:56:37Z",
+      "side": 1,
+      "message": "The mjsunit tests are [working again](https://ci.chromium.org/ui/p/v8/builders/ci/V8%20NumFuzz%20-%20ASAN/36/overview), so I think we can abandon this change.",
+      "parentUuid": "990651d8_29f993c1",
+      "revId": "89a3288450e06fb350af85952ec677e0b8a02211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
