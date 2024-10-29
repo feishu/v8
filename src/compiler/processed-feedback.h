@@ -158,7 +158,6 @@ class ElementAccessFeedback : public ProcessedFeedback {
   ElementAccessFeedback const& Refine(
       JSHeapBroker* broker, ZoneRefSet<Map> const& inferred_maps,
       bool always_keep_group_target = true) const;
-  NamedAccessFeedback const& Refine(JSHeapBroker* broker, NameRef name) const;
 
  private:
   KeyedAccessMode const keyed_mode_;
