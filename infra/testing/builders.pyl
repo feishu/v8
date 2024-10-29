@@ -2464,11 +2464,12 @@
         'suffix': 'marking',
         'test_args': ['--total-timeout-sec=2100', '--stress-marking=1']
       },
-      {
-        'name': 'numfuzz',
-        'suffix': 'delay',
-        'test_args': ['--total-timeout-sec=2100', '--stress-delay-tasks=1']
-      },
+      # TODO(https://crbug.com/375590865): Enable when bug is resolved.
+      #{
+      #  'name': 'numfuzz',
+      #  'suffix': 'delay',
+      #  'test_args': ['--total-timeout-sec=2100', '--stress-delay-tasks=1']
+      #},
       {
         'name': 'numfuzz',
         'suffix': 'interrupt',
@@ -2489,7 +2490,8 @@
         'suffix': 'combined',
         'test_args': [
           '--total-timeout-sec=2100',
-          '--stress-delay-tasks=4',
+          # TODO(https://crbug.com/375590865): Enable when bug is resolved.
+          #'--stress-delay-tasks=4',
           '--stress-deopt=2',
           '--stress-compaction=2',
           '--stress-gc=4',
@@ -2662,11 +2664,12 @@
         'suffix': 'marking',
         'test_args': ['--total-timeout-sec=900', '--stress-marking=1']
       },
-      {
-        'name': 'numfuzz',
-        'suffix': 'delay',
-        'test_args': ['--total-timeout-sec=900', '--stress-delay-tasks=1']
-      },
+      # TODO(https://crbug.com/375590865): Enable when bug is resolved.
+      #{
+      #  'name': 'numfuzz',
+      #  'suffix': 'delay',
+      #  'test_args': ['--total-timeout-sec=900', '--stress-delay-tasks=1']
+      #},
       {
         'name': 'numfuzz',
         'suffix': 'interrupt',
@@ -2687,7 +2690,8 @@
         'suffix': 'combined',
         'test_args': [
           '--total-timeout-sec=900',
-          '--stress-delay-tasks=4',
+          # TODO(https://crbug.com/375590865): Enable when bug is resolved.
+          #'--stress-delay-tasks=4',
           '--stress-deopt=2',
           '--stress-compaction=2',
           '--stress-gc=4',
