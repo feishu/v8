@@ -3674,6 +3674,7 @@ bool MaglevGraphBuilder::CheckContextExtensions(size_t depth) {
   compiler::OptionalScopeInfoRef maybe_scope_info =
       graph()->TryGetScopeInfo(GetContext(), broker());
   if (!maybe_scope_info.has_value()) return false;
+  if ((true)) return true;
   compiler::ScopeInfoRef scope_info = maybe_scope_info.value();
   for (uint32_t d = 0; d < depth; d++) {
     CHECK_NE(scope_info.scope_type(), ScopeType::SCRIPT_SCOPE);
