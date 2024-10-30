@@ -50,6 +50,24 @@
       "message": "You could add to the CL desc footer:\nCq-Include-Trybots: luci.v8.try:v8_android_arm64_p7_rel",
       "revId": "d53b3510caff23818ae3b29e65efcdbcdc503b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7971aad_a980307a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1357035
+      },
+      "writtenOn": "2024-10-30T17:16:21Z",
+      "side": 1,
+      "message": "Good point, thanks!",
+      "parentUuid": "5e632961_3acde55b",
+      "revId": "d53b3510caff23818ae3b29e65efcdbcdc503b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
