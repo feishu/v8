@@ -690,7 +690,7 @@ MaybeHandle<String> ErrorUtils::ToString(Isolate* isolate,
     //
     // If |recv| was not constructed with %Error%, use the "message" property.
     LookupIterator it(isolate, LookupIterator::PROTOTYPE_CHAIN_SKIP_INTERCEPTOR,
-                      receiver, isolate->factory()->error_message_symbol());
+                      recv, isolate->factory()->error_message_symbol());
     Handle<Object> result = JSReceiver::GetDataProperty(&it);
     if (it.IsFound() && IsUndefined(*result, isolate)) {
       msg = msg_default;
