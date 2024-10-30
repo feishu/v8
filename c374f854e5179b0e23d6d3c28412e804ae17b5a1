@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "443ba146_091928a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1345975
+      },
+      "writtenOn": "2024-10-30T17:47:51Z",
+      "side": 1,
+      "message": "PTAL, Matthias for src/wasm/*, and Jakob for src/execution and src/codegen.",
+      "revId": "c374f854e5179b0e23d6d3c28412e804ae17b5a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
