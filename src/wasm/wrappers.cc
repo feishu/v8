@@ -567,7 +567,7 @@ class WasmWrapperTSGraphBuilder : public WasmGraphBuilderBase {
     V<JSFunction> callable_node = __ Load(ref, LoadOp::Kind::TaggedBase(),
                                           MemoryRepresentation::TaggedPointer(),
                                           WasmImportData::kCallableOffset);
-    OpIndex old_sp = BuildSwitchToTheCentralStackIfNeeded();
+    auto [old_sp, old_limit] = BuildSwitchToTheCentralStackIfNeeded();
     BuildModifyThreadInWasmFlag(__ phase_zone(), false);
     OpIndex call = OpIndex::Invalid();
     switch (kind) {
@@ -641,7 +641,7 @@ class WasmWrapperTSGraphBuilder : public WasmGraphBuilderBase {
     DCHECK(call.valid());
 
     if (suspend == kSuspend) {
-      call = BuildSuspend(call, ref, &old_sp);
+      call = BuildSuspend(call, ref, &old_sp, old_limit);
     }
 
     // Convert the return value(s) back.
@@ -661,7 +661,7 @@ class WasmWrapperTSGraphBuilder : public WasmGraphBuilderBase {
       }
     }
     BuildModifyThreadInWasmFlag(__ phase_zone(), true);
-    BuildSwitchBackFromCentralStack(old_sp);
+    BuildSwitchBackFromCentralStack(old_sp, old_limit);
     if (sig_->return_count() <= 1) {
       __ Return(val);
     } else {
@@ -1132,51 +1132,101 @@ class WasmWrapperTSGraphBuilder : public WasmGraphBuilderBase {
                    JSFunction::kContextOffset);
   }
 
-  OpIndex BuildSwitchToTheCentralStack() {
-    MachineType reps[] = {MachineType::Pointer(), MachineType::Pointer(),
-                          MachineType::Pointer()};
-    MachineSignature sig(1, 2, reps);
+  void BuildSetNewStackLimit(V<WordPtr> old_limit, V<WordPtr> new_limit) {
+    // Set the new interrupt limit and real limit. Use a compare-and-swap for
+    // the interrupt limit to avoid overwriting a pending interrupt.
+    __ AtomicCompareExchange(
+        __ ExternalConstant(ExternalReference::jslimit_address()),
+        __ UintPtrConstant(0), old_limit, new_limit,
+        RegisterRepresentation::WordPtr(), MemoryRepresentation::UintPtr(),
+        compiler::MemoryAccessKind::kNormal);
+    __ Store(__ LoadRootRegister(), new_limit, StoreOp::Kind::RawAligned(),
+             MemoryRepresentation::UintPtr(), compiler::kNoWriteBarrier,
+             IsolateData::real_jslimit_offset());
+  }
 
-    OpIndex central_stack_sp = CallC(
-        &sig, ExternalReference::wasm_switch_to_the_central_stack_for_js(),
-        {__ ExternalConstant(ExternalReference::isolate_address()),
-         __ FramePointer()});
+  OpIndex BuildSwitchToTheCentralStack(OpIndex old_limit) {
+    // Set the is_on_central_stack flag.
+    OpIndex isolate_root = __ LoadRootRegister();
+    __ Store(isolate_root, __ Word32Constant(1), LoadOp::Kind::RawAligned(),
+             MemoryRepresentation::Uint8(), compiler::kNoWriteBarrier,
+             IsolateData::is_on_central_stack_flag_offset());
+
+    // Save the old fp and the target sp in the StackMemory's stack switch info.
+    OpIndex active_continuation = LOAD_ROOT(ActiveContinuation);
+    V<Word32> stack_handle = __ Load(
+        active_continuation, LoadOp::Kind::TaggedBase(),
+        MemoryRepresentation::Uint32(), WasmContinuationObject::kStackOffset);
+    V<WordPtr> stack =
+        __ DecodeExternalPointer(stack_handle, kWasmStackMemoryTag);
+    __ Store(stack, __ FramePointer(), StoreOp::Kind::RawAligned(),
+             MemoryRepresentation::UintPtr(), compiler::kNoWriteBarrier,
+             StackMemory::stack_switch_source_fp_offset());
+    V<WordPtr> central_stack_sp = __ Load(
+        isolate_root, LoadOp::Kind::RawAligned(),
+        MemoryRepresentation::UintPtr(), Isolate::central_stack_sp_offset());
+    __ Store(stack, central_stack_sp, StoreOp::Kind::RawAligned(),
+             MemoryRepresentation::UintPtr(), compiler::kNoWriteBarrier,
+             StackMemory::stack_switch_target_sp_offset());
+
+    // Set the central stack limit as the new interrupt limit and real limit.
+    // Use a compare-and-swap for the interrupt limit to avoid overwriting a
+    // pending interrupt.
+    V<WordPtr> central_stack_limit = __ Load(
+        isolate_root, LoadOp::Kind::RawAligned(),
+        MemoryRepresentation::UintPtr(), Isolate::central_stack_limit_offset());
+    BuildSetNewStackLimit(old_limit, central_stack_limit);
+
     OpIndex old_sp = __ LoadStackPointer();
-    // Temporarily disallow sp-relative offsets.
     __ SetStackPointer(central_stack_sp);
     return old_sp;
   }
 
-  OpIndex BuildSwitchToTheCentralStackIfNeeded() {
+  std::pair<OpIndex, OpIndex> BuildSwitchToTheCentralStackIfNeeded() {
     OpIndex isolate_root = __ LoadRootRegister();
     OpIndex is_on_central_stack_flag = __ Load(
         isolate_root, LoadOp::Kind::RawAligned(), MemoryRepresentation::Uint8(),
         IsolateData::is_on_central_stack_flag_offset());
     ScopedVar<WordPtr> old_sp_var(this, __ IntPtrConstant(0));
-    // The stack switch performs a C call which causes some spills that would
-    // not be needed otherwise. Add a branch hint such that we don't spill if we
-    // are already on the central stack.
-    // TODO(thibaudm): Look into ways to optimize the switching case as well.
-    // Can we avoid the C call? Can we avoid spilling callee-saved registers?
+    ScopedVar<WordPtr> old_limit_var(this, __ IntPtrConstant(0));
     IF_NOT (LIKELY(is_on_central_stack_flag)) {
-      OpIndex old_sp = BuildSwitchToTheCentralStack();
+      V<WordPtr> old_limit = __ Load(isolate_root, LoadOp::Kind::RawAligned(),
+                                     MemoryRepresentation::UintPtr(),
+                                     IsolateData::real_jslimit_offset());
+      auto old_sp = BuildSwitchToTheCentralStack(old_limit);
       old_sp_var = old_sp;
     }
-    return old_sp_var;
+    return {old_sp_var, old_limit_var};
   }
 
-  void BuildSwitchBackFromCentralStack(OpIndex old_sp) {
-    MachineType reps[] = {MachineType::Pointer(), MachineType::Pointer()};
-    MachineSignature sig(0, 1, reps);
+  void BuildSwitchBackFromCentralStack(OpIndex old_sp, OpIndex old_limit) {
     IF_NOT (LIKELY(__ WordPtrEqual(old_sp, __ IntPtrConstant(0)))) {
-      CallC(&sig,
-            ExternalReference::wasm_switch_from_the_central_stack_for_js(),
-            {__ ExternalConstant(ExternalReference::isolate_address())});
+      OpIndex active_continuation = LOAD_ROOT(ActiveContinuation);
+      OpIndex isolate_root = __ LoadRootRegister();
+      // Reset is_on_central_stack flag.
+      __ Store(isolate_root, __ Word32Constant(0), LoadOp::Kind::RawAligned(),
+               MemoryRepresentation::Uint8(), compiler::kNoWriteBarrier,
+               IsolateData::is_on_central_stack_flag_offset());
+      // Clear stack switch info.
+      V<Word32> stack_handle = __ Load(
+          active_continuation, LoadOp::Kind::TaggedBase(),
+          MemoryRepresentation::Uint32(), WasmContinuationObject::kStackOffset);
+      V<WordPtr> stack =
+          __ DecodeExternalPointer(stack_handle, kWasmStackMemoryTag);
+      __ Store(stack, __ UintPtrConstant(0), StoreOp::Kind::RawAligned(),
+               MemoryRepresentation::UintPtr(), compiler::kNoWriteBarrier,
+               StackMemory::stack_switch_source_fp_offset());
+      V<WordPtr> real_jslimit = __ Load(
+          isolate_root, LoadOp::Kind::RawAligned(),
+          MemoryRepresentation::UintPtr(), IsolateData::real_jslimit_offset());
+      BuildSetNewStackLimit(real_jslimit, old_limit);
+
       __ SetStackPointer(old_sp);
     }
   }
 
-  OpIndex BuildSuspend(OpIndex value, V<Object> import_data, OpIndex* old_sp) {
+  OpIndex BuildSuspend(OpIndex value, V<Object> import_data, OpIndex* old_sp,
+                       OpIndex old_limit) {
     // If value is a promise, suspend to the js-to-wasm prompt, and resume later
     // with the promise's resolved value.
     ScopedVar<Object> result(this, value);
@@ -1241,10 +1291,10 @@ class WasmWrapperTSGraphBuilder : public WasmGraphBuilderBase {
         OpIndex suspend = GetTargetForBuiltinCall(Builtin::kWasmSuspend);
         auto* suspend_call_descriptor =
             GetBuiltinCallDescriptor(Builtin::kWasmSuspend, __ graph_zone());
-        BuildSwitchBackFromCentralStack(*old_sp);
+        BuildSwitchBackFromCentralStack(*old_sp, old_limit);
         OpIndex resolved =
             __ Call(suspend, {suspender}, suspend_call_descriptor);
-        old_sp_var = BuildSwitchToTheCentralStack();
+        old_sp_var = BuildSwitchToTheCentralStack(old_limit);
         result = resolved;
       }
     }
