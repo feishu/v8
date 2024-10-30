@@ -102,12 +102,10 @@ void TracedReferenceTest(v8::Isolate* isolate,
   v8::HandleScope scope(isolate);
   auto* traced_handles = i_isolate->traced_handles();
   const size_t initial_count = traced_handles->used_node_count();
-  auto gc_invisible_handle =
-      std::make_unique<v8::TracedReference<v8::Object>>();
-  construct_function(isolate, isolate->GetCurrentContext(),
-                     gc_invisible_handle.get());
-  ASSERT_TRUE(IsNewObjectInCorrectGeneration(isolate, *gc_invisible_handle));
-  modifier_function(*gc_invisible_handle);
+  v8::TracedReference<v8::Object> handle;
+  construct_function(isolate, isolate->GetCurrentContext(), &handle);
+  ASSERT_TRUE(IsNewObjectInCorrectGeneration(isolate, handle));
+  modifier_function(handle);
   const size_t after_modification_count = traced_handles->used_node_count();
   gc_function();
   // Cannot check the handle as it is not explicitly cleared by the GC. Instead
