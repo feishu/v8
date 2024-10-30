@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "d53b3510caff23818ae3b29e65efcdbcdc503b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8f72d3a_88bf624d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1357035
+      },
+      "writtenOn": "2024-10-30T11:42:22Z",
+      "side": 1,
+      "message": "@machenbach: I believe I fixed the crash, so I would try to enable the test again.",
+      "revId": "d53b3510caff23818ae3b29e65efcdbcdc503b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
