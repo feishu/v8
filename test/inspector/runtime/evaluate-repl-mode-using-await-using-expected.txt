@@ -1,0 +1,1 @@
+Tests if `using` and `await using` works in REPL mode.
