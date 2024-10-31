@@ -755,47 +755,88 @@ String::FlatContent String::SlowGetFlatContent(
       .value();
 }
 
-std::unique_ptr<char[]> String::ToCString(AllowNullsFlag allow_nulls,
-                                          uint32_t offset, uint32_t length,
-                                          uint32_t* length_return) {
-  // Compute the size of the UTF-8 string. Start at the specified offset.
+size_t String::Utf8Length(uint32_t offset, uint32_t length) {
+  DCHECK_LE(length, this->length());
+  DCHECK_LE(offset + length, this->length());
+
   StringCharacterStream stream(this, offset);
   uint32_t character_position = offset;
-  uint32_t utf8_bytes = 0;
-  uint32_t last = unibrow::Utf16::kNoPreviousCharacter;
+  size_t utf8_bytes = 0;
+  uint16_t last = unibrow::Utf16::kNoPreviousCharacter;
   while (stream.HasMore() && character_position++ < offset + length) {
     uint16_t character = stream.GetNext();
     utf8_bytes += unibrow::Utf8::Length(character, last);
     last = character;
   }
+  return utf8_bytes;
+}
+
+size_t String::EncodeUtf8(AllowNullsFlag allow_nulls, char* buffer,
+                          size_t capacity, uint32_t offset, uint32_t length,
+                          bool null_terminate, bool ensure_valid) {
+  DCHECK_LE(length, this->length());
+  DCHECK_LE(offset + length, this->length());
+
+  StringCharacterStream stream(this, offset);
+  size_t pos = 0;
+  uint32_t remaining = length;
+  uint16_t last = unibrow::Utf16::kNoPreviousCharacter;
+
+  while (stream.HasMore() && remaining-- != 0) {
+    uint16_t character = stream.GetNext();
+    if (allow_nulls == DISALLOW_NULLS && character == 0) {
+      character = ' ';
+    }
+
+    uint32_t required_space = unibrow::Utf8::Length(character, last);
+    required_space += null_terminate;
+    size_t remaining_space = capacity - pos;
+    if (remaining_space < required_space) {
+      // Not enough space left, so stop here.
+      if (ensure_valid && unibrow::Utf16::IsLeadSurrogate(last)) {
+        // We're in the middle of a surrogate pair. Delete the first part again.
+        pos -= unibrow::Utf8::kSizeOfUnmatchedSurrogate;
+      }
+      break;
+    }
+
+    pos += unibrow::Utf8::Encode(buffer + pos, character, last, ensure_valid);
+
+    last = character;
+  }
+
+  if (null_terminate) {
+    DCHECK_LT(pos, capacity);
+    buffer[pos++] = 0;
+  }
+
+  return pos;
+}
+
+std::unique_ptr<char[]> String::ToCString(AllowNullsFlag allow_nulls,
+                                          uint32_t offset, uint32_t length,
+                                          size_t* length_return) {
+  DCHECK_LE(length, this->length());
+  DCHECK_LE(offset + length, this->length());
+
+  size_t utf8_bytes = Utf8Length(offset, length);
 
   if (length_return) {
     *length_return = utf8_bytes;
   }
 
-  char* result = NewArray<char>(utf8_bytes + 1);
+  size_t capacity = utf8_bytes + 1;
+  char* result = NewArray<char>(capacity);
 
-  // Convert the UTF-16 string to a UTF-8 buffer. Start at the specified offset.
-  stream.Reset(this, offset);
-  character_position = offset;
-  int utf8_byte_position = 0;
-  last = unibrow::Utf16::kNoPreviousCharacter;
-  while (stream.HasMore() && character_position++ < offset + length) {
-    uint16_t character = stream.GetNext();
-    if (allow_nulls == DISALLOW_NULLS && character == 0) {
-      character = ' ';
-    }
-    utf8_byte_position +=
-        unibrow::Utf8::Encode(result + utf8_byte_position, character, last);
-    last = character;
-  }
-  result[utf8_byte_position] = 0;
+  size_t written = EncodeUtf8(allow_nulls, result, capacity, offset, length);
+  CHECK_EQ(written, capacity);
+
   return std::unique_ptr<char[]>(result);
 }
 
 std::unique_ptr<char[]> String::ToCString(AllowNullsFlag allow_nulls,
-                                          uint32_t* length_return) {
-  return ToCString(allow_nulls, 0, -1, length_return);
+                                          size_t* length_return) {
+  return ToCString(allow_nulls, 0, length(), length_return);
 }
 
 // static

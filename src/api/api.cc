@@ -5924,26 +5924,7 @@ bool String::ContainsOnlyOneByte() const {
 
 int String::Utf8Length(Isolate* v8_isolate) const {
   auto str = Utils::OpenHandle(this);
-  str = i::String::Flatten(reinterpret_cast<i::Isolate*>(v8_isolate), str);
-  uint32_t length = str->length();
-  if (length == 0) return 0;
-  i::DisallowGarbageCollection no_gc;
-  i::String::FlatContent flat = str->GetFlatContent(no_gc);
-  DCHECK(flat.IsFlat());
-  uint32_t utf8_length = 0;
-  if (flat.IsOneByte()) {
-    for (uint8_t c : flat.ToOneByteVector()) {
-      utf8_length += c >> 7;
-    }
-    utf8_length += length;
-  } else {
-    int last_character = unibrow::Utf16::kNoPreviousCharacter;
-    for (uint16_t c : flat.ToUC16Vector()) {
-      utf8_length += unibrow::Utf8::Length(c, last_character);
-      last_character = c;
-    }
-  }
-  return utf8_length;
+  return static_cast<int>(str->Utf8Length(0, str->length()));
 }
 
 uint32_t String::Utf8LengthV2(Isolate* v8_isolate) const {
@@ -6084,16 +6065,12 @@ int String::WriteUtf8(Isolate* v8_isolate, char* buffer, int capacity,
   i::Isolate* i_isolate = reinterpret_cast<i::Isolate*>(v8_isolate);
   API_RCS_SCOPE(i_isolate, String, WriteUtf8);
   ENTER_V8_NO_SCRIPT_NO_EXCEPTION(i_isolate);
-  str = i::String::Flatten(i_isolate, str);
-  i::DisallowGarbageCollection no_gc;
-  i::String::FlatContent content = str->GetFlatContent(no_gc);
-  if (content.IsOneByte()) {
-    return WriteUtf8Impl<uint8_t>(content.ToOneByteVector(), buffer, capacity,
-                                  options, nchars_ref);
-  } else {
-    return WriteUtf8Impl<uint16_t>(content.ToUC16Vector(), buffer, capacity,
-                                   options, nchars_ref);
-  }
+
+  size_t result =
+      str->EncodeUtf8(i::ALLOW_NULLS, buffer, capacity, 0, str->length(),
+                      (!options & String::NO_NULL_TERMINATION),
+                      options & String::REPLACE_INVALID_UTF8);
+  return static_cast<uint32_t>(result);
 }
 
 template <typename CharType>
@@ -6164,27 +6141,16 @@ void String::WriteOneByteV2(Isolate* v8_isolate, uint8_t* buffer,
 
 uint32_t String::WriteUtf8V2(Isolate* v8_isolate, char* buffer,
                              uint32_t capacity, int flags) const {
-  // TODO(saelo): Move this code into an internal function, similar to
-  // String::WriteToFlat, so it can be reused in other places.
   auto str = Utils::OpenHandle(this);
   i::Isolate* i_isolate = reinterpret_cast<i::Isolate*>(v8_isolate);
   API_RCS_SCOPE(i_isolate, String, WriteUtf8);
   ENTER_V8_NO_SCRIPT_NO_EXCEPTION(i_isolate);
-  str = i::String::Flatten(i_isolate, str);
-  i::DisallowGarbageCollection no_gc;
-  i::String::FlatContent content = str->GetFlatContent(no_gc);
-  int options = NO_OPTIONS;
-  if (!(flags & String::WriteFlags::kNullTerminate))
-    options |= NO_NULL_TERMINATION;
-  if (flags & String::WriteFlags::kReplaceInvalidUtf8)
-    options |= REPLACE_INVALID_UTF8;
-  if (content.IsOneByte()) {
-    return WriteUtf8Impl<uint8_t>(content.ToOneByteVector(), buffer, capacity,
-                                  options, nullptr);
-  } else {
-    return WriteUtf8Impl<uint16_t>(content.ToUC16Vector(), buffer, capacity,
-                                   options, nullptr);
-  }
+
+  size_t result =
+      str->EncodeUtf8(i::ALLOW_NULLS, buffer, capacity, 0, str->length(),
+                      flags & String::WriteFlags::kNullTerminate,
+                      flags & String::WriteFlags::kReplaceInvalidUtf8);
+  return static_cast<uint32_t>(result);
 }
 
 namespace {
@@ -9001,7 +8967,7 @@ CompiledWasmModule WasmModuleObject::GetCompiledModule() {
   auto obj = i::Cast<i::WasmModuleObject>(Utils::OpenDirectHandle(this));
   auto url = i::direct_handle(i::Cast<i::String>(obj->script()->name()),
                               obj->GetIsolate());
-  uint32_t length;
+  size_t length;
   std::unique_ptr<char[]> cstring = url->ToCString(i::DISALLOW_NULLS, &length);
   return CompiledWasmModule(std::move(obj->shared_native_module()),
                             cstring.get(), length);
