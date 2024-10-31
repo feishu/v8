@@ -273,9 +273,9 @@ class TestCodeEventHandler : public v8::CodeEventHandler {
     std::string name = std::string(code_event->GetComment());
     if (name.empty()) {
       v8::Local<v8::String> functionName = code_event->GetFunctionName();
-      std::string buffer(functionName->Utf8Length(isolate_) + 1, 0);
-      functionName->WriteUtf8(isolate_, &buffer[0],
-                              functionName->Utf8Length(isolate_) + 1);
+      uint32_t buffer_size = functionName->Utf8LengthV2(isolate_);
+      std::string buffer(buffer_size, 0);
+      functionName->WriteUtf8V2(isolate_, &buffer[0], buffer_size);
       // Sanitize name, removing unwanted \0 resulted from WriteUtf8
       name = std::string(buffer.c_str());
     }

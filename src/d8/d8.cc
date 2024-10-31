@@ -4785,9 +4785,9 @@ class InspectorClient : public v8_inspector::V8InspectorClient {
     Local<String> message = info[0]->ToString(context).ToLocalChecked();
     v8_inspector::V8InspectorSession* session =
         InspectorClient::GetSession(context);
-    int length = message->Length();
+    uint32_t length = message->LengthV2();
     std::unique_ptr<uint16_t[]> buffer(new uint16_t[length]);
-    message->Write(isolate, buffer.get(), 0, length);
+    message->WriteV2(isolate, buffer.get(), length, 0);
     v8_inspector::StringView message_view(buffer.get(), length);
     {
       v8::SealHandleScope seal_handle_scope(isolate);

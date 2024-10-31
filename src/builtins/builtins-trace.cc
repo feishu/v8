@@ -26,7 +26,7 @@ class MaybeUtf8 {
  public:
   explicit MaybeUtf8(Isolate* isolate, Handle<String> string) : buf_(data_) {
     string = String::Flatten(isolate, string);
-    int len;
+    uint32_t len;
     if (string->IsOneByteRepresentation()) {
       // Technically this allows unescaped latin1 characters but the trace
       // events mechanism currently does the same and the current consuming
@@ -47,7 +47,9 @@ class MaybeUtf8 {
       len = local->Utf8Length(v8_isolate);
       AllocateSufficientSpace(len);
       if (len > 0) {
-        local->WriteUtf8(v8_isolate, reinterpret_cast<char*>(buf_));
+        uint32_t written_length =
+            local->WriteUtf8V2(v8_isolate, reinterpret_cast<char*>(buf_), len);
+        CHECK_EQ(written_length, len);
       }
     }
     buf_[len] = 0;
