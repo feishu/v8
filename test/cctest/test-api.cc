@@ -8631,10 +8631,16 @@ THREADED_TEST(StringWrite) {
   CHECK_EQ(0, strcmp(utf8buf, "abc\xC3\xB0\xE2\x98\x83"));
 
   memset(utf8buf, 0x1, 1000);
-  len = str2->WriteUtf8(isolate, utf8buf, 8, &charlen);
-  CHECK_EQ(8, len);
+  len = str2->WriteUtf8(isolate, utf8buf, 9, &charlen);
+  CHECK_EQ(9, len);
   CHECK_EQ(5, charlen);
-  CHECK_EQ(0, strncmp(utf8buf, "abc\xC3\xB0\xE2\x98\x83\x01", 9));
+  CHECK_EQ(0, strcmp(utf8buf, "abc\xC3\xB0\xE2\x98\x83"));
+
+  memset(utf8buf, 0x1, 1000);
+  len = str2->WriteUtf8(isolate, utf8buf, 8, &charlen);
+  CHECK_EQ(6, len);
+  CHECK_EQ(4, charlen);
+  CHECK_EQ(0, strcmp(utf8buf, "abc\xC3\xB0\xE2"));
 
   memset(utf8buf, 0x1, 1000);
   len = str2->WriteUtf8(isolate, utf8buf, 7, &charlen);

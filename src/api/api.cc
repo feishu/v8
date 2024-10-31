@@ -5918,26 +5918,7 @@ bool String::ContainsOnlyOneByte() const {
 
 int String::Utf8Length(Isolate* v8_isolate) const {
   auto str = Utils::OpenHandle(this);
-  str = i::String::Flatten(reinterpret_cast<i::Isolate*>(v8_isolate), str);
-  int length = str->length();
-  if (length == 0) return 0;
-  i::DisallowGarbageCollection no_gc;
-  i::String::FlatContent flat = str->GetFlatContent(no_gc);
-  DCHECK(flat.IsFlat());
-  int utf8_length = 0;
-  if (flat.IsOneByte()) {
-    for (uint8_t c : flat.ToOneByteVector()) {
-      utf8_length += c >> 7;
-    }
-    utf8_length += length;
-  } else {
-    int last_character = unibrow::Utf16::kNoPreviousCharacter;
-    for (uint16_t c : flat.ToUC16Vector()) {
-      utf8_length += unibrow::Utf8::Length(c, last_character);
-      last_character = c;
-    }
-  }
-  return utf8_length;
+  return static_cast<int>(str->Utf8Length(0, str->length()));
 }
 
 namespace {
@@ -6074,16 +6055,19 @@ int String::WriteUtf8(Isolate* v8_isolate, char* buffer, int capacity,
   i::Isolate* i_isolate = reinterpret_cast<i::Isolate*>(v8_isolate);
   API_RCS_SCOPE(i_isolate, String, WriteUtf8);
   ENTER_V8_NO_SCRIPT_NO_EXCEPTION(i_isolate);
-  str = i::String::Flatten(i_isolate, str);
-  i::DisallowGarbageCollection no_gc;
-  i::String::FlatContent content = str->GetFlatContent(no_gc);
-  if (content.IsOneByte()) {
-    return WriteUtf8Impl<uint8_t>(content.ToOneByteVector(), buffer, capacity,
-                                  options, nchars_ref);
-  } else {
-    return WriteUtf8Impl<uint16_t>(content.ToUC16Vector(), buffer, capacity,
-                                   options, nchars_ref);
+
+  i::String::Utf8EncodeFlags flags;
+  if (!(options & String::NO_NULL_TERMINATION))
+    flags |= i::String::Utf8EncodeFlag::kNullTerminate;
+  if (options & String::REPLACE_INVALID_UTF8)
+    flags |= i::String::Utf8EncodeFlag::kReplaceInvalid;
+  uint32_t num_chars_written;
+  size_t result = str->EncodeUtf8(buffer, capacity, 0, str->length(),
+                                  &num_chars_written, flags);
+  if (nchars_ref) {
+    *nchars_ref = base::checked_cast<int>(num_chars_written);
   }
+  return static_cast<uint32_t>(result);
 }
 
 template <typename CharType>
@@ -8934,7 +8918,7 @@ CompiledWasmModule WasmModuleObject::GetCompiledModule() {
   auto obj = i::Cast<i::WasmModuleObject>(Utils::OpenDirectHandle(this));
   auto url = i::direct_handle(i::Cast<i::String>(obj->script()->name()),
                               obj->GetIsolate());
-  uint32_t length;
+  size_t length;
   std::unique_ptr<char[]> cstring =
       url->ToCString(i::DISALLOW_NULLS, i::FAST_STRING_TRAVERSAL, &length);
   return CompiledWasmModule(std::move(obj->shared_native_module()),
@@ -10994,7 +10978,7 @@ String::Utf8Value::Utf8Value(v8::Isolate* v8_isolate, v8::Local<v8::Value> obj,
   if (!obj->ToString(context).ToLocal(&str)) return;
   length_ = str->Utf8Length(v8_isolate);
   str_ = i::NewArray<char>(length_ + 1);
-  str->WriteUtf8(v8_isolate, str_, -1, nullptr, options);
+  str->WriteUtf8(v8_isolate, str_, length_ + 1, nullptr, options);
 }
 
 String::Utf8Value::~Utf8Value() { i::DeleteArray(str_); }

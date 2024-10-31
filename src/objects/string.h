@@ -409,6 +409,20 @@ V8_OBJECT class String : public Name {
   // Returns true if the |str| is a valid ECMAScript identifier.
   static bool IsIdentifier(Isolate* isolate, Handle<String> str);
 
+  enum Utf8EncodeFlag : uint8_t {
+    kNoFlags = 0,
+    kNullTerminate = 1u << 0,
+    kDisallowNulls = 1u << 1,
+    kReplaceInvalid = 1u << 2,
+    kRobustTraversal = 1u << 3,
+  };
+
+  using Utf8EncodeFlags = base::Flags<Utf8EncodeFlag>;
+  size_t Utf8Length(uint32_t offset, uint32_t length);
+  size_t EncodeUtf8(char* buffer, size_t capacity, uint32_t offset,
+                    uint32_t length, uint32_t* num_chars_written,
+                    Utf8EncodeFlags flags);
+
   // Return a UTF8 representation of the string.  The string is null
   // terminated but may optionally contain nulls.  Length is returned
   // in length_output if length_output is not a null pointer  The string
@@ -420,11 +434,11 @@ V8_OBJECT class String : public Name {
   std::unique_ptr<char[]> ToCString(AllowNullsFlag allow_nulls,
                                     RobustnessFlag robustness_flag,
                                     uint32_t offset, uint32_t length,
-                                    uint32_t* length_output = nullptr);
+                                    size_t* length_output = nullptr);
   V8_EXPORT_PRIVATE std::unique_ptr<char[]> ToCString(
       AllowNullsFlag allow_nulls = DISALLOW_NULLS,
       RobustnessFlag robustness_flag = FAST_STRING_TRAVERSAL,
-      uint32_t* length_output = nullptr);
+      size_t* length_output = nullptr);
 
   // Externalization.
   template <typename T>
