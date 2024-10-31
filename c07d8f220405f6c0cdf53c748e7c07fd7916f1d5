@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e50c1f1c_36210beb",
+        "filename": "src/execution/stack-guard.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1345975
+      },
+      "writtenOn": "2024-10-31T13:36:08Z",
+      "side": 0,
+      "message": "Note: there was a merge conflict because the  function was also inlined in the meantime, I resolved it by outlining it again.",
+      "revId": "c07d8f220405f6c0cdf53c748e7c07fd7916f1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
