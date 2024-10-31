@@ -34,6 +34,24 @@
       "parentUuid": "f440ff00_699bd321",
       "revId": "db4d7a01cc3125a5ccc547e5e2e0978cf8598f3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a23c3d64_dac4b79e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1535927
+      },
+      "writtenOn": "2024-10-31T14:25:14Z",
+      "side": 1,
+      "message": "The StringBuilderOptimizer in TF is not enabled.\n\nBut yea that makes sense, I forgot that string concatenation always goes through StringAdd_CheckNone. I guess that the impact of this on TF wasn\u0027t huge either then.\n\nAnyways, thanks for the microbenchmark confirming that it\u0027s working as intended 😊",
+      "parentUuid": "8b2a8d5f_4049fd86",
+      "revId": "db4d7a01cc3125a5ccc547e5e2e0978cf8598f3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
