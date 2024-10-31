@@ -16,6 +16,24 @@
       "message": "Pinpoint doesn\u0027t show any improvements, is that expected? I would have thought that date-format-xparb would be sped up up by this CL..",
       "revId": "db4d7a01cc3125a5ccc547e5e2e0978cf8598f3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b2a8d5f_4049fd86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115961
+      },
+      "writtenOn": "2024-10-31T14:08:46Z",
+      "side": 1,
+      "message": "Yea we were just chatting about it w/ Leszek.\n\nThe TF implementation of string + stringwrapper makes routes those additions to the StringBuilderOptimizer, so it can do optimized stuff there.\n\nThis CL just makes us not call Add_WithFeedback but directly StringAdd_CheckNone, but Add_WithFeedback also already calls StringAdd_CheckNone, so, this is just bypassing a couple of checks, but it\u0027s not a big improvement like the TF side was.\n\nIn a microbenchmark this is showing a small (7%) improvement with --no-turbofan:\n```\nfunction pad(val, size, ch) {\n    var result \u003d new String(val);\n    while (result.length \u003c size) {\n        result \u003d ch + result; // string + string wrapper\n    }\n    return result;\n}\n\n%PrepareFunctionForOptimization(pad);\npad(\u0027foo\u0027, 5, \u0027a\u0027);\n%OptimizeMaglevOnNextCall(pad);\npad(\u0027foo\u0027, 5, \u0027a\u0027);\n\nfunction test() {\n  for (let j \u003d 0; j \u003c 10000; ++j) {\n    for (let i \u003d 0; i \u003c 1000; ++i) {\n      pad(\u0027sth\u0027, i % 10, \u0027s\u0027);\n    }\n  }\n}\n%NeverOptimizeFunction(test);\n\nconsole.time(\"test\");\ntest();\nconsole.timeEnd(\"test\");\n```",
+      "parentUuid": "f440ff00_699bd321",
+      "revId": "db4d7a01cc3125a5ccc547e5e2e0978cf8598f3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
