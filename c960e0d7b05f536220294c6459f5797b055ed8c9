@@ -33,6 +33,23 @@
       "message": "dmercadier, ptal @ compiler",
       "revId": "c960e0d7b05f536220294c6459f5797b055ed8c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57efec66_3f523b98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1535927
+      },
+      "writtenOn": "2024-10-31T11:58:00Z",
+      "side": 1,
+      "message": "src/compiler LGTM, thanks :)",
+      "revId": "c960e0d7b05f536220294c6459f5797b055ed8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
