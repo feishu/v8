@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d83d27_6760485e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with the stack switching mechanism, so I have some comments. 😊",
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "042ab5c2_1358c97b",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "So how does this work?\nWe try to store the new limit but if a pending interrupt already changed it, the compare exchange has no effect and we still store the new limit in the isolate?\n\nWhat\u0027s the relationship between the field in the cas (`IsolateFieldId::kJsLimitAddress`) and the memory location in the store (`IsolateData::real_jslimit_offset`)?",
+      "range": {
+        "startLine": 1139,
+        "startChar": 4,
+        "endLine": 1145,
+        "endChar": 49
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f910812_538a7750",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "We already have almost the same thing in `wasm-lowering-reducer.h`. Please move that into `assembler.h` and reuse it in both places.",
+      "range": {
+        "startLine": 1148,
+        "startChar": 2,
+        "endLine": 1149,
+        "endChar": 70
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0a903cf_7878e497",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "In the isolate this is typed as `HeapObject`. Any reason why it isn\u0027t typed as `WasmContinuationObject` there but we can still just reinterpret cast it in the `BuildLoadExternalPointerFromObject` without any type check?\nIf not, can we constrain the type in the isolate and in the `V\u003c\u003e`?",
+      "range": {
+        "startLine": 1168,
+        "startChar": 6,
+        "endLine": 1168,
+        "endChar": 12
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48044d3f_870b4c33",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "Please add a comment to the function that specifies what this function returns.",
+      "range": {
+        "startLine": 1192,
+        "startChar": 2,
+        "endLine": 1192,
+        "endChar": 35
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50709f01_1721e589",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "`V\u003cWordPtr\u003e` please (you\u0027ll need to adapt the `LoadRootRegister()` to return that I guess.)",
+      "range": {
+        "startLine": 1193,
+        "startChar": 4,
+        "endLine": 1193,
+        "endChar": 11
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51a71e16_a5a9c835",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "`V\u003cWord32\u003e`?",
+      "range": {
+        "startLine": 1194,
+        "startChar": 4,
+        "endLine": 1194,
+        "endChar": 11
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef07d1f_a7c9ae5b",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "So this returns two nullptrs if we are already on the central stack? Why?",
+      "range": {
+        "startLine": 1207,
+        "startChar": 11,
+        "endLine": 1207,
+        "endChar": 39
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1a357bf_c9613acd",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "`StoreOp` please. 😊",
+      "range": {
+        "startLine": 1215,
+        "startChar": 51,
+        "endLine": 1215,
+        "endChar": 57
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "593709cb_446e2a26",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-10-31T14:34:47Z",
+      "side": 1,
+      "message": "What\u0027s `stack`? It doesn\u0027t seem to be the stack pointer as that\u0027s handled below? Can we provide a better name?",
+      "range": {
+        "startLine": 1221,
+        "startChar": 17,
+        "endLine": 1221,
+        "endChar": 22
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
