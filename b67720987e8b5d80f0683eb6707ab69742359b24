@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "367039c0_22d44ba5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1345975
+      },
+      "writtenOn": "2024-10-31T13:33:51Z",
+      "side": 1,
+      "message": "Igor, PTAL, reverting because of some test failures.",
+      "revId": "b67720987e8b5d80f0683eb6707ab69742359b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
