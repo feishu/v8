@@ -53,6 +53,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00a1f930_9bca8a9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-10-31T19:56:01Z",
+      "side": 1,
+      "message": "I have added two tests, one for REPL mode and one for debug evaluate.",
+      "parentUuid": "1a946bb0_74f1788a",
+      "revId": "f56bc0673257f11c2f23ac86c9fc4e8f25ae34f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71dffb6e_28d3ddb8",
@@ -66,6 +84,30 @@
       "writtenOn": "2024-10-25T22:37:05Z",
       "side": 1,
       "message": "This can be shortened to `mode \u003d\u003d lookup.mode \u0026\u0026 IsLexicalVariableMode(mode)`.",
+      "range": {
+        "startLine": 214,
+        "startChar": 14,
+        "endLine": 221,
+        "endChar": 58
+      },
+      "revId": "f56bc0673257f11c2f23ac86c9fc4e8f25ae34f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acb79dee_177b418c",
+        "filename": "src/execution/execution.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-10-31T19:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71dffb6e_28d3ddb8",
       "range": {
         "startLine": 214,
         "startChar": 14,
@@ -123,6 +165,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "202a86ec_c62321e7",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-reource-management-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-10-31T19:56:01Z",
+      "side": 1,
+      "message": "I guess the problem was not having the right flag in the test file. Thanks for catching that.",
+      "parentUuid": "83325360_67e3811e",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 102
+      },
+      "revId": "f56bc0673257f11c2f23ac86c9fc4e8f25ae34f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8910a1e5_c0fab31a",
@@ -140,6 +206,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66ed130a_3c96729c",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-reource-management.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-10-31T19:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8910a1e5_c0fab31a",
+      "revId": "f56bc0673257f11c2f23ac86c9fc4e8f25ae34f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "957f2a64_be2ec049",
@@ -153,6 +237,24 @@
       "writtenOn": "2024-10-28T05:39:03Z",
       "side": 1,
       "message": "After seeing the other test, this needs probably a `// Flags: --js-explicit-resource-management`.",
+      "revId": "f56bc0673257f11c2f23ac86c9fc4e8f25ae34f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "172e9ef0_8c6b7b1e",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-reource-management.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-10-31T19:56:01Z",
+      "side": 1,
+      "message": "Oh, I\u0027ve missed that. Done",
+      "parentUuid": "957f2a64_be2ec049",
       "revId": "f56bc0673257f11c2f23ac86c9fc4e8f25ae34f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
