@@ -276,6 +276,8 @@ class MaglevGraphBuilder {
       }
       VisitSingleBytecode();
     }
+    DCHECK_EQ(loop_effects_stack_.size(),
+              is_inline() && parent_->loop_effects_ ? 1 : 0);
   }
 
   VirtualObject* CreateVirtualObjectForMerge(compiler::MapRef map,
