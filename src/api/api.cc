@@ -5790,7 +5790,13 @@ int Name::GetIdentityHash() {
   return static_cast<int>(Utils::OpenDirectHandle(this)->EnsureHash());
 }
 
-int String::Length() const { return Utils::OpenDirectHandle(this)->length(); }
+int String::Length() const {
+  return static_cast<int>(Utils::OpenDirectHandle(this)->length());
+}
+
+uint32_t String::LengthV2() const {
+  return Utils::OpenDirectHandle(this)->length();
+}
 
 bool String::IsOneByte() const {
   return Utils::OpenDirectHandle(this)->IsOneByteRepresentation();
@@ -5919,12 +5925,12 @@ bool String::ContainsOnlyOneByte() const {
 int String::Utf8Length(Isolate* v8_isolate) const {
   auto str = Utils::OpenHandle(this);
   str = i::String::Flatten(reinterpret_cast<i::Isolate*>(v8_isolate), str);
-  int length = str->length();
+  uint32_t length = str->length();
   if (length == 0) return 0;
   i::DisallowGarbageCollection no_gc;
   i::String::FlatContent flat = str->GetFlatContent(no_gc);
   DCHECK(flat.IsFlat());
-  int utf8_length = 0;
+  uint32_t utf8_length = 0;
   if (flat.IsOneByte()) {
     for (uint8_t c : flat.ToOneByteVector()) {
       utf8_length += c >> 7;
@@ -5938,6 +5944,10 @@ int String::Utf8Length(Isolate* v8_isolate) const {
     }
   }
   return utf8_length;
+}
+
+uint32_t String::Utf8LengthV2(Isolate* v8_isolate) const {
+  return static_cast<uint32_t>(Utf8Length(v8_isolate));
 }
 
 namespace {
@@ -6118,6 +6128,63 @@ int String::Write(Isolate* v8_isolate, uint16_t* buffer, int start, int length,
                   int options) const {
   return WriteHelper(reinterpret_cast<i::Isolate*>(v8_isolate), this, buffer,
                      start, length, options);
+}
+
+template <typename CharType>
+static inline void WriteHelperV2(i::Isolate* i_isolate, const String* string,
+                                 CharType* buffer, uint32_t offset,
+                                 uint32_t length, int flags) {
+  API_RCS_SCOPE(i_isolate, String, Write);
+  ENTER_V8_NO_SCRIPT_NO_EXCEPTION(i_isolate);
+
+  DCHECK_LE(length, string->Length());
+  DCHECK_LE(offset, string->Length());
+  DCHECK_LE(offset + length, string->Length());
+
+  auto str = Utils::OpenHandle(string);
+  str = i::String::Flatten(i_isolate, str);
+  i::String::WriteToFlat(*str, buffer, offset, length);
+  if (flags & String::WriteFlags::kNullTerminate) {
+    buffer[length] = '\0';
+  }
+}
+
+void String::WriteV2(Isolate* v8_isolate, uint16_t* buffer, uint32_t length,
+                     uint32_t offset, int flags) const {
+  WriteHelperV2(reinterpret_cast<i::Isolate*>(v8_isolate), this, buffer, offset,
+                length, flags);
+}
+
+void String::WriteOneByteV2(Isolate* v8_isolate, uint8_t* buffer,
+                            uint32_t length, uint32_t offset, int flags) const {
+  DCHECK(IsOneByte());
+  WriteHelperV2(reinterpret_cast<i::Isolate*>(v8_isolate), this, buffer, offset,
+                length, flags);
+}
+
+uint32_t String::WriteUtf8V2(Isolate* v8_isolate, char* buffer,
+                             uint32_t capacity, int flags) const {
+  // TODO(saelo): Move this code into an internal function, similar to
+  // String::WriteToFlat, so it can be reused in other places.
+  auto str = Utils::OpenHandle(this);
+  i::Isolate* i_isolate = reinterpret_cast<i::Isolate*>(v8_isolate);
+  API_RCS_SCOPE(i_isolate, String, WriteUtf8);
+  ENTER_V8_NO_SCRIPT_NO_EXCEPTION(i_isolate);
+  str = i::String::Flatten(i_isolate, str);
+  i::DisallowGarbageCollection no_gc;
+  i::String::FlatContent content = str->GetFlatContent(no_gc);
+  int options = NO_OPTIONS;
+  if (!(flags & String::WriteFlags::kNullTerminate))
+    options |= NO_NULL_TERMINATION;
+  if (flags & String::WriteFlags::kReplaceInvalidUtf8)
+    options |= REPLACE_INVALID_UTF8;
+  if (content.IsOneByte()) {
+    return WriteUtf8Impl<uint8_t>(content.ToOneByteVector(), buffer, capacity,
+                                  options, nullptr);
+  } else {
+    return WriteUtf8Impl<uint16_t>(content.ToUC16Vector(), buffer, capacity,
+                                   options, nullptr);
+  }
 }
 
 namespace {
