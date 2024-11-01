@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67dc41d4_5e60b289",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-01T17:45:32Z",
+      "side": 1,
+      "message": "lgtm % the break-on-exception test questions for Simon.",
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7f8666f_b436dec8",
@@ -59,6 +76,29 @@
         "startChar": 0,
         "endLine": 57,
         "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abf9f8cd_dc4dd735",
+        "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-01T17:45:32Z",
+      "side": 1,
+      "message": "It\u0027d be good to make this `throw` to show that the dispose methods are never called in repl mode.",
+      "range": {
+        "startLine": 11,
+        "startChar": 118,
+        "endLine": 11,
+        "endChar": 128
       },
       "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
