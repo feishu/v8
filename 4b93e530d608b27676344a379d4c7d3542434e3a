@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c1ecade_2cf5a8d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1572942
+      },
+      "writtenOn": "2024-11-01T08:20:15Z",
+      "side": 1,
+      "message": "Hi Darius \u0026 Matthias, PTAL, thanks!",
+      "revId": "4b93e530d608b27676344a379d4c7d3542434e3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
