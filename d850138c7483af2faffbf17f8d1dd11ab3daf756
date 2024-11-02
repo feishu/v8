@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5d4c0b1d_f9d3eaf6",
+        "filename": "src/debug/debug.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2240,
+      "author": {
+        "id": 3213273
+      },
+      "writtenOn": "2024-11-02T15:19:09Z",
+      "side": 1,
+      "message": "compileFunction is executed inside the compileToplevel.",
+      "parentUuid": "d3836e30_e6e6b73a",
+      "range": {
+        "startLine": 2240,
+        "startChar": 8,
+        "endLine": 2240,
+        "endChar": 40
+      },
+      "revId": "d850138c7483af2faffbf17f8d1dd11ab3daf756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5416ca87_cedff0b4",
         "filename": "test/inspector/debugger/fail-compile-wrapped-and-recompile-module.js",
         "patchSetId": 4
