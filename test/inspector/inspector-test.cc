@@ -13,6 +13,7 @@
 #include "include/v8-initialization.h"
 #include "include/v8-local-handle.h"
 #include "include/v8-snapshot.h"
+#include "include/v8-value.h"
 #include "src/base/platform/platform.h"
 #include "src/base/small-vector.h"
 #include "src/flags/flags.h"
@@ -22,6 +23,7 @@
 #include "test/inspector/task-runner.h"
 #include "test/inspector/tasks.h"
 #include "test/inspector/utils.h"
+#include "v8-container.h"
 
 #if !defined(V8_OS_WIN)
 #include <unistd.h>
@@ -108,6 +110,9 @@ class UtilsExtension : public InspectorIsolateData::SetupGlobalTask {
     utils->Set(
         isolate, "waitForDebugger",
         v8::FunctionTemplate::New(isolate, &UtilsExtension::WaitForDebugger));
+    utils->Set(
+        isolate, "compileFunction",
+        v8::FunctionTemplate::New(isolate, &UtilsExtension::CompileFunction));
     global->Set(isolate, "utils", utils);
   }
 
@@ -252,14 +257,13 @@ class UtilsExtension : public InspectorIsolateData::SetupGlobalTask {
     std::vector<uint16_t> details =
         ToVector(info.GetIsolate(), info[2].As<v8::String>());
     int context_group_id = info[0].As<v8::Int32>()->Value();
-    RunSyncTask(backend_runner_,
-                [&context_group_id, &reason,
-                 &details](InspectorIsolateData* data) {
-                  data->SchedulePauseOnNextStatement(
-                      context_group_id,
-                      v8_inspector::StringView(reason.data(), reason.size()),
-                      v8_inspector::StringView(details.data(), details.size()));
-                });
+    RunSyncTask(backend_runner_, [&context_group_id, &reason,
+                                  &details](InspectorIsolateData* data) {
+      data->SchedulePauseOnNextStatement(
+          context_group_id,
+          v8_inspector::StringView(reason.data(), reason.size()),
+          v8_inspector::StringView(details.data(), details.size()));
+    });
   }
 
   static void CancelPauseOnNextStatement(
@@ -337,12 +341,12 @@ class UtilsExtension : public InspectorIsolateData::SetupGlobalTask {
     std::vector<uint16_t> name =
         ToVector(info.GetIsolate(), info[1].As<v8::String>());
 
-    RunSyncTask(backend_runner_, [&context_group_id,
-                                  name](InspectorIsolateData* data) {
-      CHECK(data->CreateContext(
-          context_group_id,
-          v8_inspector::StringView(name.data(), name.size())));
-    });
+    RunSyncTask(backend_runner_,
+                [&context_group_id, name](InspectorIsolateData* data) {
+                  CHECK(data->CreateContext(
+                      context_group_id,
+                      v8_inspector::StringView(name.data(), name.size())));
+                });
   }
 
   static void ResetContextGroup(
@@ -443,6 +447,45 @@ class UtilsExtension : public InspectorIsolateData::SetupGlobalTask {
           data->WaitForDebugger(context_group_id);
         },
         info[1].As<v8::Function>());
+  }
+
+  static void CompileFunction(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    if (info.Length() != 6 || !info[0]->IsInt32() || !info[1]->IsString() ||
+        !info[2]->IsString() || !info[3]->IsInt32() || !info[4]->IsInt32() ||
+        !info[5]->IsArray()) {
+      FATAL(
+          "Internal error: compileFunction(context_group_id, source, "
+          "url, line_offset, column_offset, args).");
+    }
+
+    int context_group_id = info[0].As<v8::Int32>()->Value();
+    const std::vector<uint16_t> source =
+        ToVector(info.GetIsolate(), info[1].As<v8::String>());
+    v8::Local<v8::String> url = info[2].As<v8::String>();
+    v8::Local<v8::Integer> line_offset = info[3].As<v8::Integer>();
+    v8::Local<v8::Integer> column_offset = info[4].As<v8::Integer>();
+    v8::Local<v8::Array> argument_array = info[5].As<v8::Array>();
+
+    v8::Isolate* isolate = info.GetIsolate();
+    std::vector<std::string> string_arguments;
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
+
+    for (size_t i = 0; i < argument_array->Length(); ++i) {
+      v8::Local<Value> argument_value =
+          argument_array->Get(context, static_cast<uint32_t>(i))
+              .ToLocalChecked();
+      if (!argument_value->IsString()) {
+        FATAL("Arguments should be strings");
+      }
+      v8::Local<v8::String> argument_string = argument_value.As<v8::String>();
+      std::vector<uint16_t> utf16_argument = ToVector(isolate, argument_string);
+      string_arguments.push_back(
+          std::string(utf16_argument.begin(), utf16_argument.end()));
+    }
+
+    backend_runner_->Append(std::make_unique<CompileFunctionTask>(
+        info.GetIsolate(), context_group_id, source, url, line_offset,
+        column_offset, string_arguments));
   }
 };
 

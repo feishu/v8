@@ -1969,10 +1969,64 @@ void FindBreakablePositions(Handle<DebugInfo> debug_info, int start_position,
   }
 }
 
+bool CompileWrapped(Isolate* isolate, Handle<Script> script) {
+  auto debug_script = ToApiHandle<v8::debug::Script>(script);
+
+  Maybe<int> maybe_context_id = debug_script->ContextId();
+  MaybeLocal<v8::String> maybe_source_code =
+      debug_script->Source()->JavaScriptCode();
+  MaybeLocal<v8::String> maybe_script_name = debug_script->Name();
+
+  Tagged<Object> wrapped_arguments =
+      script->eval_from_shared_or_wrapped_arguments();
+  Tagged<FixedArray> argument_array = Cast<FixedArray>(wrapped_arguments);
+  Handle<FixedArray> argument_handle = handle(argument_array, isolate);
+
+  std::vector<Local<v8::String>> arguments(argument_handle->length());
+  int argument_count = argument_handle->length();
+
+  for (int i = 0; i < argument_count; i++) {
+    Tagged<Object> arg = argument_handle->get(i);
+    Tagged<String> arg_str = Cast<String>(arg);
+    Handle<String> arg_handle = handle(arg_str, isolate);
+    arguments[i] = ToApiHandle<v8::String>(arg_handle);
+  }
+
+  int context_id;
+  Local<v8::String> source_code;
+  Local<v8::String> script_name;
+
+  if (maybe_context_id.To(&context_id) &&
+      maybe_source_code.ToLocal(&source_code) &&
+      maybe_script_name.ToLocal(&script_name)) {
+    Handle<Context> native_context = isolate->native_context();
+
+    int line_offset = debug_script->StartLine();
+    int column_offset = debug_script->StartColumn();
+
+    v8::ScriptOrigin origin(script_name, line_offset, column_offset, true, -1,
+                            v8::Local<v8::Value>(), false, false, false);
+    v8::ScriptCompiler::Source source_info(source_code, origin);
+
+    auto maybe_function = v8::ScriptCompiler::CompileFunction(
+        ToApiHandle<v8::Context>(native_context), &source_info, argument_count,
+        arguments.data(), 0, nullptr, ScriptCompiler::kNoCompileOptions);
+
+    if (maybe_function.IsEmpty()) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+}
+
 bool CompileTopLevel(Isolate* isolate, Handle<Script> script,
                      MaybeHandle<SharedFunctionInfo>* result = nullptr) {
   if (script->compilation_type() == Script::CompilationType::kEval) {
     return false;
+  }
+  if (script->is_wrapped()) {
+    return CompileWrapped(isolate, script);
   }
   UnoptimizedCompileState compile_state;
   ReusableUnoptimizedCompileState reusable_state(isolate);

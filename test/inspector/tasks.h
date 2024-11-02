@@ -5,6 +5,7 @@
 #ifndef V8_TEST_INSPECTOR_TASKS_H_
 #define V8_TEST_INSPECTOR_TASKS_H_
 
+#include <string>
 #include <vector>
 
 #include "include/v8-context.h"
@@ -99,6 +100,36 @@ class ExecuteStringTask : public TaskRunner::Task {
   int32_t column_offset_ = 0;
   bool is_module_ = false;
   int context_group_id_;
+};
+
+class CompileFunctionTask : public TaskRunner::Task {
+ public:
+  CompileFunctionTask(v8::Isolate* isolate, int context_group_id,
+                      const std::vector<uint16_t>& expression,
+                      v8::Local<v8::String> name,
+                      v8::Local<v8::Integer> line_offset,
+                      v8::Local<v8::Integer> column_offset,
+                      std::vector<std::string> arguments)
+      : expression_(expression),
+        name_(ToVector(isolate, name)),
+        line_offset_(line_offset.As<v8::Int32>()->Value()),
+        column_offset_(column_offset.As<v8::Int32>()->Value()),
+        context_group_id_(context_group_id),
+        arguments_(std::move(arguments)) {}
+
+  ~CompileFunctionTask() override = default;
+  CompileFunctionTask(const CompileFunctionTask&) = delete;
+  CompileFunctionTask& operator=(const CompileFunctionTask&) = delete;
+  bool is_priority_task() override { return false; }
+  void Run(InspectorIsolateData* data) override;
+
+ private:
+  std::vector<uint16_t> expression_;
+  std::vector<uint16_t> name_;
+  int32_t line_offset_ = 0;
+  int32_t column_offset_ = 0;
+  int context_group_id_;
+  std::vector<std::string> arguments_;
 };
 
 class SetTimeoutTask : public TaskRunner::Task {
