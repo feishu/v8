@@ -356,7 +356,11 @@ class V8_BASE_EXPORT OS {
                                                MemoryPermission access);
 
   // Make part of the process's data memory read-only.
-  static void SetDataReadOnly(void* address, size_t size);
+  // The immutable parameter controls the immutability of pages on platforms
+  // where it is supported.
+  // The protection or mapping of such pages may not be changed in the future.
+  static void SetDataReadOnly(void* address, size_t size,
+                              bool immutable = false);
 
  private:
   // These classes use the private memory management API below.
