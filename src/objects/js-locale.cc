@@ -782,7 +782,7 @@ Handle<Object> JSLocale::Language(Isolate* isolate,
                                   DirectHandle<JSLocale> locale) {
   Factory* factory = isolate->factory();
   const char* language = locale->icu_locale()->raw()->getLanguage();
-  if (strlen(language) == 0) return factory->undefined_value();
+  if (strlen(language) == 0) return factory->NewStringFromAsciiChecked("und");
   return factory->NewStringFromAsciiChecked(language);
 }
 
