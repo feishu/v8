@@ -788,10 +788,10 @@ struct StaticReadOnlyRoot {
   static constexpr Tagged_t kEmptyOrderedHashSet = 0x62f1;
   static constexpr Tagged_t kEmptyFeedbackMetadata = 0x6305;
   static constexpr Tagged_t kGlobalThisBindingScopeInfo = 0x6311;
-  static constexpr Tagged_t kEmptyFunctionScopeInfo = 0x6331;
-  static constexpr Tagged_t kNativeScopeInfo = 0x6355;
-  static constexpr Tagged_t kShadowRealmScopeInfo = 0x636d;
-  static constexpr Tagged_t kWasmNullPadding = 0x6385;
+  static constexpr Tagged_t kEmptyFunctionScopeInfo = 0x6335;
+  static constexpr Tagged_t kNativeScopeInfo = 0x6359;
+  static constexpr Tagged_t kShadowRealmScopeInfo = 0x6375;
+  static constexpr Tagged_t kWasmNullPadding = 0x6391;
   static constexpr Tagged_t kWasmNull = 0xfffd;
   static constexpr Tagged_t kJSSharedArrayMap = 0x20001;
   static constexpr Tagged_t kJSAtomicsMutexMap = 0x20045;
