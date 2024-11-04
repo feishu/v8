@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "deb50abf_007c43e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1572588
+      },
+      "writtenOn": "2024-11-04T02:07:03Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "d10c1cb50758ed92844ddff490eec53178e373ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
