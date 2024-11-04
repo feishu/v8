@@ -16,6 +16,23 @@
       "message": "PTAnL?",
       "revId": "63a59615baebb194c15f954b6c5b5cacc287b598",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a3eff60_9d69f447",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2024-11-04T16:47:53Z",
+      "side": 1,
+      "message": "lgtm, sorry for the delay as I was OOO",
+      "revId": "63a59615baebb194c15f954b6c5b5cacc287b598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
