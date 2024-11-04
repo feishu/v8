@@ -35,6 +35,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b6d83db_cebb11a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1535927
+      },
+      "writtenOn": "2024-11-04T16:36:02Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "5130c6858a910fcf0942593e2627e93682adc067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65fcde18_4aeb46ef",
@@ -53,6 +70,29 @@
         "startChar": 33,
         "endLine": 357,
         "endChar": 56
+      },
+      "revId": "5130c6858a910fcf0942593e2627e93682adc067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4646d4f_586324e2",
+        "filename": "src/compiler/turboshaft/wasm-revec-reducer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1535927
+      },
+      "writtenOn": "2024-11-04T16:36:02Z",
+      "side": 1,
+      "message": "nit: `V\u003cSimd128\u003e` (and below as well)",
+      "range": {
+        "startLine": 362,
+        "startChar": 2,
+        "endLine": 362,
+        "endChar": 9
       },
       "revId": "5130c6858a910fcf0942593e2627e93682adc067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
