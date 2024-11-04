@@ -424,8 +424,16 @@ Tagged<Object> DeclareEvalHelper(Isolate* isolate, Handle<String> name,
            context->IsFunctionContext());
     object =
         isolate->factory()->NewJSObject(isolate->context_extension_function());
-
+    // PrintF("=== BOOM: context->set_extension(..)\n");
     context->set_extension(*object);
+    if (Tagged<ScopeInfo> scope_info = context->scope_info();
+        scope_info->HasNonEmptyContextExtension()) {
+      // Invalidate
+      scope_info->mark_has_non_empty_context_extension();
+      scope_info->dependent_code();
+      DependentCode::DeoptimizeDependencyGroups(
+          isolate, scope_info, DependentCode::kEmptyContextExtensionGroup);
+    }
   } else {
     THROW_NEW_ERROR_RETURN_FAILURE(
         isolate,

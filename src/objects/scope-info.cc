@@ -61,6 +61,9 @@ bool ScopeInfo::Equals(Tagged<ScopeInfo> other,
             Cast<Oddball>(other_entry)->kind()) {
           return false;
         }
+      } else if (IsDependentCode(entry)) {
+        DCHECK(IsDependentCode(other_entry));
+        // Allow dependent_code to be different.
       } else {
         UNREACHABLE();
       }
@@ -184,15 +187,16 @@ Handle<ScopeInfo> ScopeInfo::Create(IsolateT* isolate, Zone* zone, Scope* scope,
   const int local_names_container_size =
       has_inlined_local_names ? context_local_count : 1;
 
-  const int length = kVariablePartIndex + local_names_container_size +
-                     context_local_count +
-                     (should_save_class_variable_index ? 1 : 0) +
-                     (has_function_name ? kFunctionNameEntries : 0) +
-                     (has_inferred_function_name ? 1 : 0) +
-                     (has_outer_scope_info ? 1 : 0) +
-                     (scope->is_module_scope()
-                          ? 2 + kModuleVariableEntryLength * module_vars_count
-                          : 0);
+  const int has_dependent_code = scope->HasContextExtensionSlot();
+  const int length =
+      kVariablePartIndex + local_names_container_size + context_local_count +
+      (should_save_class_variable_index ? 1 : 0) +
+      (has_function_name ? kFunctionNameEntries : 0) +
+      (has_inferred_function_name ? 1 : 0) + (has_outer_scope_info ? 1 : 0) +
+      (scope->is_module_scope()
+           ? 2 + kModuleVariableEntryLength * module_vars_count
+           : 0) +
+      (has_dependent_code ? 1 : 0);
 
   // Create hash table if local names are not inlined.
   Handle<NameToIndexHashTable> local_names_hashtable;
@@ -394,7 +398,7 @@ Handle<ScopeInfo> ScopeInfo::Create(IsolateT* isolate, Zone* zone, Scope* scope,
     }
 
     // If present, add the outer scope info.
-    DCHECK(index == scope_info->OuterScopeInfoIndex());
+    DCHECK_EQ(index, scope_info->OuterScopeInfoIndex());
     if (has_outer_scope_info) {
       scope_info->set(index++, *outer_scope.ToHandleChecked(), mode);
     }
@@ -407,9 +411,16 @@ Handle<ScopeInfo> ScopeInfo::Create(IsolateT* isolate, Zone* zone, Scope* scope,
       // The variable entries themselves have already been written above.
       index += kModuleVariableEntryLength * module_vars_count;
     }
+
+    DCHECK_EQ(index, scope_info->DependentCodeIndex());
+    if (scope->HasContextExtensionSlot()) {
+      scope_info->set(
+          index++, DependentCode::empty_dependent_code(ReadOnlyRoots(isolate)));
+    }
   }
 
   DCHECK_EQ(index, scope_info_handle->length());
+  DCHECK_EQ(length, scope_info_handle->length());
   DCHECK_EQ(parameter_count, scope_info_handle->ParameterCount());
   DCHECK_EQ(scope->num_heap_slots(), scope_info_handle->ContextLength());
 
@@ -429,7 +440,9 @@ template EXPORT_TEMPLATE_DEFINE(V8_EXPORT_PRIVATE)
 Handle<ScopeInfo> ScopeInfo::CreateForWithScope(
     Isolate* isolate, MaybeHandle<ScopeInfo> outer_scope) {
   const bool has_outer_scope_info = !outer_scope.is_null();
-  const int length = kVariablePartIndex + (has_outer_scope_info ? 1 : 0);
+  const int has_dependent_code = true;
+  const int length = kVariablePartIndex + (has_outer_scope_info ? 1 : 0) +
+                     (has_dependent_code ? 1 : 0);
 
   Factory* factory = isolate->factory();
   Handle<ScopeInfo> scope_info = factory->NewScopeInfo(length);
@@ -463,12 +476,16 @@ Handle<ScopeInfo> ScopeInfo::CreateForWithScope(
   int index = kVariablePartIndex;
   DCHECK_EQ(index, scope_info->FunctionVariableInfoIndex());
   DCHECK_EQ(index, scope_info->InferredFunctionNameIndex());
-  DCHECK(index == scope_info->OuterScopeInfoIndex());
+  DCHECK_EQ(index, scope_info->OuterScopeInfoIndex());
   if (has_outer_scope_info) {
     Tagged<ScopeInfo> outer = *outer_scope.ToHandleChecked();
     scope_info->set(index++, outer);
   }
+  DCHECK_EQ(index, scope_info->DependentCodeIndex());
+  scope_info->set(index++,
+                  DependentCode::empty_dependent_code(ReadOnlyRoots(isolate)));
   DCHECK_EQ(index, scope_info->length());
+  DCHECK_EQ(length, scope_info->length());
   DCHECK_EQ(0, scope_info->ParameterCount());
   DCHECK_EQ(scope_info->ContextHeaderLength(), scope_info->ContextLength());
   return scope_info;
@@ -510,9 +527,13 @@ Handle<ScopeInfo> ScopeInfo::CreateForBootstrapping(Isolate* isolate,
   const bool has_inferred_function_name = is_empty_function;
   // NOTE: Local names are always inlined here, since context_local_count < 2.
   DCHECK_LT(context_local_count, kScopeInfoMaxInlinedLocalNamesSize);
+  const bool has_context_extension_slot =
+      is_native_context || has_const_tracking_let_side_data;
+  const int has_dependent_code = has_context_extension_slot;
   const int length = kVariablePartIndex + 2 * context_local_count +
                      (is_empty_function ? kFunctionNameEntries : 0) +
-                     (has_inferred_function_name ? 1 : 0);
+                     (has_inferred_function_name ? 1 : 0) +
+                     (has_dependent_code ? 1 : 0);
 
   Factory* factory = isolate->factory();
   Handle<ScopeInfo> scope_info =
@@ -542,8 +563,7 @@ Handle<ScopeInfo> ScopeInfo::CreateForBootstrapping(Isolate* isolate,
       IsDebugEvaluateScopeBit::encode(false) |
       ForceContextAllocationBit::encode(false) |
       PrivateNameLookupSkipsOuterClassBit::encode(false) |
-      HasContextExtensionSlotBit::encode(is_native_context ||
-                                         has_const_tracking_let_side_data) |
+      HasContextExtensionSlotBit::encode(has_context_extension_slot) |
       IsHiddenBit::encode(false) | IsWrappedFunctionBit::encode(false);
   Tagged<ScopeInfo> raw_scope_info = *scope_info;
   raw_scope_info->set_flags(flags);
@@ -581,7 +601,12 @@ Handle<ScopeInfo> ScopeInfo::CreateForBootstrapping(Isolate* isolate,
     raw_scope_info->set(index++, roots.empty_string());
   }
   DCHECK_EQ(index, raw_scope_info->OuterScopeInfoIndex());
+  DCHECK_EQ(index, raw_scope_info->DependentCodeIndex());
+  if (has_dependent_code) {
+    raw_scope_info->set(index++, DependentCode::empty_dependent_code(roots));
+  }
   DCHECK_EQ(index, raw_scope_info->length());
+  DCHECK_EQ(length, raw_scope_info->length());
   DCHECK_EQ(raw_scope_info->ParameterCount(), parameter_count);
   if (is_empty_function || is_native_context) {
     DCHECK_EQ(raw_scope_info->ContextLength(), 0);
@@ -714,6 +739,14 @@ int ScopeInfo::UniqueIdInScript() const {
 
 bool ScopeInfo::HasContextExtensionSlot() const {
   return HasContextExtensionSlotBit::decode(Flags());
+}
+
+bool ScopeInfo::HasNonEmptyContextExtension() const {
+  return HasNonEmptyContextExtensionBit::decode(Flags());
+}
+
+void ScopeInfo::mark_has_non_empty_context_extension() {
+  set_flags(HasNonEmptyContextExtensionBit::update(Flags(), true));
 }
 
 int ScopeInfo::ContextHeaderLength() const {
@@ -1100,6 +1133,10 @@ void ScopeInfo::ModuleVariable(int i, Tagged<String>* name, int* index,
   if (maybe_assigned_flag != nullptr) {
     *maybe_assigned_flag = MaybeAssignedFlagBit::decode(properties);
   }
+}
+
+int ScopeInfo::DependentCodeIndex() const {
+  return ConvertOffsetToIndex(DependentCodeOffset());
 }
 
 uint32_t ScopeInfo::Hash() {
