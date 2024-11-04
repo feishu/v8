@@ -2550,7 +2550,19 @@ void MaglevGraphBuilder::VisitBinaryOperation() {
       }
       break;
     case BinaryOperationHint::kStringOrStringWrapper:
-    // TODO(v8:12199): Fast path for the string wrapper case.
+      if constexpr (kOperation == Operation::kAdd) {
+        if (broker()
+                ->dependencies()
+                ->DependOnStringWrapperToPrimitiveProtector()) {
+          ValueNode* left = LoadRegister(0);
+          ValueNode* right = GetAccumulator();
+          BuildCheckStringOrStringWrapper(left);
+          BuildCheckStringOrStringWrapper(right);
+          SetAccumulator(AddNewNode<StringWrapperConcat>({left, right}));
+          return;
+        }
+      }
+      [[fallthrough]];
     case BinaryOperationHint::kBigInt:
     case BinaryOperationHint::kBigInt64:
     case BinaryOperationHint::kAny:
@@ -3888,6 +3900,7 @@ NodeType StaticTypeForNode(compiler::JSHeapBroker* broker,
     case Opcode::kToString:
     case Opcode::kNumberToString:
     case Opcode::kStringConcat:
+    case Opcode::kStringWrapperConcat:
       return NodeType::kString;
     case Opcode::kCheckedInternalizedString:
       return NodeType::kInternalizedString;
@@ -4097,6 +4110,12 @@ void MaglevGraphBuilder::BuildCheckString(ValueNode* object) {
   NodeType known_type;
   if (EnsureType(object, NodeType::kString, &known_type)) return;
   AddNewNode<CheckString>({object}, GetCheckType(known_type));
+}
+
+void MaglevGraphBuilder::BuildCheckStringOrStringWrapper(ValueNode* object) {
+  NodeType known_type;
+  if (EnsureType(object, NodeType::kStringOrStringWrapper, &known_type)) return;
+  AddNewNode<CheckStringOrStringWrapper>({object}, GetCheckType(known_type));
 }
 
 void MaglevGraphBuilder::BuildCheckNumber(ValueNode* object) {
