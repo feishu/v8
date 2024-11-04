@@ -107,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "976dcfd1_8c0800c6",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-04T09:38:29Z",
+      "side": 1,
+      "message": "@leese@chromium.org: The bytecode-generator impl is here: https://source.chromium.org/chromium/chromium/src/+/main:v8/src/interpreter/bytecode-generator.cc;l\u003d2800-2801;drc\u003d5de3cdee8a512769ee7c8e91b875a58d28f83452.\n\nMaybe you could take a look and see if the re-throw and catch prediction is done correctly?",
+      "parentUuid": "accfea16_147cac7e",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf9f8cd_dc4dd735",
         "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
         "patchSetId": 19
