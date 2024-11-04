@@ -16,6 +16,46 @@
       "message": "LGTM, thanks!",
       "revId": "242e81298061fd37105ce7df46b8b38d37a1d491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1473929_914452ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115935
+      },
+      "writtenOn": "2024-11-04T10:57:14Z",
+      "side": 1,
+      "message": "LGTM with a nit.",
+      "revId": "242e81298061fd37105ce7df46b8b38d37a1d491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f8a90ba_bb5978d3",
+        "filename": "src/compiler/turboshaft/assembler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 2806,
+      "author": {
+        "id": 1115935
+      },
+      "writtenOn": "2024-11-04T10:57:14Z",
+      "side": 1,
+      "message": "Can this be `V\u003cWordPtr\u003e`?",
+      "range": {
+        "startLine": 2806,
+        "startChar": 2,
+        "endLine": 2806,
+        "endChar": 9
+      },
+      "revId": "242e81298061fd37105ce7df46b8b38d37a1d491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
