@@ -42,7 +42,8 @@ namespace compiler {
   V(StableMap)                          \
   V(Transition)                         \
   V(ObjectSlotValue)                    \
-  V(ConstTrackingLet)
+  V(ConstTrackingLet)                   \
+  V(EmptyContextExtension)
 
 CompilationDependencies::CompilationDependencies(JSHeapBroker* broker,
                                                  Zone* zone)
@@ -941,6 +942,41 @@ class ConstTrackingLetDependency final : public CompilationDependency {
   size_t index_;
 };
 
+class EmptyContextExtensionDependency final : public CompilationDependency {
+ public:
+  explicit EmptyContextExtensionDependency(ScopeInfoRef scope_info)
+      : CompilationDependency(kEmptyContextExtension), scope_info_(scope_info) {
+    DCHECK(v8_flags.empty_context_extension_dep);
+  }
+
+  bool IsValid(JSHeapBroker* broker) const override {
+    return !scope_info_.object()->HasNonEmptyContextExtension();
+  }
+
+  void Install(JSHeapBroker* broker, PendingDependencies* deps) const override {
+    SLOW_DCHECK(IsValid(broker));
+    // Isolate* isolate = broker->isolate();
+    DCHECK(scope_info_.HasContextExtensionSlot());
+    deps->Register(scope_info_.object(),
+                   DependentCode::kEmptyContextExtensionGroup);
+  }
+
+ private:
+  size_t Hash() const override {
+    ObjectRef::Hash h;
+    // return base::hash_combine(h(context_), index_);
+    return h(scope_info_);
+  }
+
+  bool Equals(const CompilationDependency* that) const override {
+    const EmptyContextExtensionDependency* const zat =
+        that->AsEmptyContextExtension();
+    return scope_info_.equals(zat->scope_info_);
+  }
+
+  const ScopeInfoRef scope_info_;
+};
+
 class ProtectorDependency final : public CompilationDependency {
  public:
   explicit ProtectorDependency(PropertyCellRef cell)
@@ -1261,6 +1297,21 @@ bool CompilationDependencies::DependOnConstTrackingLet(
         return true;
       }
     }
+  }
+  return false;
+}
+
+bool CompilationDependencies::DependOnEmptyContextExtension(
+    ScopeInfoRef scope_info) {
+  if (v8_flags.empty_context_extension_dep) {
+    DCHECK(scope_info.HasContextExtensionSlot());
+    if (scope_info.object()->HasNonEmptyContextExtension()) {
+      // There are respective context instances with non-empty context
+      // extension.
+      return false;
+    }
+    RecordDependency(zone_->New<EmptyContextExtensionDependency>(scope_info));
+    return true;
   }
   return false;
 }

@@ -33,6 +33,10 @@ uint32_t ScopeInfo::Flags() const { return flags(); }
 int ScopeInfo::ParameterCount() const { return parameter_count(); }
 int ScopeInfo::ContextLocalCount() const { return context_local_count(); }
 
+Tagged<DependentCode> ScopeInfo::dependent_code() const {
+  return Cast<DependentCode>(TorqueGeneratedScopeInfo::dependent_code());
+}
+
 ObjectSlot ScopeInfo::data_start() { return RawField(OffsetOfElementAt(0)); }
 
 bool ScopeInfo::HasInlinedLocalNames() const {

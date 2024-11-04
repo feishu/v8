@@ -76,7 +76,11 @@ class ScopeInfo : public TorqueGeneratedScopeInfo<ScopeInfo, HeapObject> {
   int ContextLength() const;
   int ContextHeaderLength() const;
 
+  // Returns true if the respective contexts have a context extension slot.
   bool HasContextExtensionSlot() const;
+  // Returns true if there context with non-empty context extension.
+  bool HasNonEmptyContextExtension() const;
+  void mark_has_non_empty_context_extension();
 
   // Does this scope declare a "this" binding?
   bool HasReceiver() const;
@@ -286,6 +290,8 @@ class ScopeInfo : public TorqueGeneratedScopeInfo<ScopeInfo, HeapObject> {
   static_assert(LanguageModeSize == 1 << LanguageModeBit::kSize);
   static_assert(FunctionKindBits::is_valid(FunctionKind::kLastFunctionKind));
 
+  inline Tagged<DependentCode> dependent_code() const;
+
   bool IsEmpty() const;
 
   // Returns the size in bytes for a ScopeInfo with |length| slots.
@@ -309,6 +315,7 @@ class ScopeInfo : public TorqueGeneratedScopeInfo<ScopeInfo, HeapObject> {
   int ModuleInfoIndex() const;
   int ModuleVariableCountIndex() const;
   int ModuleVariablesIndex() const;
+  int DependentCodeIndex() const;
 
   // Raw access by slot index. These functions rely on the fact that everything
   // in ScopeInfo is tagged. Each slot is tagged-pointer sized. Slot 0 is
