@@ -83,6 +83,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9440660a_6cf739f9",
+        "filename": "src/wasm/wrappers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-04T09:26:15Z",
+      "side": 1,
+      "message": "Acknowledged, thanks!",
+      "parentUuid": "c5298fd0_b02ce585",
+      "range": {
+        "startLine": 1139,
+        "startChar": 4,
+        "endLine": 1145,
+        "endChar": 49
+      },
+      "revId": "572d5205d4e15bdcf7f9c11f0388b498986d4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f910812_538a7750",
