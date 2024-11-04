@@ -35,6 +35,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63638713_741ea4c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1369666
+      },
+      "writtenOn": "2024-11-04T12:37:02Z",
+      "side": 1,
+      "message": "Let me know if you need help debugging this.",
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7f8666f_b436dec8",
@@ -48,6 +65,30 @@
       "writtenOn": "2024-10-31T19:56:01Z",
       "side": 1,
       "message": "That is strange that it gets paused on uncaught exceptions as well. It seems that it shouldn\u0027t.",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32af66d5_88ce2618",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1369666
+      },
+      "writtenOn": "2024-11-04T12:37:02Z",
+      "side": 1,
+      "message": "What does the handler table for the bytecode look like? The region should not be marked as CAUGHT_BY_JAVASCRIPT, as that is our signal that it is caught. If the problem is specific to await using, perhaps you have added a builtin continuation that we have to treat as non-handling akin to a finally?",
+      "parentUuid": "e7f8666f_b436dec8",
       "range": {
         "startLine": 23,
         "startChar": 14,
@@ -123,6 +164,53 @@
         "startLine": 57,
         "startChar": 0,
         "endLine": 57,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92c30e65_06928d81",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1369666
+      },
+      "writtenOn": "2024-11-04T12:37:02Z",
+      "side": 1,
+      "message": "Nothing looks wrong there but I\u0027d need to see the actual bytecode being generated where it is stopping. What\u0027s important is to make sure you use the rethrow bytecode so we know it isn\u0027t a debug event.",
+      "parentUuid": "976dcfd1_8c0800c6",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2559cfd_3d38b6fb",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1369666
+      },
+      "writtenOn": "2024-11-04T12:37:02Z",
+      "side": 1,
+      "message": "So here we see the same exception twice, but the first time it is detected as caught and the second time it is uncaught, so we must be seeing the the disposal code as a try/catch rather than a try/finally and the disposal code must be rethrowing it with a kThrow rather than kRethrow instruction.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
         "endChar": 20
       },
       "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
