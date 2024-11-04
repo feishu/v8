@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0a1ed7d_b15a507f",
+        "filename": "src/compiler/turboshaft/maglev-graph-building-phase.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2633,
+      "author": {
+        "id": 1535927
+      },
+      "writtenOn": "2024-11-04T07:21:50Z",
+      "side": 1,
+      "message": "This should be\n```\nScopedVar\u003cString, AssemblerT\u003e left(this);\nScopedVar\u003cString, AssemblerT\u003e right(this);\n```",
+      "range": {
+        "startLine": 2632,
+        "startChar": 4,
+        "endLine": 2633,
+        "endChar": 20
+      },
+      "revId": "241f6d0bad72a7bb9f9627822076e30704522925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
