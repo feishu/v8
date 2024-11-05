@@ -77,6 +77,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "761977b7_9e97fb78",
+        "filename": "src/compiler/turboshaft/wasm-revec-reducer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1513087
+      },
+      "writtenOn": "2024-11-05T08:14:49Z",
+      "side": 1,
+      "message": "It make sense. But there are many existing functions use it as pointer, especially in src/wasm/simd-shuffle.h(cc). Maybe it\u0027s better to do the refactoring in another CL?",
+      "parentUuid": "65fcde18_4aeb46ef",
+      "range": {
+        "startLine": 357,
+        "startChar": 33,
+        "endLine": 357,
+        "endChar": 56
+      },
+      "revId": "5130c6858a910fcf0942593e2627e93682adc067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b4646d4f_586324e2",
         "filename": "src/compiler/turboshaft/wasm-revec-reducer.cc",
         "patchSetId": 3
@@ -88,6 +112,30 @@
       "writtenOn": "2024-11-04T16:36:02Z",
       "side": 1,
       "message": "nit: `V\u003cSimd128\u003e` (and below as well)",
+      "range": {
+        "startLine": 362,
+        "startChar": 2,
+        "endLine": 362,
+        "endChar": 9
+      },
+      "revId": "5130c6858a910fcf0942593e2627e93682adc067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c69f507_20c54070",
+        "filename": "src/compiler/turboshaft/wasm-revec-reducer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1513087
+      },
+      "writtenOn": "2024-11-05T08:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4646d4f_586324e2",
       "range": {
         "startLine": 362,
         "startChar": 2,
@@ -121,6 +169,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26a4cf66_4f280e18",
+        "filename": "src/compiler/turboshaft/wasm-revec-reducer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1513087
+      },
+      "writtenOn": "2024-11-05T08:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fae94e2e_703d0590",
+      "range": {
+        "startLine": 418,
+        "startChar": 6,
+        "endLine": 418,
+        "endChar": 23
+      },
+      "revId": "5130c6858a910fcf0942593e2627e93682adc067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0a24bae_79d986d2",
@@ -134,6 +206,30 @@
       "writtenOn": "2024-11-04T10:49:02Z",
       "side": 1,
       "message": "Nit: `following`",
+      "range": {
+        "startLine": 388,
+        "startChar": 19,
+        "endLine": 388,
+        "endChar": 27
+      },
+      "revId": "5130c6858a910fcf0942593e2627e93682adc067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c742356a_3ba78c53",
+        "filename": "src/compiler/turboshaft/wasm-revec-reducer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1513087
+      },
+      "writtenOn": "2024-11-05T08:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0a24bae_79d986d2",
       "range": {
         "startLine": 388,
         "startChar": 19,
@@ -167,6 +263,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c933334_9bfc1601",
+        "filename": "src/compiler/turboshaft/wasm-revec-reducer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1513087
+      },
+      "writtenOn": "2024-11-05T08:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9d3d665_f50c8fe6",
+      "range": {
+        "startLine": 876,
+        "startChar": 0,
+        "endLine": 880,
+        "endChar": 24
+      },
+      "revId": "5130c6858a910fcf0942593e2627e93682adc067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2758353_4193d368",
@@ -180,6 +300,30 @@
       "writtenOn": "2024-11-04T10:49:02Z",
       "side": 1,
       "message": "Do I understand correctly that these look different from:\n```\n      shuffle0 \u003d 0,x,x,x,  1,x,x,x  2,x,x,x  3,x,x,x\n      shuffle1 \u003d 4,x,x,x,  5,x,x,x  6,x,x,x  7,x,x,x\n      x \u003e\u003d 16\n```\nbecause of the canonicalization, meaning that after canonicalization we swap left and right of shuffle0 and update the indices to `0, 17, 18, 19, 1, 20, ...`?",
+      "range": {
+        "startLine": 5338,
+        "startChar": 0,
+        "endLine": 5341,
+        "endChar": 77
+      },
+      "revId": "5130c6858a910fcf0942593e2627e93682adc067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a66f108_da7748c5",
+        "filename": "test/cctest/wasm/test-run-wasm-simd.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5341,
+      "author": {
+        "id": 1513087
+      },
+      "writtenOn": "2024-11-05T08:14:49Z",
+      "side": 1,
+      "message": "Yes, your understanding is correct!",
+      "parentUuid": "b2758353_4193d368",
       "range": {
         "startLine": 5338,
         "startChar": 0,
