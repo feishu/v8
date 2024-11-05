@@ -159,6 +159,12 @@ class EmbeddedFileWriter : public EmbeddedFileWriterInterface {
   void WriteBuiltin(PlatformEmbeddedFileWriterBase* w,
                     const i::EmbeddedData* blob, const Builtin builtin) const;
 
+#if V8_ENABLE_ISX_BUILTIN
+  void WriteISXBuiltin(PlatformEmbeddedFileWriterBase* w,
+                       const i::EmbeddedData* blob,
+                       const Builtin builtin) const;
+#endif  // V8_ENABLE_ISX_BUILTIN
+
   void WriteBuiltinLabels(PlatformEmbeddedFileWriterBase* w,
                           std::string name) const;
 
