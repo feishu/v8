@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "542b095e_00b14f8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-05T10:35:55Z",
+      "side": 1,
+      "message": "FYI: we are observing too-good-to-be-true pinpoint results on JetStream2 in the recent days, it\u0027s not clear what\u0027s going on yet.",
+      "revId": "2afee469fd3cf9151a2909419396f45122505340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
