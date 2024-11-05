@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f469230c_e039edb5",
+        "filename": "src/flags/flag-definitions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-05T15:55:05Z",
+      "side": 1,
+      "message": "I\u0027ll disable it before landing.",
+      "range": {
+        "startLine": 678,
+        "startChar": 41,
+        "endLine": 678,
+        "endChar": 45
+      },
+      "revId": "174e112f1bdc575683d668135b3d925e93604316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b53c45ea_ec98c754",
+        "filename": "src/objects/scope-info.tq",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-05T15:55:05Z",
+      "side": 1,
+      "message": "The `has_non_empty_context_extension` bit is updated concurrently.",
+      "revId": "174e112f1bdc575683d668135b3d925e93604316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
