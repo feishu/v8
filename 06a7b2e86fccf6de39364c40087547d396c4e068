@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35c0e323_d192d9d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1291594
+      },
+      "writtenOn": "2024-11-05T21:01:04Z",
+      "side": 1,
+      "message": "for the removal- M132 feature freeze on Oct 28. So I am waiting for the branch off on on Nov 11 to ask for 3 owner LGTM for M133",
+      "revId": "06a7b2e86fccf6de39364c40087547d396c4e068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8fdae6a4_5856cc20",
