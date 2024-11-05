@@ -3706,29 +3706,36 @@ bool MaglevGraphBuilder::CheckContextExtensions(size_t depth) {
   compiler::OptionalScopeInfoRef maybe_scope_info =
       graph()->TryGetScopeInfo(GetContext(), broker());
   if (!maybe_scope_info.has_value()) return false;
+
   compiler::ScopeInfoRef scope_info = maybe_scope_info.value();
   for (uint32_t d = 0; d < depth; d++) {
     CHECK_NE(scope_info.scope_type(), ScopeType::SCRIPT_SCOPE);
     CHECK_NE(scope_info.scope_type(), ScopeType::REPL_MODE_SCOPE);
     if (scope_info.HasContextExtensionSlot()) {
-      ValueNode* context = GetContextAtDepth(GetContext(), d);
-      // Only support known contexts so that we can check that there's no
-      // extension at compile time. Otherwise we could end up in a deopt loop
-      // once we do get an extension.
-      compiler::OptionalHeapObjectRef maybe_ref = TryGetConstant(context);
-      if (!maybe_ref) return false;
-      compiler::ContextRef context_ref = maybe_ref.value().AsContext();
-      compiler::OptionalObjectRef extension_ref =
-          context_ref.get(broker(), Context::EXTENSION_INDEX);
-      // The extension may be concurrently installed while we're checking the
-      // context, in which case it may still be uninitialized. This still means
-      // an extension is about to appear, so we should block this optimization.
-      if (!extension_ref) return false;
-      if (!extension_ref->IsUndefined()) return false;
-      ValueNode* extension = LoadAndCacheContextSlot(
-          context, Context::OffsetOfElementAt(Context::EXTENSION_INDEX),
-          kMutable);
-      AddNewNode<CheckValue>({extension}, broker()->undefined_value());
+      if (!broker()->dependencies()->DependOnEmptyContextExtension(
+              scope_info)) {
+        // Using EmptyContextExtension dependency is not possible for this
+        // scope_info, so generate dynamic checks.
+        ValueNode* context = GetContextAtDepth(GetContext(), d);
+        // Only support known contexts so that we can check that there's no
+        // extension at compile time. Otherwise we could end up in a deopt loop
+        // once we do get an extension.
+        compiler::OptionalHeapObjectRef maybe_ref = TryGetConstant(context);
+        if (!maybe_ref) return false;
+        compiler::ContextRef context_ref = maybe_ref.value().AsContext();
+        compiler::OptionalObjectRef extension_ref =
+            context_ref.get(broker(), Context::EXTENSION_INDEX);
+        // The extension may be concurrently installed while we're checking the
+        // context, in which case it may still be uninitialized. This still
+        // means an extension is about to appear, so we should block this
+        // optimization.
+        if (!extension_ref) return false;
+        if (!extension_ref->IsUndefined()) return false;
+        ValueNode* extension = LoadAndCacheContextSlot(
+            context, Context::OffsetOfElementAt(Context::EXTENSION_INDEX),
+            kMutable);
+        AddNewNode<CheckValue>({extension}, broker()->undefined_value());
+      }
     }
     CHECK_IMPLIES(!scope_info.HasOuterScopeInfo(), d + 1 == depth);
     if (scope_info.HasOuterScopeInfo()) {
