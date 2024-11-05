@@ -33,6 +33,24 @@
       "message": "Out of curiosity what\u0027s the status of removing these?",
       "revId": "06a7b2e86fccf6de39364c40087547d396c4e068",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45f2c199_100dbb4e",
+        "filename": "src/init/bootstrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3992,
+      "author": {
+        "id": 1291594
+      },
+      "writtenOn": "2024-11-05T21:01:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8fdae6a4_5856cc20",
+      "revId": "06a7b2e86fccf6de39364c40087547d396c4e068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
