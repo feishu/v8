@@ -408,6 +408,27 @@ V8_OBJECT class String : public Name {
   // Returns true if the |str| is a valid ECMAScript identifier.
   static bool IsIdentifier(Isolate* isolate, Handle<String> str);
 
+  enum Utf8EncodeFlag : uint8_t {
+    kNoFlags = 0,
+    kNullTerminate = 1u << 0,
+    kDisallowNulls = 1u << 1,
+    kReplaceInvalid = 1u << 2,
+  };
+  using Utf8EncodeFlags = base::Flags<Utf8EncodeFlag>;
+
+  // Compute the number of bytes needed for the Utf8 encoding of this string.
+  size_t Utf8Length(uint32_t offset, uint32_t length);
+
+  // Encode this string as Utf8 into the given buffer.
+  //
+  // This will encode |length| characters starting at |offset| as Utf8.
+  // This will never write more than |capacity| bytes, but it may write fewer.
+  // If null termination is requested, a null terminator will always be written
+  // to the end of the string.
+  size_t EncodeUtf8(char* buffer, size_t capacity, uint32_t offset,
+                    uint32_t length, uint32_t* num_chars_written,
+                    Utf8EncodeFlags flags);
+
   // Return a UTF8 representation of the string.  The string is null
   // terminated but may optionally contain nulls.  Length is returned
   // in length_output if length_output is not a null pointer.  The string
