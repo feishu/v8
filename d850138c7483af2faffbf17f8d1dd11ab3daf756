@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ce250750_ea370e8d",
+        "filename": "src/debug/debug.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2240,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-05T12:28:54Z",
+      "side": 1,
+      "message": "I talked to V8 folks, and unfortunately this is not something we can fix. To re-compile the wrapped script correctly you not only need the stashed away original wrapped arguments, but also the outer SFI in which the original function was compiled. We currently only have the args:\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:v8/src/objects/script.tq;l\u003d47-48;drc\u003dcc09cc9195b326dee8a24881eed9f670b4916969\n\nI think the best solution for now is to also bail on recompilation of wrapped scripts, similar to how we bail for eval scripts.",
+      "parentUuid": "5d4c0b1d_f9d3eaf6",
+      "range": {
+        "startLine": 2240,
+        "startChar": 8,
+        "endLine": 2240,
+        "endChar": 40
+      },
+      "revId": "d850138c7483af2faffbf17f8d1dd11ab3daf756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5416ca87_cedff0b4",
         "filename": "test/inspector/debugger/fail-compile-wrapped-and-recompile-module.js",
         "patchSetId": 4
