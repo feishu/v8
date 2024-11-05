@@ -99,6 +99,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9055cf2f_f26716dd",
+        "filename": "src/compiler/turboshaft/wasm-revec-reducer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-05T09:01:43Z",
+      "side": 1,
+      "message": "Yes, for sure in another CL. \"At some point\". Also no need to do it now, just something I stumbled upon. 😊",
+      "parentUuid": "761977b7_9e97fb78",
+      "range": {
+        "startLine": 357,
+        "startChar": 33,
+        "endLine": 357,
+        "endChar": 56
+      },
+      "revId": "5130c6858a910fcf0942593e2627e93682adc067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4646d4f_586324e2",
