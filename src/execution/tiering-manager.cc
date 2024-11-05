@@ -323,13 +323,12 @@ void TieringManager::MaybeOptimizeFrame(Tagged<JSFunction> function,
   }
 
   const bool maglev_osr = maglev::IsMaglevOsrEnabled();
-  const std::optional<CodeKind> available_kind =
-      function->GetActiveTier(isolate_);
+  const CodeKinds available_kinds = function->GetAvailableCodeKinds(isolate_);
   const bool waiting_for_tierup =
       (current_code_kind < CodeKind::TURBOFAN_JS &&
-       available_kind == CodeKind::TURBOFAN_JS) ||
+       (available_kinds & CodeKindFlag::TURBOFAN_JS)) ||
       (maglev_osr && current_code_kind < CodeKind::MAGLEV &&
-       available_kind == CodeKind::MAGLEV);
+       (available_kinds & CodeKindFlag::MAGLEV));
   // Baseline OSR uses a separate mechanism and must not be considered here,
   // therefore we limit to kOptimizedJSFunctionCodeKindsMask.
   if (function->IsOptimizationRequested(isolate_) || waiting_for_tierup) {
@@ -362,7 +361,7 @@ void TieringManager::MaybeOptimizeFrame(Tagged<JSFunction> function,
                   d.should_optimize() && d.code_kind == CodeKind::MAGLEV)) {
     bool is_marked_for_maglev_optimization =
         existing_request == CodeKind::MAGLEV ||
-        available_kind == CodeKind::MAGLEV;
+        (available_kinds & CodeKindFlag::MAGLEV);
     if (is_marked_for_maglev_optimization) {
       d = ShouldOptimize(function->feedback_vector(), CodeKind::MAGLEV);
     }

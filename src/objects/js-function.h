@@ -419,6 +419,15 @@ class JSFunction : public TorqueGeneratedJSFunction<
 
   class BodyDescriptor;
 
+  // Returns the set of code kinds of compilation artifacts (bytecode,
+  // generated code) attached to this JSFunction.
+  // Note that attached code objects that are marked_for_deoptimization are not
+  // included in this set.
+  // Also considers locations outside of this JSFunction. For example the
+  // optimized code cache slot in the feedback vector, and the shared function
+  // info.
+  CodeKinds GetAvailableCodeKinds(IsolateForSandbox isolate) const;
+
  private:
   // JSFunction doesn't have a fixed header size:
   // Hide TorqueGeneratedClass::kHeaderSize to avoid confusion.
@@ -450,11 +459,6 @@ class JSFunction : public TorqueGeneratedJSFunction<
   // adding a NOT_COMPILED kind and changing this function to simply return the
   // kind if this becomes more convenient in the future.
   CodeKinds GetAttachedCodeKinds(IsolateForSandbox isolate) const;
-
-  // As above, but also considers locations outside of this JSFunction. For
-  // example the optimized code cache slot in the feedback vector, and the
-  // shared function info.
-  CodeKinds GetAvailableCodeKinds(IsolateForSandbox isolate) const;
 
  public:
   static constexpr int kSizeWithoutPrototype = kPrototypeOrInitialMapOffset;
