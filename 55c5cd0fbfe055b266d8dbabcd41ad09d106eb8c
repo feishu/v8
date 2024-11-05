@@ -22,6 +22,30 @@
       },
       "revId": "55c5cd0fbfe055b266d8dbabcd41ad09d106eb8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70fd7c24_70436bdc",
+        "filename": "src/interpreter/bytecode-generator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2807,
+      "author": {
+        "id": 1369666
+      },
+      "writtenOn": "2024-11-05T12:44:19Z",
+      "side": 1,
+      "message": "This looks correct. There is a known issue with detecting everything in repl mode as caught: crbug.com/337197964\n\nCan you use setTimeout to run it outside the repl task?",
+      "parentUuid": "5ecd73e8_6f606697",
+      "range": {
+        "startLine": 2805,
+        "startChar": 4,
+        "endLine": 2807,
+        "endChar": 58
+      },
+      "revId": "55c5cd0fbfe055b266d8dbabcd41ad09d106eb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

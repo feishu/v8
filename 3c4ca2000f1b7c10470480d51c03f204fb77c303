@@ -123,6 +123,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fc838c1_401111d3",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1369666
+      },
+      "writtenOn": "2024-11-05T12:44:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "763ee15c_684efa27",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b97e920_4f789a57",
@@ -242,6 +266,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0795d1a0_d7588f82",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1369666
+      },
+      "writtenOn": "2024-11-05T12:44:19Z",
+      "side": 1,
+      "message": "Just speculating on what might be wrong but it turns out you aren\u0027t using any bytecode to rethrow. See other comment.",
+      "parentUuid": "ad2c50fe_c0106219",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2559cfd_3d38b6fb",
@@ -279,6 +327,30 @@
       "side": 1,
       "message": "Based on the expected behavior of this new feature, we have to call disposal methods in a try/finally (https://github.com/tc39/proposal-explicit-resource-management) and not a try/catch, so I believe we cannot change this part. Also about the second part, we have already used throw instead of rethrow in disposal code (https://source.chromium.org/chromium/chromium/src/+/main:v8/src/objects/js-disposable-stack.cc;l\u003d188;drc\u003da45502c46d75f210c783e07384138379ea1e46e4). Did you mean this part? If not, I may misunderstood which rethrowing you are pointing at.",
       "parentUuid": "e2559cfd_3d38b6fb",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec90b9bd_48db575b",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1369666
+      },
+      "writtenOn": "2024-11-05T12:44:19Z",
+      "side": 1,
+      "message": "I expect try/finally to work as desired. We should walk past that during catch prediction. But for some reason we are claiming the first exception is caught even though the rethrow is uncaught, suggesting that it is inside something marked as catching in the handler table which the rethrow is not. I don\u0027t know why we are seeing that; you should check the callstack at the time the exception is first thrown and see which call frame is detected as a try/catch, or step through  Isolate::WalkCallStackAndPromiseTree and see where it gets the idea that this is caught.\n\nFor the second part, yes that is what I was talking about although I didn\u0027t realize you were invoking Isolate::Throw from the runtime directly instead of putting an instruction in the bytecode. If you change this call to Rethrow, it shouldn\u0027t pause twice.",
+      "parentUuid": "3259ece7_c86bd87b",
       "range": {
         "startLine": 125,
         "startChar": 0,
