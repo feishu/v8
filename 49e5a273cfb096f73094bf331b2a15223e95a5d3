@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f085fbce_2022624c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1368302
+      },
+      "writtenOn": "2024-11-05T15:54:59Z",
+      "side": 1,
+      "message": "PTAL again. It was reverted, because the dependency was reverted.",
+      "revId": "49e5a273cfb096f73094bf331b2a15223e95a5d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
