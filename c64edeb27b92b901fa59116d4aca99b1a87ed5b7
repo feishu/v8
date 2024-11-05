@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d21a984b_778e346b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1519522
+      },
+      "writtenOn": "2024-11-05T14:13:52Z",
+      "side": 1,
+      "message": "Since you reviewed some of my recent string-related CLs, do you also want to take a look at this one? Otherwise I\u0027ll pick another reviewer, no worries :)",
+      "revId": "c64edeb27b92b901fa59116d4aca99b1a87ed5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
