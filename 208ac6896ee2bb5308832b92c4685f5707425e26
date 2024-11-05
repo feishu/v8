@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fc02222_6d882c37",
+        "filename": "src/builtins/builtins.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1420650
+      },
+      "writtenOn": "2024-11-05T05:56:49Z",
+      "side": 1,
+      "message": "// This enum contains all builtin id which we would like to add an ISX version\n// for it. For example ISX_Builtin::kBuiltin_A equals to Builtin::kBuiltin_A.",
+      "revId": "208ac6896ee2bb5308832b92c4685f5707425e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3d74002_4763786f",
+        "filename": "src/builtins/builtins.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1420650
+      },
+      "writtenOn": "2024-11-05T05:56:49Z",
+      "side": 1,
+      "message": "rename to ISX_Builtin",
+      "revId": "208ac6896ee2bb5308832b92c4685f5707425e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "661092db_a5d7385c",
+        "filename": "src/builtins/builtins.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1420650
+      },
+      "writtenOn": "2024-11-05T05:56:49Z",
+      "side": 1,
+      "message": "// We build a separate list for the Builtins that need ISX. These Builtins are\n// ordered by their original Builtin id, and the enum class\n// represent their order in the list. For example, if we take Builtin::kBuiltin_A\n// as ISX Builtin with smallest Builtin id, ISX_Builtin_order::kBuiltin_A is set to 0.",
+      "revId": "208ac6896ee2bb5308832b92c4685f5707425e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bb29b1c_6f096894",
+        "filename": "src/builtins/builtins.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1420650
+      },
+      "writtenOn": "2024-11-05T05:56:49Z",
+      "side": 1,
+      "message": "rename to ISX_Builtin_order",
+      "revId": "208ac6896ee2bb5308832b92c4685f5707425e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0276f72_d6a938b2",
+        "filename": "src/builtins/builtins.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1420650
+      },
+      "writtenOn": "2024-11-05T05:56:49Z",
+      "side": 1,
+      "message": "kISXBuiltinCount",
+      "revId": "208ac6896ee2bb5308832b92c4685f5707425e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "293d31fd_6d7342f1",
+        "filename": "src/builtins/builtins.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1420650
+      },
+      "writtenOn": "2024-11-05T05:56:49Z",
+      "side": 1,
+      "message": "GetISXBuiltinIdx -\u003e GetISXBuiltinOrder",
+      "revId": "208ac6896ee2bb5308832b92c4685f5707425e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6694ae7_84de3eee",
+        "filename": "src/builtins/builtins.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1420650
+      },
+      "writtenOn": "2024-11-05T05:56:49Z",
+      "side": 1,
+      "message": "rename to IsBuiltinNeedsISX",
+      "revId": "208ac6896ee2bb5308832b92c4685f5707425e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
