@@ -4645,14 +4645,18 @@ void CppClassGenerator::EmitLoadFieldStatement(
   stream << "  " << type_name << " value = ";
 
   if (!field_type->IsSubtypeOf(TypeOracle::GetTaggedType())) {
-    if (class_field.read_synchronization ==
-        FieldSynchronization::kAcquireRelease) {
-      ReportError("Torque doesn't support @cppAcquireRead on untagged data");
-    } else if (class_field.read_synchronization ==
-               FieldSynchronization::kRelaxed) {
-      ReportError("Torque doesn't support @cppRelaxedRead on untagged data");
+    const char* load;
+    switch (class_field.read_synchronization) {
+      case FieldSynchronization::kNone:
+        load = "ReadField";
+        break;
+      case FieldSynchronization::kRelaxed:
+        load = "Relaxed_ReadField";
+        break;
+      case FieldSynchronization::kAcquireRelease:
+        ReportError("Torque doesn't support @cppAcquireLoad on untagged data");
     }
-    stream << "this->template ReadField<" << type_name << ">(" << offset
+    stream << "this->template " << load << "<" << type_name << ">(" << offset
            << ");\n";
   } else {
     const char* load;
