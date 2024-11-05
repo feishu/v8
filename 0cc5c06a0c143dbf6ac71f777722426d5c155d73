@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9bba166_fce379fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-05T12:14:08Z",
+      "side": 1,
+      "message": "Thank you all for the reviews. I have applied some comments, replied to some comments and added a new question. Please take a look, thanks.",
+      "revId": "0cc5c06a0c143dbf6ac71f777722426d5c155d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}

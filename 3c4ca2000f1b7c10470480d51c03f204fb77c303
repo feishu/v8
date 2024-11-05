@@ -101,6 +101,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "763ee15c_684efa27",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-05T12:14:08Z",
+      "side": 1,
+      "message": "Please look at the comment I added in `bytecode-generator.cc` file. I think I fixed the problem related to this part but the test result is still the same.",
+      "parentUuid": "32af66d5_88ce2618",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6b97e920_4f789a57",
         "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
         "patchSetId": 19
@@ -196,6 +220,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ad2c50fe_c0106219",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-05T12:14:08Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. Can you please explain a little bit about it?",
+      "parentUuid": "92c30e65_06928d81",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e2559cfd_3d38b6fb",
         "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
         "patchSetId": 19
@@ -207,6 +255,30 @@
       "writtenOn": "2024-11-04T12:37:02Z",
       "side": 1,
       "message": "So here we see the same exception twice, but the first time it is detected as caught and the second time it is uncaught, so we must be seeing the the disposal code as a try/catch rather than a try/finally and the disposal code must be rethrowing it with a kThrow rather than kRethrow instruction.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3259ece7_c86bd87b",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-05T12:14:08Z",
+      "side": 1,
+      "message": "Based on the expected behavior of this new feature, we have to call disposal methods in a try/finally (https://github.com/tc39/proposal-explicit-resource-management) and not a try/catch, so I believe we cannot change this part. Also about the second part, we have already used throw instead of rethrow in disposal code (https://source.chromium.org/chromium/chromium/src/+/main:v8/src/objects/js-disposable-stack.cc;l\u003d188;drc\u003da45502c46d75f210c783e07384138379ea1e46e4). Did you mean this part? If not, I may misunderstood which rethrowing you are pointing at.",
+      "parentUuid": "e2559cfd_3d38b6fb",
       "range": {
         "startLine": 125,
         "startChar": 0,
@@ -253,6 +325,54 @@
       "writtenOn": "2024-11-04T07:11:26Z",
       "side": 1,
       "message": "can we evaluate `x` and `y` afterwards to make sure that the variable actually got declared?",
+      "range": {
+        "startLine": 11,
+        "startChar": 63,
+        "endLine": 11,
+        "endChar": 73
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04321fc1_969cd157",
+        "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-05T12:14:08Z",
+      "side": 1,
+      "message": "That\u0027s a good idea. Done",
+      "parentUuid": "abf9f8cd_dc4dd735",
+      "range": {
+        "startLine": 11,
+        "startChar": 118,
+        "endLine": 11,
+        "endChar": 128
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80440165_5ced45f2",
+        "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-05T12:14:08Z",
+      "side": 1,
+      "message": "Done. However, the expected result is showing Object/object. When I test it in the console, evaluating `x` results in `{value: 1, Symbol(Symbol.dispose): ƒ}`.",
+      "parentUuid": "4e799a27_2c914899",
       "range": {
         "startLine": 11,
         "startChar": 63,

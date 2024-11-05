@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ecd73e8_6f606697",
+        "filename": "src/interpreter/bytecode-generator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2807,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-05T12:14:08Z",
+      "side": 1,
+      "message": "@leese@chromium.org I think this part is correct now but the test result did not change after fixing this.",
+      "range": {
+        "startLine": 2805,
+        "startChar": 4,
+        "endLine": 2807,
+        "endChar": 58
+      },
+      "revId": "55c5cd0fbfe055b266d8dbabcd41ad09d106eb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
