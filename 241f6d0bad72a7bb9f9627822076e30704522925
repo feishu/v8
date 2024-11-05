@@ -22,6 +22,30 @@
       },
       "revId": "241f6d0bad72a7bb9f9627822076e30704522925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c326dd8_619c2e26",
+        "filename": "src/compiler/turboshaft/maglev-graph-building-phase.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2633,
+      "author": {
+        "id": 1115961
+      },
+      "writtenOn": "2024-11-05T07:34:22Z",
+      "side": 1,
+      "message": "Done (I need to resolve this commit, otherwise this CL is stuck in the \"my turn\" list, wat?)",
+      "parentUuid": "f0a1ed7d_b15a507f",
+      "range": {
+        "startLine": 2632,
+        "startChar": 4,
+        "endLine": 2633,
+        "endChar": 20
+      },
+      "revId": "241f6d0bad72a7bb9f9627822076e30704522925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
