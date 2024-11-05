@@ -51,6 +51,9 @@ class RegExpBuiltinsAssembler : public CodeStubAssembler {
                          TVariable<RawPtrT>* var_string_start,
                          TVariable<RawPtrT>* var_string_end);
 
+  TNode<RawPtrT> TryLoadRegExpResultVector(TNode<Smi> capture_count,
+                                           Label* if_failure);
+
   // Low level logic around the actual call into pattern matching code.
   TNode<HeapObject> RegExpExecInternal(
       TNode<Context> context, TNode<JSRegExp> regexp, TNode<String> string,
