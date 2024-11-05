@@ -758,44 +758,62 @@ String::FlatContent String::SlowGetFlatContent(
 std::unique_ptr<char[]> String::ToCString(AllowNullsFlag allow_nulls,
                                           uint32_t offset, uint32_t length,
                                           uint32_t* length_return) {
-  // Compute the size of the UTF-8 string. Start at the specified offset.
+  DCHECK_LE(length, this->length());
+  DCHECK_LE(offset + length, this->length());
+
   StringCharacterStream stream(this, offset);
+
+  // First, compute the required size of the output buffer.
   uint32_t character_position = offset;
-  uint32_t utf8_bytes = 0;
-  uint32_t last = unibrow::Utf16::kNoPreviousCharacter;
+  size_t utf8_bytes = 0;
+  uint16_t last = unibrow::Utf16::kNoPreviousCharacter;
   while (stream.HasMore() && character_position++ < offset + length) {
     uint16_t character = stream.GetNext();
     utf8_bytes += unibrow::Utf8::Length(character, last);
     last = character;
   }
 
+  // TODO(saelo): migrate this API to use size_t for length_return.
   if (length_return) {
-    *length_return = utf8_bytes;
+    *length_return = base::checked_cast<uint32_t>(utf8_bytes);
   }
 
-  char* result = NewArray<char>(utf8_bytes + 1);
+  // Second, allocate the output buffer.
+  size_t capacity = utf8_bytes + 1;
+  char* result = NewArray<char>(capacity);
 
-  // Convert the UTF-16 string to a UTF-8 buffer. Start at the specified offset.
+  // Third, encode the string into the output buffer.
   stream.Reset(this, offset);
-  character_position = offset;
-  int utf8_byte_position = 0;
+  size_t pos = 0;
+  uint32_t remaining = length;
   last = unibrow::Utf16::kNoPreviousCharacter;
-  while (stream.HasMore() && character_position++ < offset + length) {
+  while (stream.HasMore() && remaining-- != 0) {
     uint16_t character = stream.GetNext();
-    if (allow_nulls == DISALLOW_NULLS && character == 0) {
+    if (character == 0) {
       character = ' ';
     }
-    utf8_byte_position +=
-        unibrow::Utf8::Encode(result + utf8_byte_position, character, last);
+
+    // Ensure that there's sufficient space for this character and the null
+    // terminator. This should normally always be the case, unless there is
+    // in-sandbox memory corruption.
+    uint32_t required_space = unibrow::Utf8::Length(character, last) + 1;
+    size_t remaining_space = capacity - pos;
+    SBXCHECK_GE(remaining_space, required_space);
+
+    pos += unibrow::Utf8::Encode(result + pos, character, last);
+
     last = character;
   }
-  result[utf8_byte_position] = 0;
+
+  DCHECK_LT(pos, capacity);
+  result[pos++] = 0;
+
   return std::unique_ptr<char[]>(result);
 }
 
 std::unique_ptr<char[]> String::ToCString(AllowNullsFlag allow_nulls,
                                           uint32_t* length_return) {
-  return ToCString(allow_nulls, 0, -1, length_return);
+  return ToCString(allow_nulls, 0, length(), length_return);
 }
 
 // static
