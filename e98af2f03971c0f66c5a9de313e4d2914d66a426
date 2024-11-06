@@ -16,6 +16,57 @@
       "message": "@syg: Could you PTAL?",
       "revId": "e98af2f03971c0f66c5a9de313e4d2914d66a426",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5ebfc66_b7ed8bde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-06T18:09:18Z",
+      "side": 1,
+      "message": "lgtm!",
+      "revId": "e98af2f03971c0f66c5a9de313e4d2914d66a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f10baf3f_54b37975",
+        "filename": "src/execution/isolate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1851,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-06T18:09:18Z",
+      "side": 1,
+      "message": "Please add a TODO here that the only objects that can be in the shared heap object cache are strings, and the name should be updated.",
+      "revId": "e98af2f03971c0f66c5a9de313e4d2914d66a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb926481_ef7d0e8d",
+        "filename": "src/snapshot/shared-heap-deserializer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-06T18:09:18Z",
+      "side": 1,
+      "message": "Ditto here. Please add a TODO here that the only objects that can be in the shared heap object cache are strings, and the name should be updated.",
+      "revId": "e98af2f03971c0f66c5a9de313e4d2914d66a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
