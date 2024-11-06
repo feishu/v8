@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a2bc0e8_8714afc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-06T14:12:08Z",
+      "side": 1,
+      "message": "Thanks, the approach generally LGMT. Left some comments, will take another look later.",
+      "revId": "93f4e4a7ca931ba2d54125808bd1b6570549bb5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "932e980a_860c24a8",
+        "filename": "src/wasm/jump-table-assembler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-06T14:12:08Z",
+      "side": 1,
+      "message": "I first read the constant as `711u` instead of `7llu`.\nCan\u0027t we write this as `DCHECK_EQ(write_start / kSystemPointerSize, write_end / kSystemPointerSize);`? Or alternatively `DCHECK_EQ(write_start \u003e\u003e kSystemPointerSizeLog2, write_end \u003e\u003e kSystemPointerSizeLog2);`?\n\nAlso, please make it a `DCHECK` instead of `CHECK`, even if it\u0027s inside a `#ifdef DEBUG` block, to make it clear (in CF reports and such) that this will only be executed in debug builds.",
+      "revId": "93f4e4a7ca931ba2d54125808bd1b6570549bb5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d628c4b_04087700",
+        "filename": "src/wasm/jump-table-assembler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-06T14:12:08Z",
+      "side": 1,
+      "message": "We only read the `0x68` and `0xe9` from this array. Is it worth having? Why not just `emit\u003cuint8_t\u003e(0x68);  // pushq`?",
+      "revId": "93f4e4a7ca931ba2d54125808bd1b6570549bb5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b08a441_9fde3153",
+        "filename": "src/wasm/jump-table-assembler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-06T14:12:08Z",
+      "side": 1,
+      "message": "Other places use `int3` (`0xcc`) for this purpose. Is `hlt` better here?",
+      "revId": "93f4e4a7ca931ba2d54125808bd1b6570549bb5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc278a8_9194369d",
+        "filename": "src/wasm/jump-table-assembler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-06T14:12:08Z",
+      "side": 1,
+      "message": "The comment above only explains the cache-line boundaries. Please add an x64-specific explanation for the stricter alignment.\nAlso, what you actually want to modify is the `kJumpTableLineSize` I think. If on this architecture one line is the same size as one slot, we should just make both the same size.",
+      "revId": "93f4e4a7ca931ba2d54125808bd1b6570549bb5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
