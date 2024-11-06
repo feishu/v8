@@ -16,6 +16,92 @@
       "message": "PTAL - note this has never worked before, BUT it only becomes relevant when the result vector contains multiple matches. This happens rather rarely so far, but will happen more often starting with a followup CL.",
       "revId": "9a34253cbce449fb432d6442863f82f619243628",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b57b89e_df465bd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-06T10:51:22Z",
+      "side": 1,
+      "message": "Didn\u0027t realize I wasn\u0027t a reviewer. So dropping some nits.",
+      "revId": "9a34253cbce449fb432d6442863f82f619243628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73061ff9_36a13741",
+        "filename": "src/execution/isolate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-06T10:51:22Z",
+      "side": 1,
+      "message": "nit: Can you move this comment to function level",
+      "range": {
+        "startLine": 1430,
+        "startChar": 4,
+        "endLine": 1430,
+        "endChar": 17
+      },
+      "revId": "9a34253cbce449fb432d6442863f82f619243628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83c797cb_5e97c466",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-06T10:51:22Z",
+      "side": 1,
+      "message": "nit: `const`",
+      "range": {
+        "startLine": 58,
+        "startChar": 65,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "9a34253cbce449fb432d6442863f82f619243628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78f8f3ad_e3a1d604",
+        "filename": "src/regexp/regexp-result-vector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-06T10:51:22Z",
+      "side": 1,
+      "message": "Can you add a comment explaining the size calculation please? It is not obvious why we need to add `kIsolateSlotSize`.",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "9a34253cbce449fb432d6442863f82f619243628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
