@@ -24,6 +24,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9be74a22_da20cfc9",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2024-11-06T12:05:09Z",
+      "side": 1,
+      "message": "jsregexp_static_offsets_vector always points at the static vector and is never null, contrary to regexp_static_result_offsets_vector.\n\nThe reason that we serialize the contents even when it\u0027s in-use is for constant size requirements.",
+      "parentUuid": "822e1736_672eced9",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 49
+      },
+      "revId": "8465d136357cee8a2afac6cf99ad4827b62ca191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "939be25b_0cfe1ecc",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-06T11:57:24Z",
       "side": 1,
       "message": "I don\u0027t think we need the `_unchecked` version anymore?",
+      "range": {
+        "startLine": 55,
+        "startChar": 11,
+        "endLine": 55,
+        "endChar": 60
+      },
+      "revId": "8465d136357cee8a2afac6cf99ad4827b62ca191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03997725_633afbe5",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2024-11-06T12:05:09Z",
+      "side": 1,
+      "message": "We do, since the checked version ensures that exactly one of {slot value, new value} is non-nullptr. In these unchecked spots, both can be nullptr.",
+      "parentUuid": "939be25b_0cfe1ecc",
       "range": {
         "startLine": 55,
         "startChar": 11,
