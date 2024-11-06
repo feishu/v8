@@ -7,6 +7,7 @@
 
 #include "src/base/macros.h"
 #include "src/common/globals.h"
+#include "src/execution/isolate.h"
 
 namespace v8 {
 namespace internal {
@@ -29,6 +30,20 @@ class RegExpResultVectorScope final {
   Isolate* const isolate_;
   std::unique_ptr<int32_t[]> if_dynamic_;
   int32_t* if_static_ = nullptr;
+};
+
+class RegExpResultVector final : public AllStatic {
+ public:
+  static constexpr int kIsolateSlotSize = kSystemPointerSize;
+  static constexpr int kSlotSize = kInt32Size;
+  static constexpr int kSize =
+      kIsolateSlotSize + Isolate::kJSRegexpStaticOffsetsVectorSize * kSlotSize;
+
+  // Thread local archiving.
+  static constexpr int ArchiveSpacePerThread() { return kSize; }
+  static char* ArchiveState(Isolate* isolate, char* to);
+  static char* RestoreState(Isolate* isolate, char* from);
+  static void FreeThreadResources(Isolate* isolate) {}
 };
 
 }  // namespace internal
