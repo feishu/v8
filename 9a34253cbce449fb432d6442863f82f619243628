@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d0b1266_ee969df6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2024-11-06T10:34:48Z",
+      "side": 1,
+      "message": "PTAL - note this has never worked before, BUT it only becomes relevant when the result vector contains multiple matches. This happens rather rarely so far, but will happen more often starting with a followup CL.",
+      "revId": "9a34253cbce449fb432d6442863f82f619243628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
