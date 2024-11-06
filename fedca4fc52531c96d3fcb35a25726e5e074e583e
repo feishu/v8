@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af10b10c_eefff339",
+        "filename": "src/maglev/maglev-ir.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3392,
+      "author": {
+        "id": 1453398
+      },
+      "writtenOn": "2024-11-06T02:00:28Z",
+      "side": 1,
+      "message": "Hello, Map::kBitField2Offset is a 1-byte field, this Move won\u0027t work on big endian. I have upload this CL to correct the issue: https://chromium-review.googlesource.com/c/v8/v8/+/5997350 Please take a look. Thanks.",
+      "range": {
+        "startLine": 3392,
+        "startChar": 2,
+        "endLine": 3392,
+        "endChar": 68
+      },
+      "revId": "fedca4fc52531c96d3fcb35a25726e5e074e583e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
