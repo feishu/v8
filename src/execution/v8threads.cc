@@ -12,6 +12,7 @@
 #include "src/execution/stack-guard.h"
 #include "src/init/bootstrapper.h"
 #include "src/objects/visitors.h"
+#include "src/regexp/regexp-result-vector.h"
 #include "src/regexp/regexp-stack.h"
 
 namespace v8 {
@@ -138,6 +139,7 @@ bool ThreadManager::RestoreThread() {
   from = isolate_->stack_guard()->RestoreStackGuard(from);
   from = isolate_->debug()->RestoreDebug(from);
   from = isolate_->regexp_stack()->RestoreStack(from);
+  from = RegExpResultVectorArchiver::RestoreState(isolate_, from);
   from = isolate_->bootstrapper()->RestoreState(from);
   per_thread->set_thread_state(nullptr);
   state->set_id(ThreadId::Invalid());
@@ -162,6 +164,7 @@ static int ArchiveSpacePerThread() {
          Isolate::ArchiveSpacePerThread() + Debug::ArchiveSpacePerThread() +
          StackGuard::ArchiveSpacePerThread() +
          RegExpStack::ArchiveSpacePerThread() +
+         RegExpResultVectorArchiver::ArchiveSpacePerThread() +
          Bootstrapper::ArchiveSpacePerThread() +
          Relocatable::ArchiveSpacePerThread();
 }
@@ -272,6 +275,7 @@ void ThreadManager::EagerlyArchiveThread() {
   to = isolate_->stack_guard()->ArchiveStackGuard(to);
   to = isolate_->debug()->ArchiveDebug(to);
   to = isolate_->regexp_stack()->ArchiveStack(to);
+  to = RegExpResultVectorArchiver::RestoreState(isolate_, to);
   to = isolate_->bootstrapper()->ArchiveState(to);
   lazily_archived_thread_ = ThreadId::Invalid();
   lazily_archived_thread_state_ = nullptr;
@@ -293,6 +297,7 @@ void ThreadManager::FreeThreadResources() {
   isolate_->debug()->FreeThreadResources();
   isolate_->stack_guard()->FreeThreadResources();
   isolate_->regexp_stack()->FreeThreadResources();
+  RegExpResultVectorArchiver::FreeThreadResources(isolate_);
   isolate_->bootstrapper()->FreeThreadResources();
 }
 
