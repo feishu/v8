@@ -1468,6 +1468,11 @@ LocationReference ImplementationVisitor::GenerateFieldReference(
     }
   }
   DCHECK(field.offset.has_value());
+  if (field.read_synchronization != field.write_synchronization) {
+    ReportError("Incompatible read/write syncronization definition for '",
+                class_type->name(), ".", field.name_and_type.name);
+  }
+  FieldSynchronization field_synchronization = field.read_synchronization;
   StackRange result_range = assembler().TopRange(0);
   result_range.Extend(GenerateCopy(object).stack_range());
   VisitResult offset =
@@ -1476,7 +1481,8 @@ LocationReference ImplementationVisitor::GenerateFieldReference(
   result_range.Extend(offset.stack_range());
   const Type* type = TypeOracle::GetReferenceType(field.name_and_type.type,
                                                   field.const_qualified);
-  return LocationReference::HeapReference(VisitResult(type, result_range));
+  return LocationReference::HeapReference(VisitResult(type, result_range),
+                                          field_synchronization);
 }
 
 // This is used to generate field references during initialization, where we can
@@ -2549,7 +2555,8 @@ VisitResult ImplementationVisitor::GenerateFetchFromLocation(
       return VisitResult(referenced_type, result_range);
     } else {
       GenerateCopy(reference.heap_reference());
-      assembler().Emit(LoadReferenceInstruction{referenced_type});
+      FieldSynchronization sync = reference.heap_reference_synchronization();
+      assembler().Emit(LoadReferenceInstruction{referenced_type, sync});
       DCHECK_EQ(1, LoweredSlotCount(referenced_type));
       return VisitResult(referenced_type, assembler().TopRange(1));
     }
@@ -4645,14 +4652,18 @@ void CppClassGenerator::EmitLoadFieldStatement(
   stream << "  " << type_name << " value = ";
 
   if (!field_type->IsSubtypeOf(TypeOracle::GetTaggedType())) {
-    if (class_field.read_synchronization ==
-        FieldSynchronization::kAcquireRelease) {
-      ReportError("Torque doesn't support @cppAcquireRead on untagged data");
-    } else if (class_field.read_synchronization ==
-               FieldSynchronization::kRelaxed) {
-      ReportError("Torque doesn't support @cppRelaxedRead on untagged data");
+    const char* load;
+    switch (class_field.read_synchronization) {
+      case FieldSynchronization::kNone:
+        load = "ReadField";
+        break;
+      case FieldSynchronization::kRelaxed:
+        load = "Relaxed_ReadField";
+        break;
+      case FieldSynchronization::kAcquireRelease:
+        ReportError("Torque doesn't support @cppAcquireLoad on untagged data");
     }
-    stream << "this->template ReadField<" << type_name << ">(" << offset
+    stream << "this->template " << load << "<" << type_name << ">(" << offset
            << ");\n";
   } else {
     const char* load;
@@ -4711,7 +4722,18 @@ void CppClassGenerator::EmitStoreFieldStatement(
   }
 
   if (!field_type->IsSubtypeOf(TypeOracle::GetTaggedType())) {
-    stream << "  this->template WriteField<" << type_name << ">(" << offset
+    const char* store;
+    switch (class_field.write_synchronization) {
+      case FieldSynchronization::kNone:
+        store = "WriteField";
+        break;
+      case FieldSynchronization::kRelaxed:
+        store = "Relaxed_WriteField";
+        break;
+      case FieldSynchronization::kAcquireRelease:
+        ReportError("Torque doesn't support @cppReleaseStore on untagged data");
+    }
+    stream << "  this->template " << store << "<" << type_name << ">(" << offset
            << ", value);\n";
   } else {
     bool strong_pointer = field_type->IsSubtypeOf(TypeOracle::GetObjectType());
@@ -4720,7 +4742,7 @@ void CppClassGenerator::EmitStoreFieldStatement(
     if (!strong_pointer) {
       if (class_field.write_synchronization ==
           FieldSynchronization::kAcquireRelease) {
-        ReportError("Torque doesn't support @releaseWrite on weak fields");
+        ReportError("Torque doesn't support @cppReleaseStore on weak fields");
       }
       write_macro = "RELAXED_WRITE_WEAK_FIELD";
     } else {
