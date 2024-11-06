@@ -31,7 +31,7 @@ int32_t* RegExpResultVectorScope::Initialize(int size) {
   int32_t* result;
   if (size > Isolate::kJSRegexpStaticOffsetsVectorSize ||
       static_vector_or_null == nullptr) {
-    result = NewArray<int32_t>(size);
+    result = RegExpResultVector::Allocate(size);
     if_dynamic_.reset(result);
   } else {
     result = static_vector_or_null;
@@ -66,6 +66,19 @@ char* RegExpResultVectorArchiver::RestoreState(Isolate* isolate, char* from) {
   isolate->set_regexp_static_result_offsets_vector_unchecked(isolate_slot);
   static_assert(kSize == kIsolateSlotSize + kVectorSize);
   return from + kSize;
+}
+
+// static
+int32_t* RegExpResultVector::Allocate(uint32_t size) {
+  DisallowGarbageCollection no_gc;
+  return NewArray<int32_t>(size);
+}
+
+// static
+void RegExpResultVector::Free(int32_t* vector) {
+  DisallowGarbageCollection no_gc;
+  DCHECK_NOT_NULL(vector);
+  delete[] vector;
 }
 
 }  // namespace internal
