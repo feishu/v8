@@ -1426,6 +1426,10 @@ class V8_EXPORT_PRIVATE Isolate final : private HiddenFactory {
               regexp_static_result_offsets_vector_ != nullptr);
     regexp_static_result_offsets_vector_ = value;
   }
+  void set_regexp_static_result_offsets_vector_unchecked(int32_t* value) {
+    // Used for thread archival/restoration.
+    regexp_static_result_offsets_vector_ = value;
+  }
   Address address_of_regexp_static_result_offsets_vector() const {
     return reinterpret_cast<Address>(&regexp_static_result_offsets_vector_);
   }

@@ -45,5 +45,24 @@ int32_t* RegExpResultVectorScope::Initialize(int size) {
   return result;
 }
 
+// static
+char* RegExpResultVectorArchiver::ArchiveState(Isolate* isolate, char* to) {
+  int32_t* isolate_slot = isolate->regexp_static_result_offsets_vector();
+  MemCopy(reinterpret_cast<void*>(to), &isolate_slot, kIsolateSlotSize);
+  MemCopy(reinterpret_cast<void*>(to),
+          isolate->jsregexp_static_offsets_vector(), kSize);
+  return to + kSize;
+}
+
+// static
+char* RegExpResultVectorArchiver::RestoreState(Isolate* isolate, char* from) {
+  int32_t* isolate_slot;
+  MemCopy(&isolate_slot, reinterpret_cast<void*>(from), kIsolateSlotSize);
+  MemCopy(isolate->jsregexp_static_offsets_vector(),
+          reinterpret_cast<void*>(from), kSize);
+  isolate->set_regexp_static_result_offsets_vector_unchecked(isolate_slot);
+  return from + kSize;
+}
+
 }  // namespace internal
 }  // namespace v8
