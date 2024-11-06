@@ -33,6 +33,24 @@
       "message": "Attempted to have sharedFunctionInfo add a test for garbage collected cases but could not achieve it.\nIf you have a better idea, please let me know.",
       "revId": "5d31e83984b75fdc88b5be484314c0a57d7c76dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "418c7ad5_56313b59",
+        "filename": "test/inspector/debugger/compile-function.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-06T13:19:57Z",
+      "side": 1,
+      "message": "I think we don\u0027t need a GC test since we exercise the code path already with the test above.",
+      "parentUuid": "1290f450_993df516",
+      "revId": "5d31e83984b75fdc88b5be484314c0a57d7c76dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba8f6b6f_3a4588d2",
+        "filename": "test/inspector/debugger/compile-function.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-06T13:19:57Z",
+      "side": 1,
+      "message": "I think we can remove these now.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 44
+      },
+      "revId": "6937dad9d316c39990e23792d9b9bab8ae5db5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fb720f5_536a0fbd",
+        "filename": "test/inspector/inspector-test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-06T13:19:57Z",
+      "side": 1,
+      "message": "Should also b e `include/v8-container.h`.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "6937dad9d316c39990e23792d9b9bab8ae5db5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01faf1c0_f16218ad",
+        "filename": "test/inspector/inspector-test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-06T13:19:57Z",
+      "side": 1,
+      "message": "I know that we need this function to reproduce the bug, but I wanna point out that it\u0027s a bit odd: We can\u0027t actually call the compiled function. It\u0027s totally inaccessible to us. We can\u0027t pass it back here as the return value since it originates from a different isolate.\n\nMaybe a better place for the regression test would be test-debug.cc (https://source.chromium.org/chromium/chromium/src/+/main:v8/test/cctest/test-debug.cc). There we could call the ScriptCompiler::CompileFunction directly and  try to set a breakpoint on it. All without adding a non-functional `util.compileFunction` binding to the inspector test runner. Wdyt?\n\nApologies for making you jump through hoops here.",
+      "range": {
+        "startLine": 452,
+        "startChar": 14,
+        "endLine": 452,
+        "endChar": 29
+      },
+      "revId": "6937dad9d316c39990e23792d9b9bab8ae5db5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
