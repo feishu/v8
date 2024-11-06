@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2b3df0c3_18e81cca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1531727
+      },
+      "writtenOn": "2024-11-06T08:26:55Z",
+      "side": 1,
+      "message": "Thanks for your review!",
+      "parentUuid": "82b2fe99_bcda67f6",
+      "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba3e8ba4_f8b9384f",
         "filename": "src/builtins/builtins-definitions.h",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "writtenOn": "2024-10-14T08:05:20Z",
       "side": 1,
       "message": "To retain the order, you can use something like\n```\n#define IF_TFH_ISX(NAME, DESCRIPTOR)       \\\n  TFH(NAME, DESCRIPTOR)                    \\\n  TFH_ISX(NAME, DESCRIPTOR)\n\n#define BUILTIN_LIST(CPP, TSJ, TFJ, TSC, TFC, TFS, TFH, BCH, ASM, TFH_ISX)\n...\nIF_TFH_ISX(StoreFastElementIC_InBounds, StoreWithVector)\n...\n```\nThen when you need to skip `TFH_ISX` to generate the normal builtins list, you can use `IGNORE_BUILTIN` at this position. For example:\n```\n#define DEF_ENUM(Name, ...) k##Name,\n  BUILTIN_LIST(DEF_ENUM, DEF_ENUM, DEF_ENUM, DEF_ENUM, DEF_ENUM, DEF_ENUM,\n               DEF_ENUM, DEF_ENUM, DEF_ENUM, IGNORE_BUILTIN)\n#undef DEF_ENUM\n```\nIf you want to get the ISX Builtins list, you can use:\n```\n#define DEF_ENUM(Name, ...) k##Name,\n  BUILTIN_LIST(IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN,\n               IGNORE_BUILTIN, IGNORE_BUILTIN, IGNORE_BUILTIN, DEF_ENUM)\n#undef DEF_ENUM\n```",
+      "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af40317d_4f56c03f",
+        "filename": "src/builtins/builtins-definitions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2272,
+      "author": {
+        "id": 1531727
+      },
+      "writtenOn": "2024-11-06T08:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3e8ba4_f8b9384f",
       "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -105,6 +141,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e636c68f_b31e16f2",
+        "filename": "src/builtins/builtins-definitions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2273,
+      "author": {
+        "id": 1531727
+      },
+      "writtenOn": "2024-11-06T08:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5b6d839_ac2fc292",
+      "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ca13976_3ec7319f",
@@ -118,6 +172,24 @@
       "writtenOn": "2024-10-14T08:05:20Z",
       "side": 1,
       "message": "Rename to Builtin_needs_ISX.\n\nAnd add a comment to describe this class.",
+      "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4af8b164_59754802",
+        "filename": "src/builtins/builtins.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1531727
+      },
+      "writtenOn": "2024-11-06T08:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca13976_3ec7319f",
       "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -139,6 +211,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77a63126_6a710b71",
+        "filename": "src/builtins/builtins.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1531727
+      },
+      "writtenOn": "2024-11-06T08:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b122ba14_722dd9b0",
+      "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6a39480_ab4b7653",
@@ -156,6 +246,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87a779be_ce532af3",
+        "filename": "src/builtins/setup-builtins-internal.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1531727
+      },
+      "writtenOn": "2024-11-06T08:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6a39480_ab4b7653",
+      "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab5ee259_ac101a13",
@@ -169,6 +277,24 @@
       "writtenOn": "2024-10-14T08:05:20Z",
       "side": 1,
       "message": "The Builtins are TFH rather than TFC.",
+      "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25c3cecd_53d1ade2",
+        "filename": "src/builtins/setup-builtins-internal.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1531727
+      },
+      "writtenOn": "2024-11-06T08:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab5ee259_ac101a13",
       "revId": "abffe1b4f660e015d237a1f6cd789ab6c72668f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
