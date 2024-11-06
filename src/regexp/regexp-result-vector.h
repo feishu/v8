@@ -7,6 +7,7 @@
 
 #include "src/base/macros.h"
 #include "src/common/globals.h"
+#include "src/execution/isolate.h"
 
 namespace v8 {
 namespace internal {
@@ -29,6 +30,23 @@ class RegExpResultVectorScope final {
   Isolate* const isolate_;
   std::unique_ptr<int32_t[]> if_dynamic_;
   int32_t* if_static_ = nullptr;
+};
+
+// Implements state serialization for the ThreadManager.
+class RegExpResultVectorArchiver final : public AllStatic {
+ public:
+  // The relevant state is the entire static offsets vector, plus the isolate
+  // slot that indicates its ownership (i.e. whether the vector is currently in
+  // use or not).
+  static constexpr int kIsolateSlotSize = kSystemPointerSize;
+  static constexpr int kSlotSize = kInt32Size;
+  static constexpr int kSize =
+      kIsolateSlotSize + Isolate::kJSRegexpStaticOffsetsVectorSize * kSlotSize;
+
+  static constexpr int ArchiveSpacePerThread() { return kSize; }
+  static char* ArchiveState(Isolate* isolate, char* to);
+  static char* RestoreState(Isolate* isolate, char* from);
+  static void FreeThreadResources(Isolate* isolate) {}
 };
 
 }  // namespace internal
