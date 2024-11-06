@@ -3060,6 +3060,18 @@ void Builtins::Generate_WasmDebugBreak(MacroAssembler* masm) {
 #endif  // V8_ENABLE_WEBASSEMBLY
 
 namespace {
+void SwitchSimulatorStackLimit(MacroAssembler* masm) {
+#ifdef V8_TARGET_ARCH_RISCV64
+  if (masm->options().enable_simulator_code) {
+    UseScratchRegisterScope temps(masm);
+    temps.Exclude(kSimulatorBreakArgument);
+    __ RecordComment("-- Set simulator stack limit --");
+    __ LoadStackLimit(kSimulatorBreakArgument, StackLimitKind::kRealStackLimit);
+    __ break_(kExceptionIsSwitchStackLimit, false);
+  }
+#endif
+}
+
 static constexpr Register kOldSPRegister = s9;
 static constexpr Register kSwitchFlagRegister = s10;
 
@@ -3097,6 +3109,8 @@ void SwitchToTheCentralStackIfNeeded(MacroAssembler* masm, Register argc_input,
     __ mv(central_stack_sp, kReturnRegister0);
     __ Pop(argc_input, target_input, argv_input);
   }
+
+  SwitchSimulatorStackLimit(masm);
 
   static constexpr int kReturnAddressSlotOffset = 1 * kSystemPointerSize;
   static constexpr int kPadding = 1 * kSystemPointerSize;
@@ -3464,10 +3478,26 @@ void SwitchStackState(MacroAssembler* masm, Register jmpbuf, Register tmp,
   __ Sw(tmp, MemOperand(jmpbuf, wasm::kJmpBufStateOffset));
 }
 
-// Switch the stack pointer.
-void SwitchStackPointer(MacroAssembler* masm, Register jmpbuf, Register tmp) {
-  __ LoadWord(tmp, MemOperand(jmpbuf, wasm::kJmpBufSpOffset));
-  __ mv(sp, tmp);
+// Switch the stack pointer. Also switch the simulator's stack limit when
+// running on the simulator. This needs to be done as close as possible to
+// changing the stack pointer, as a mismatch between the stack pointer and the
+// simulator's stack limit can cause stack access check failures.
+void SwitchStackPointerAndSimulatorStackLimit(MacroAssembler* masm,
+                                              Register jmpbuf, Register tmp) {
+#ifdef V8_TARGET_ARCH_RISCV64
+  if (masm->options().enable_simulator_code) {
+    UseScratchRegisterScope temps(masm);
+    temps.Exclude(kSimulatorBreakArgument);
+    __ LoadWord(tmp, MemOperand(jmpbuf, wasm::kJmpBufSpOffset));
+    __ LoadWord(kSimulatorBreakArgument,
+                MemOperand(jmpbuf, wasm::kJmpBufStackLimitOffset));
+    __ mv(sp, tmp);
+    __ break_(kExceptionIsSwitchStackLimit);
+  } else {
+    __ LoadWord(tmp, MemOperand(jmpbuf, wasm::kJmpBufSpOffset));
+    __ mv(sp, tmp);
+  }
+#endif
 }
 
 void FillJumpBuffer(MacroAssembler* masm, Register jmpbuf, Label* pc,
@@ -3485,7 +3515,7 @@ void FillJumpBuffer(MacroAssembler* masm, Register jmpbuf, Label* pc,
 void LoadJumpBuffer(MacroAssembler* masm, Register jmpbuf, bool load_pc,
                     Register tmp, wasm::JumpBuffer::StackState expected_state) {
   ASM_CODE_COMMENT(masm);
-  SwitchStackPointer(masm, jmpbuf, tmp);
+  SwitchStackPointerAndSimulatorStackLimit(masm, jmpbuf, tmp);
   __ LoadWord(fp, MemOperand(jmpbuf, wasm::kJmpBufFpOffset));
   SwitchStackState(masm, jmpbuf, tmp, expected_state, wasm::JumpBuffer::Active);
   if (load_pc) {
