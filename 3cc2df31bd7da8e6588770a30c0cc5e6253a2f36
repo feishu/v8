@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ebc9577_597be149",
+        "filename": "src/base/platform/platform.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1531727
+      },
+      "writtenOn": "2024-11-06T08:36:07Z",
+      "side": 1,
+      "message": "For the current `SetPermissions` on windows platform, it uses `VirtualAllocWrapper` API, but it just work for the memory which was allocated in v8, but not the memory in `.data` sction.\nSo for modifying the permission for these memory, we may have to introduce a new API.",
+      "revId": "3cc2df31bd7da8e6588770a30c0cc5e6253a2f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c07fe764_41b94279",
+        "filename": "src/execution/isolate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1531727
+      },
+      "writtenOn": "2024-11-06T08:36:07Z",
+      "side": 1,
+      "message": "For some test case, we will check this hash for mutiple times, so we will fail here,\n\nThere is an idea came in my mind, we could store two kinds of hash in the blob, and check for both of them, WDYT?",
+      "revId": "3cc2df31bd7da8e6588770a30c0cc5e6253a2f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
