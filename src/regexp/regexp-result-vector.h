@@ -46,6 +46,12 @@ class RegExpResultVectorArchiver final : public AllStatic {
   static void FreeThreadResources(Isolate* isolate) {}
 };
 
+class RegExpResultVector final : public AllStatic {
+ public:
+  static int32_t* Allocate(uint32_t size);
+  static void Free(int32_t* vector);
+};
+
 }  // namespace internal
 }  // namespace v8
 
