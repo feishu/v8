@@ -26,6 +26,7 @@ namespace compiler {
   V(ConsistentJSFunctionView)           \
   V(ConstantInDictionaryPrototypeChain) \
   V(ElementsKind)                       \
+  V(EmptyContextExtension)              \
   V(FieldConstness)                     \
   V(FieldRepresentation)                \
   V(FieldType)                          \
@@ -950,6 +951,39 @@ class ScriptContextSlotPropertyDependency final : public CompilationDependency {
   ContextSidePropertyCell::Property property_;
 };
 
+class EmptyContextExtensionDependency final : public CompilationDependency {
+ public:
+  explicit EmptyContextExtensionDependency(ScopeInfoRef scope_info)
+      : CompilationDependency(kEmptyContextExtension), scope_info_(scope_info) {
+    DCHECK(v8_flags.empty_context_extension_dep);
+    DCHECK(scope_info.HasContextExtensionSlot());
+  }
+
+  bool IsValid(JSHeapBroker* broker) const override {
+    return !scope_info_.HasNonEmptyContextExtension();
+  }
+
+  void Install(JSHeapBroker* broker, PendingDependencies* deps) const override {
+    SLOW_DCHECK(IsValid(broker));
+    deps->Register(scope_info_.object(),
+                   DependentCode::kEmptyContextExtensionGroup);
+  }
+
+ private:
+  size_t Hash() const override {
+    ObjectRef::Hash h;
+    return base::hash_combine(h(scope_info_));
+  }
+
+  bool Equals(const CompilationDependency* that) const override {
+    const EmptyContextExtensionDependency* const zat =
+        that->AsEmptyContextExtension();
+    return scope_info_.equals(zat->scope_info_);
+  }
+
+  const ScopeInfoRef scope_info_;
+};
+
 class ProtectorDependency final : public CompilationDependency {
  public:
   explicit ProtectorDependency(PropertyCellRef cell)
@@ -1259,6 +1293,19 @@ bool CompilationDependencies::DependOnScriptContextSlotProperty(
     return true;
   }
   return false;
+}
+
+bool CompilationDependencies::DependOnEmptyContextExtension(
+    ScopeInfoRef scope_info) {
+  if (!v8_flags.empty_context_extension_dep) return false;
+  DCHECK(scope_info.HasContextExtensionSlot());
+  if (scope_info.object()->HasNonEmptyContextExtension()) {
+    // There are respective contexts with non-empty context extension, so
+    // dynamic checks are required.
+    return false;
+  }
+  RecordDependency(zone_->New<EmptyContextExtensionDependency>(scope_info));
+  return true;
 }
 
 bool CompilationDependencies::DependOnProtector(PropertyCellRef cell) {
