@@ -401,8 +401,22 @@ void CCGenerator::EmitInstruction(const LoadReferenceInstruction& instruction,
             << ">::load(UncheckedCast<HeapObject>(" << object
             << "), static_cast<int>(" << offset << "));\n";
     } else {
-      out() << "(" << object << ")->ReadField<" << result_type << ">(" << offset
-            << ");\n";
+      // This code replicates the way we load field in accessors, see
+      // CppClassGenerator::EmitLoadFieldStatement().
+      const char* load;
+      switch (instruction.synchronization) {
+        case FieldSynchronization::kNone:
+          load = "ReadField";
+          break;
+        case FieldSynchronization::kRelaxed:
+          load = "Relaxed_ReadField";
+          break;
+        case FieldSynchronization::kAcquireRelease:
+          ReportError(
+              "Torque doesn't support @cppAcquireLoad on untagged data");
+      }
+      out() << "(" << object << ")->" << load << "<" << result_type << ">("
+            << offset << ");\n";
     }
   } else {
     std::string result_type = instruction.type->GetDebugType();

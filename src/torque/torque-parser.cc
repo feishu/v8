@@ -2141,6 +2141,9 @@ std::optional<ParseResult> MakeClassField(ParseResultIterator* child_results) {
   } else if (annotations.Contains(ANNOTATION_CPP_RELAXED_LOAD)) {
     read_synchronization = FieldSynchronization::kRelaxed;
   }
+  if (read_synchronization != write_synchronization) {
+    Error("Incompatible synchronization annotiatoins for a field.");
+  }
   std::vector<ConditionalAnnotation> conditions;
   std::optional<std::string> if_condition =
       annotations.GetStringParam(ANNOTATION_IF);
