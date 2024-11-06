@@ -1850,10 +1850,11 @@ class V8_EXPORT_PRIVATE Isolate final : private HiddenFactory {
   // shared heap object cache holds objects in shared among Isolates. Otherwise
   // this object cache is per-Isolate like the startup object cache.
   std::vector<Tagged<Object>>* shared_heap_object_cache() {
-    if (has_shared_space()) {
+    if (OwnsStringTables()) {
+      return &shared_heap_object_cache_;
+    } else {
       return &shared_space_isolate()->shared_heap_object_cache_;
     }
-    return &shared_heap_object_cache_;
   }
 
   bool IsGeneratingEmbeddedBuiltins() const {
