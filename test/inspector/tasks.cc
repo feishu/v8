@@ -129,5 +129,30 @@ void ExecuteStringTask::Run(InspectorIsolateData* data) {
   }
 }
 
+void CompileFunctionTask::Run(InspectorIsolateData* data) {
+  v8::HandleScope handle_scope(data->isolate());
+  v8::Local<v8::Context> context = data->GetDefaultContext(context_group_id_);
+  v8::MicrotasksScope microtasks_scope(context,
+                                       v8::MicrotasksScope::kRunMicrotasks);
+
+  v8::ScriptOrigin origin(ToV8String(data->isolate(), name_), line_offset_,
+                          column_offset_, true, -1, v8::Local<v8::Value>(),
+                          false, false, false);
+  v8::Local<v8::String> source = ToV8String(data->isolate(), expression_);
+  v8::ScriptCompiler::Source source_info(source, origin);
+
+  std::vector<v8::Local<v8::String>> arguments;
+  for (const auto& arg : arguments_) {
+    arguments.push_back(ToV8String(data->isolate(), arg));
+  }
+
+  v8::MaybeLocal<v8::Function> maybe_fn = v8::ScriptCompiler::CompileFunction(
+      context, &source_info, arguments.size(), arguments.data(), 0, nullptr,
+      ScriptCompiler::CompileOptions::kNoCompileOptions);
+  if (maybe_fn.IsEmpty()) {
+    return;
+  }
+}
+
 }  // namespace internal
 }  // namespace v8

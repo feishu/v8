@@ -1,0 +1,7 @@
+compile function
+
+Running test: testFailCompileFunction
+hasBreakpoint: false
+
+Running test: testSuccessCompileFunction
+hasBreakpoint: true
