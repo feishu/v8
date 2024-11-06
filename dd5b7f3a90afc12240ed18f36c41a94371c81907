@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f884e1_76753b1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115935
+      },
+      "writtenOn": "2024-11-06T14:15:18Z",
+      "side": 1,
+      "message": "LGTM with comments.",
+      "revId": "dd5b7f3a90afc12240ed18f36c41a94371c81907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3af9c4d_26bd0a01",
+        "filename": "src/objects/string.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1115935
+      },
+      "writtenOn": "2024-11-06T14:15:18Z",
+      "side": 1,
+      "message": "This would be more robust if written as `DCHECK_LE(offset, this-\u003elength() - length)`, because the `offset + length` computation could overflow for bad offsets, whereas the subtraction cannot underflow given the previous DCHECK.",
+      "range": {
+        "startLine": 761,
+        "startChar": 12,
+        "endLine": 761,
+        "endChar": 43
+      },
+      "revId": "dd5b7f3a90afc12240ed18f36c41a94371c81907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eddd1455_9c07e683",
+        "filename": "src/objects/string.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1115935
+      },
+      "writtenOn": "2024-11-06T14:15:18Z",
+      "side": 1,
+      "message": "This feels a bit expensive. Maybe that\u0027s OK for the use case... but how would you feel about something like:\n```\n  uint32_t encoded_length \u003d unibrow::Utf8::Encode(result + pos, character, last);\n  // \"LT\" to account for the eventual null terminator.\n  SBXCHECK_LT(encoded_length, capacity - pos);\n  pos +\u003d encoded_length;\n```\nIn the worst case (concurrently-mutated string exceeding the previously computed capacity), this would write OOB by 3 bytes (4 byte max encoding length, at least 1 byte remaining after the check in the previous iteration), but it would then terminate the process before the OOB write can cause any further confusion.",
+      "range": {
+        "startLine": 798,
+        "startChar": 4,
+        "endLine": 798,
+        "endChar": 76
+      },
+      "revId": "dd5b7f3a90afc12240ed18f36c41a94371c81907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
