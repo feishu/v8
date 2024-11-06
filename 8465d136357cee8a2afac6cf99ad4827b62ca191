@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "822e1736_672eced9",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-06T11:57:24Z",
+      "side": 1,
+      "message": "Just came to my mind: What if the vector is in use (aka `null`) here?",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 49
+      },
+      "revId": "8465d136357cee8a2afac6cf99ad4827b62ca191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "939be25b_0cfe1ecc",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-06T11:57:24Z",
+      "side": 1,
+      "message": "I don\u0027t think we need the `_unchecked` version anymore?",
+      "range": {
+        "startLine": 55,
+        "startChar": 11,
+        "endLine": 55,
+        "endChar": 60
+      },
+      "revId": "8465d136357cee8a2afac6cf99ad4827b62ca191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
