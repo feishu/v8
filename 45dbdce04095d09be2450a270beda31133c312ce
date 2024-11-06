@@ -16,6 +16,24 @@
       "message": "Thanks, there are two more places where it should be changed as well. We can think about unifying them at some point. This change only affects numfuzz.\n\nGeneral fuzzing:\nhttps://source.chromium.org/chromium/chromium/src/+/main:v8/tools/clusterfuzz/trials/clusterfuzz_trials_config.json;l\u003d12\n\nCorrectness fuzzing:\nhttps://source.chromium.org/chromium/chromium/src/+/main:v8/tools/clusterfuzz/foozzie/v8_fuzz_flags.json\n(wasn\u0027t added at all yet...)",
       "revId": "45dbdce04095d09be2450a270beda31133c312ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe1f77b1_145863af",
+        "filename": "tools/testrunner/testproc/fuzzer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1535927
+      },
+      "writtenOn": "2024-11-06T07:33:39Z",
+      "side": 1,
+      "message": "Thanks, done! :)",
+      "parentUuid": "4ddeba76_bfee1484",
+      "revId": "45dbdce04095d09be2450a270beda31133c312ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
