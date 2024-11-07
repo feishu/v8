@@ -176,6 +176,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e52c0522_2c4054b8",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-07T11:52:19Z",
+      "side": 1,
+      "message": "Just talked with Michi and was corrected: Embedders overriding `OnCriticalMemoryPressure()` are not allowed to trigger a GC (\"enforced\" by a comment: https://crsrc.org/c/v8/include/v8-platform.h;drc\u003d0afc9ac9afcaab79fc54299039f4d27abf3a086d;l\u003d1083).\nSo `NewArray` is also fine here.",
+      "parentUuid": "c8423e1f_851232fd",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "861c357d_96194280",
