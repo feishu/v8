@@ -16,6 +16,23 @@
       "message": "@victorgomes,pthier: Can you PTAL again as well?",
       "revId": "a8683c8bc79649fa82f01d738efd82b1122a123e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a458b703_7c918a8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-07T12:45:39Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "a8683c8bc79649fa82f01d738efd82b1122a123e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
