@@ -1,0 +1,129 @@
+Checks if catch prediction works on new `using` and `await using` syntax.
+
+Running test: testPauseOnInitialState
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+
+evaluate 'disposalCaughtUsingSyntax()'..
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+
+Running test: testPauseOnExceptionOff
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+
+evaluate 'disposalCaughtUsingSyntax()'..
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+
+Running test: testBreakOnCaughtException
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+paused on exception:
+{
+    className : Error
+    description : Error: fail     at [Symbol.dispose] (test.js:23:11)     at disposalUncaughtUsingSyntax (test.js:20:15)     at <anonymous>:130:147
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+paused on exception:
+{
+    className : Error
+    description : Error: fail     at [Symbol.asyncDispose] (test.js:32:11)     at disposalUncaughtAwaitUsingSyntax (test.js:29:21)     at <anonymous>:130:147
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+evaluate 'disposalCaughtUsingSyntax()'..
+paused on exception:
+{
+    className : Error
+    description : Error: fail     at [Symbol.dispose] (test.js:42:11)     at disposalCaughtUsingSyntax (test.js:39:15)     at <anonymous>:130:147
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+paused on exception:
+{
+    className : Error
+    description : Error: fail     at [Symbol.asyncDispose] (test.js:54:11)     at disposalCaughtAwaitUsingSyntax (test.js:51:21)     at <anonymous>:130:147
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+Running test: testBreakOnUncaughtException
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+
+evaluate 'disposalCaughtUsingSyntax()'..
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+
+Running test: testBreakOnAll
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+paused on exception:
+{
+    className : Error
+    description : Error: fail     at [Symbol.dispose] (test.js:23:11)     at disposalUncaughtUsingSyntax (test.js:20:15)     at <anonymous>:130:147
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+paused on exception:
+{
+    className : Error
+    description : Error: fail     at [Symbol.asyncDispose] (test.js:32:11)     at disposalUncaughtAwaitUsingSyntax (test.js:29:21)     at <anonymous>:130:147
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+evaluate 'disposalCaughtUsingSyntax()'..
+paused on exception:
+{
+    className : Error
+    description : Error: fail     at [Symbol.dispose] (test.js:42:11)     at disposalCaughtUsingSyntax (test.js:39:15)     at <anonymous>:130:147
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+paused on exception:
+{
+    className : Error
+    description : Error: fail     at [Symbol.asyncDispose] (test.js:54:11)     at disposalCaughtAwaitUsingSyntax (test.js:51:21)     at <anonymous>:130:147
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+Running test: testBreakOnExceptionInSilentMode
+evaluate 'disposalUncaughtUsingSyntax()'
+evaluate 'disposalUncaughtAwaitUsingSyntax()'
+evaluate 'disposalCaughtUsingSyntax()'
+evaluate 'disposalCaughtAwaitUsingSyntax()'

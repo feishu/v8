@@ -171,7 +171,7 @@ MaybeHandle<Object> JSDisposableStackBase::DisposeResources(
   // 7. Return ? completion.
   if (!IsUninitialized(*existing_error_handle) &&
       !(existing_error_handle.equals(continuation_error))) {
-    isolate->Throw(*existing_error_handle);
+    isolate->ReThrow(*existing_error_handle);
     return MaybeHandle<Object>();
   }
   return isolate->factory()->true_value();
