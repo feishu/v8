@@ -16,6 +16,115 @@
       "message": "PTAL. Note you can see the changes starting at PS1 (the diff is still a bit messy).",
       "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "126296c5_6fb70e1e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-07T10:32:43Z",
+      "side": 1,
+      "message": "Overall really looks way better than the previous version. 👍",
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "496fea00_71641af7",
+        "filename": "src/builtins/builtins-regexp-gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-07T10:32:43Z",
+      "side": 1,
+      "message": "On what path is this possible? Isn\u0027t the result vector always allocated before we enter a path were it gets freed?",
+      "range": {
+        "startLine": 464,
+        "startChar": 2,
+        "endLine": 464,
+        "endChar": 21
+      },
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68664cc1_bfedffdf",
+        "filename": "src/builtins/builtins-regexp-gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-07T10:32:43Z",
+      "side": 1,
+      "message": "nit: Can you add a CSA_DCHECK that the currently stored vector is null?",
+      "range": {
+        "startLine": 470,
+        "startChar": 2,
+        "endLine": 470,
+        "endChar": 21
+      },
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef9d32c8_18616183",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-07T10:32:43Z",
+      "side": 1,
+      "message": "What\u0027s the point of this scope? Why is GC a problem here? I don\u0027t think this is safe:\n`NewArray` can call `OnCriticalMemoryPressure()`, which in turn could trigger a GC.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "861c357d_96194280",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1468500
+      },
+      "writtenOn": "2024-11-07T10:32:43Z",
+      "side": 1,
+      "message": "Can\u0027t trigger a GC, but don\u0027t understand the point of this scope here.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
