@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef2948fc_144b1bc7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115935
+      },
+      "writtenOn": "2024-11-07T11:24:50Z",
+      "side": 1,
+      "message": "nit: `because`",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 40
+      },
+      "revId": "0724231b4893ec3bb90507660d812831c10a6386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70b022d0_101ab7ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115935
+      },
+      "writtenOn": "2024-11-07T11:24:50Z",
+      "side": 1,
+      "message": "LGTM. \n\nFor the record, I am not thrilled about making debugging helpers less robust, so I would like to see a replacement for the outdated code being removed here. Ideally, helpers like the `job` and `jst` GDB macros would never run into segfaults, regardless of what kind of corrupted object they encounter in a debugging session. E.g. when an object contains a stale pointer pointing at a freed page (due to a missing write barrier or whatever), I still want to be able to debugprint the rest of that object (to figure out what kind of object it is, where it came from, what state it\u0027s in, what modifications it\u0027s gone through, etc).",
+      "revId": "0724231b4893ec3bb90507660d812831c10a6386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
