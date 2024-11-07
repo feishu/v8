@@ -62,6 +62,30 @@
       },
       "revId": "dd5b7f3a90afc12240ed18f36c41a94371c81907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53549a75_d80066c7",
+        "filename": "src/objects/string.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1519522
+      },
+      "writtenOn": "2024-11-07T08:55:17Z",
+      "side": 1,
+      "message": "Right, I also considered something like that, but was a bit concerned because (a) we\u0027d then be dependent on SBXCHECK crashing very quickly and without the attacker being able to delay it, which is probably fine, but a bit subtle, but also because (b) I think our fuzzers will just spam us with these reports. I have an experimental fuzzer using PKEYs to intercept and modify sandbox memory reads, and it finds this issue trivially on a single core in a few minutes (because ASAN of course catches this OOB write).\n\nSome alternatives I could think of:\n* Encode into a temporary stack buffer and to a memcpy afterwards. Maybe a bit faster (?) but definitely still some overhead\n* Allocate the output buffer also inside the sandbox. This might be nice, but we don\u0027t currently have the infrastructure for that, mainly because `delete` would magically need to somehow find the in-sandbox memory allocator.\n* Overallocate the output buffer by 3 bytes. Maybe this is the best tradeoff if we care about CPU overhead and not so much about memory overhead.\n\nIn general, this function probably isn\u0027t super performance critical, but I\u0027m also happy to e.g. try the overallocation approach. WDYT?",
+      "parentUuid": "eddd1455_9c07e683",
+      "range": {
+        "startLine": 798,
+        "startChar": 4,
+        "endLine": 798,
+        "endChar": 76
+      },
+      "revId": "dd5b7f3a90afc12240ed18f36c41a94371c81907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
