@@ -86,6 +86,30 @@
       },
       "revId": "dd5b7f3a90afc12240ed18f36c41a94371c81907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edd156a0_d94d211b",
+        "filename": "src/objects/string.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1115935
+      },
+      "writtenOn": "2024-11-07T09:34:15Z",
+      "side": 1,
+      "message": "Ah, yes, fuzzer report spam is a convincing argument against my suggestion.\n\nExtending your list:\n- \"option 1.5\" (as a hybrid of the first two) would be to build the string into an on-heap `ByteArray`, and then in the end do a single huge `memcpy` into the off-heap `result` array.\n- in the fullness of time, I expect that we\u0027ll eventually implement UTF-8 strings as a first-class string representation, but it\u0027s very much unclear how many years away from that we currently are. Once we have such infrastructure, we can reuse it here.\n\nOverall I don\u0027t feel strongly about it. Keeping the CL as-is sounds acceptable. Overallocating by 3 bytes also sounds fine; you could also document that idea in a comment so we can get back to it if the need arises in the form of unfortunate performance results on some benchmark/workload.",
+      "parentUuid": "53549a75_d80066c7",
+      "range": {
+        "startLine": 798,
+        "startChar": 4,
+        "endLine": 798,
+        "endChar": 76
+      },
+      "revId": "dd5b7f3a90afc12240ed18f36c41a94371c81907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
