@@ -88,6 +88,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "434cf2a3_cd63a71a",
+        "filename": "src/wasm/jump-table-assembler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-07T11:00:31Z",
+      "side": 1,
+      "message": "Hm, OK. If you prefer this then keep it.",
+      "parentUuid": "90a283fc_f89adf26",
+      "revId": "93f4e4a7ca931ba2d54125808bd1b6570549bb5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b08a441_9fde3153",
