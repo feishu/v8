@@ -2069,6 +2069,25 @@ RUNTIME_FUNCTION(Runtime_IsInternalizedString) {
   return isolate->heap()->ToBoolean(IsInternalizedString(*obj));
 }
 
+RUNTIME_FUNCTION(Runtime_StringToCString) {
+  HandleScope scope(isolate);
+  if (args.length() != 1 || !IsString(args[0])) {
+    return CrashUnlessFuzzing(isolate);
+  }
+  Handle<String> string = args.at<String>(0);
+
+  uint32_t output_length;
+  auto bytes = string->ToCString(&output_length);
+
+  Handle<JSArrayBuffer> result =
+      isolate->factory()
+          ->NewJSArrayBufferAndBackingStore(output_length,
+                                            InitializedFlag::kUninitialized)
+          .ToHandleChecked();
+  memcpy(result->backing_store(), bytes.get(), output_length);
+  return *result;
+}
+
 RUNTIME_FUNCTION(Runtime_SharedGC) {
   SealHandleScope scope(isolate);
   if (!isolate->has_shared_space()) {
