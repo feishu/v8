@@ -24,6 +24,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "361c9304_c6a2142b",
+        "filename": "test/inspector/debugger/compile-function.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-07T15:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8f6b6f_3a4588d2",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 44
+      },
+      "revId": "6937dad9d316c39990e23792d9b9bab8ae5db5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fb720f5_536a0fbd",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-06T13:19:57Z",
       "side": 1,
       "message": "Should also b e `include/v8-container.h`.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "6937dad9d316c39990e23792d9b9bab8ae5db5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "586e5254_161c8210",
+        "filename": "test/inspector/inspector-test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-07T15:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fb720f5_536a0fbd",
       "range": {
         "startLine": 26,
         "startChar": 0,
@@ -84,6 +132,30 @@
       "side": 1,
       "message": "Thank you!\nIndeed, using cctest made it much easier to test.",
       "parentUuid": "01faf1c0_f16218ad",
+      "range": {
+        "startLine": 452,
+        "startChar": 14,
+        "endLine": 452,
+        "endChar": 29
+      },
+      "revId": "6937dad9d316c39990e23792d9b9bab8ae5db5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53e57cce_c10489e3",
+        "filename": "test/inspector/inspector-test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-07T15:47:39Z",
+      "side": 1,
+      "message": "Awesome, thanks!",
+      "parentUuid": "00abf290_2cc7f3a0",
       "range": {
         "startLine": 452,
         "startChar": 14,

@@ -154,6 +154,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9323e89c_23d2e981",
+        "filename": "src/debug/debug.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2240,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-07T15:47:39Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a8467cc1_bfab68dd",
+      "range": {
+        "startLine": 2240,
+        "startChar": 8,
+        "endLine": 2240,
+        "endChar": 40
+      },
+      "revId": "d850138c7483af2faffbf17f8d1dd11ab3daf756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5416ca87_cedff0b4",
@@ -167,6 +191,30 @@
       "writtenOn": "2024-10-28T07:12:06Z",
       "side": 1,
       "message": "super nit: 2024 😊",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d850138c7483af2faffbf17f8d1dd11ab3daf756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6bde5e8_5cfead12",
+        "filename": "test/inspector/debugger/fail-compile-wrapped-and-recompile-module.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-07T15:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5416ca87_cedff0b4",
       "range": {
         "startLine": 1,
         "startChar": 13,
