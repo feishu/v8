@@ -833,9 +833,14 @@ StubCache* IC::stub_cache() {
   // Until we create them, don't allow accessing the load/store stub caches.
   DCHECK(!IsAnyHas());
   if (IsAnyLoad()) {
+    if (is_keyed()) {
+      return isolate()->keyed_load_stub_cache();
+    }
     return isolate()->load_stub_cache();
   } else if (IsAnyDefineOwn()) {
     return isolate()->define_own_stub_cache();
+  } else if (is_keyed()) {
+    return isolate()->keyed_store_stub_cache();
   } else {
     DCHECK(IsAnyStore());
     return isolate()->store_stub_cache();
@@ -845,6 +850,10 @@ StubCache* IC::stub_cache() {
 void IC::UpdateMegamorphicCache(DirectHandle<Map> map, DirectHandle<Name> name,
                                 const MaybeObjectHandle& handler) {
   if (!IsAnyHas()) {
+    /*if(is_keyed()){
+      PrintF("handler is:\n");
+      Print(*handler);
+    }*/
     stub_cache()->Set(*name, *map, *handler);
   }
 }
