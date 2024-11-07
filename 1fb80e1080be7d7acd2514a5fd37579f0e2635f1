@@ -22,6 +22,30 @@
       },
       "revId": "1fb80e1080be7d7acd2514a5fd37579f0e2635f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51c320bf_28784131",
+        "filename": "src/wasm/jump-table-assembler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1120979
+      },
+      "writtenOn": "2024-11-07T12:56:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ba3f3e8_bec09c13",
+      "range": {
+        "startLine": 177,
+        "startChar": 37,
+        "endLine": 177,
+        "endChar": 57
+      },
+      "revId": "1fb80e1080be7d7acd2514a5fd37579f0e2635f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
