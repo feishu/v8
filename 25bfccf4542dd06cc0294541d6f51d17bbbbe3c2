@@ -58,6 +58,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3476d508_dd380f2f",
+        "filename": "src/builtins/builtins-regexp-gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2024-11-07T11:25:32Z",
+      "side": 1,
+      "message": "For example, any path in ExecInternal that enters the `runtime` label before LoadOrAllocateRegExpResultVector is called. We could fiddle with call order so this never happens, but IMO that makes the usage of these functions more error prone.",
+      "parentUuid": "496fea00_71641af7",
+      "range": {
+        "startLine": 464,
+        "startChar": 2,
+        "endLine": 464,
+        "endChar": 21
+      },
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68664cc1_bfedffdf",
@@ -71,6 +95,30 @@
       "writtenOn": "2024-11-07T10:32:43Z",
       "side": 1,
       "message": "nit: Can you add a CSA_DCHECK that the currently stored vector is null?",
+      "range": {
+        "startLine": 470,
+        "startChar": 2,
+        "endLine": 470,
+        "endChar": 21
+      },
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fc3dff5_f160dc21",
+        "filename": "src/builtins/builtins-regexp-gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2024-11-07T11:25:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68664cc1_bfedffdf",
       "range": {
         "startLine": 470,
         "startChar": 2,
@@ -104,6 +152,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8423e1f_851232fd",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2024-11-07T11:25:32Z",
+      "side": 1,
+      "message": "Ah interesting, I wasn\u0027t aware that NewArray could trigger gc (it\u0027s a bit surprising that C++ allocation wrappers can do that). Changing to a plain new[].\n\nRe the point of this scope, CallCFunction targets may not allocate.",
+      "parentUuid": "ef9d32c8_18616183",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "861c357d_96194280",
@@ -117,6 +189,30 @@
       "writtenOn": "2024-11-07T10:32:43Z",
       "side": 1,
       "message": "Can\u0027t trigger a GC, but don\u0027t understand the point of this scope here.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "25bfccf4542dd06cc0294541d6f51d17bbbbe3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72117bdc_94cde5b2",
+        "filename": "src/regexp/regexp-result-vector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2024-11-07T11:25:32Z",
+      "side": 1,
+      "message": "These functions are called via CallCFunction and therefore don\u0027t allow GC.",
+      "parentUuid": "861c357d_96194280",
       "range": {
         "startLine": 56,
         "startChar": 2,
