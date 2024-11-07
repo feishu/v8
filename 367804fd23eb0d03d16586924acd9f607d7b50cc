@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea9e3c1b_9169c8f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2024-11-07T07:23:31Z",
+      "side": 1,
+      "message": "After sleeping on this, I don\u0027t think explicit archival/restoration is necessary; due to how we fixed reentrancy (the static vector is checked-out when in use, and a dynamic vector is allocated when needed) this already supports thread switching:\n\n1. when archiving/restoring the current thread outside of a regexp execution: we\u0027re good, the result vector is unused.\n2. when archiving/restoring the current thread during a regexp execution: the static vector is checked out and any new regexp execution will create a dynamic vector.\n\nSorry for wasting your time!",
+      "revId": "367804fd23eb0d03d16586924acd9f607d7b50cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
