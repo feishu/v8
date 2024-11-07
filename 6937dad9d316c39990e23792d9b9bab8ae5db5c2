@@ -68,6 +68,30 @@
       },
       "revId": "6937dad9d316c39990e23792d9b9bab8ae5db5c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00abf290_2cc7f3a0",
+        "filename": "test/inspector/inspector-test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 3213273
+      },
+      "writtenOn": "2024-11-07T15:03:00Z",
+      "side": 1,
+      "message": "Thank you!\nIndeed, using cctest made it much easier to test.",
+      "parentUuid": "01faf1c0_f16218ad",
+      "range": {
+        "startLine": 452,
+        "startChar": 14,
+        "endLine": 452,
+        "endChar": 29
+      },
+      "revId": "6937dad9d316c39990e23792d9b9bab8ae5db5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
