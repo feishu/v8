@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8daac9c8_28e77bd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-08T11:59:48Z",
+      "side": 1,
+      "message": "Some pre-review comments :)",
+      "revId": "5796daf014b06acd471e195f631a850e2f911ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5c50d07_aff36ce0",
+        "filename": "src/wasm/turboshaft-graph-interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-08T11:59:48Z",
+      "side": 1,
+      "message": "If you want more magic, you could use a `std::optional\u003cScopedVar\u003e` instead. That would save the explicit reset to `OpIndex::Invalid()`. But this is optional, feel free to keep the explicit management if you prefer that.",
+      "revId": "5796daf014b06acd471e195f631a850e2f911ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76bc7097_0561d274",
+        "filename": "src/wasm/turboshaft-graph-interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-08T11:59:48Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be enough to define the variable right before this line (and declare it before line 2244)? That would move the code closer together and avoid the extra `if (sig-\u003ereturn_count() \u003e 0)` above.",
+      "revId": "5796daf014b06acd471e195f631a850e2f911ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0695531f_d80d255a",
+        "filename": "src/wasm/turboshaft-graph-interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2278,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-08T11:59:48Z",
+      "side": 1,
+      "message": "nit: above we always used `if (sig-\u003ereturn_count() \u003e 0)`. We should be consistent here.",
+      "revId": "5796daf014b06acd471e195f631a850e2f911ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
