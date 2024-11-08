@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b9c72b1_fd70da41",
+        "filename": "src/wasm/turboshaft-graph-interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2024-11-08T12:57:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d5c50d07_aff36ce0",
+      "revId": "5796daf014b06acd471e195f631a850e2f911ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76bc7097_0561d274",
@@ -52,6 +70,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10ebb4fe_57368a57",
+        "filename": "src/wasm/turboshaft-graph-interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2024-11-08T12:57:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "76bc7097_0561d274",
+      "revId": "5796daf014b06acd471e195f631a850e2f911ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0695531f_d80d255a",
@@ -65,6 +101,24 @@
       "writtenOn": "2024-11-08T11:59:48Z",
       "side": 1,
       "message": "nit: above we always used `if (sig-\u003ereturn_count() \u003e 0)`. We should be consistent here.",
+      "revId": "5796daf014b06acd471e195f631a850e2f911ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aecd1cf_e87a5f2b",
+        "filename": "src/wasm/turboshaft-graph-interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2278,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2024-11-08T12:57:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0695531f_d80d255a",
       "revId": "5796daf014b06acd471e195f631a850e2f911ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
