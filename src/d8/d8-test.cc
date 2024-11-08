@@ -38,6 +38,23 @@ namespace {
     return;                                                                 \
   }
 
+template <typename IntegerT>
+bool IsInRange(double arg) {
+  return !std::isnan(arg) &&
+         arg <= static_cast<double>(std::numeric_limits<IntegerT>::max()) &&
+         arg >= static_cast<double>(std::numeric_limits<IntegerT>::min());
+}
+
+template <>
+bool IsInRange<int64_t>(double arg) {
+  return !std::isnan(arg) && arg < 0x1p63 && arg >= -0x1p63;
+}
+
+template <>
+bool IsInRange<uint64_t>(double arg) {
+  return !std::isnan(arg) && arg < 0x1p64 && arg >= 0;
+}
+
 class FastCApiObject {
  public:
   static FastCApiObject& instance();
@@ -859,13 +876,6 @@ class FastCApiObject {
 
     double result = ClampCompareCompute(in_range, real_arg, checked_arg);
     return static_cast<double>(result);
-  }
-
-  template <typename IntegerT>
-  static bool IsInRange(double arg) {
-    return !std::isnan(arg) &&
-           arg <= static_cast<double>(std::numeric_limits<IntegerT>::max()) &&
-           arg >= static_cast<double>(std::numeric_limits<IntegerT>::min());
   }
 
   template <typename IntegerT>
