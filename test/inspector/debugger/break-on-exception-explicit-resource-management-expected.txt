@@ -1,0 +1,283 @@
+Checks if catch prediction works on new `using` and `await using` syntax.
+
+Running test: testPauseOnInitialState
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+
+evaluate 'disposalUncaughtSuppressedError()'..
+
+evaluate 'disposalCaughtUsingSyntax()'..
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+
+evaluate 'disposalCaughtSuppressedError()'..
+
+Running test: testPauseOnExceptionOff
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+
+evaluate 'disposalUncaughtSuppressedError()'..
+
+evaluate 'disposalCaughtUsingSyntax()'..
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+
+evaluate 'disposalCaughtSuppressedError()'..
+
+Running test: testBreakOnCaughtException
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+paused on exception:
+{
+    description : 1
+    type : number
+    uncaught : false
+    value : 1
+}
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+paused on exception:
+{
+    description : 2
+    type : number
+    uncaught : false
+    value : 2
+}
+
+evaluate 'disposalUncaughtSuppressedError()'..
+paused on exception:
+{
+    description : 4
+    type : number
+    uncaught : false
+    value : 4
+}
+paused on exception:
+{
+    description : 3
+    type : number
+    uncaught : false
+    value : 3
+}
+
+evaluate 'disposalCaughtUsingSyntax()'..
+paused on exception:
+{
+    description : 5
+    type : number
+    uncaught : false
+    value : 5
+}
+paused on exception:
+{
+    description : 5
+    type : number
+    uncaught : false
+    value : 5
+}
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+paused on exception:
+{
+    description : 6
+    type : number
+    uncaught : false
+    value : 6
+}
+paused on exception:
+{
+    description : 6
+    type : number
+    uncaught : false
+    value : 6
+}
+
+evaluate 'disposalCaughtSuppressedError()'..
+paused on exception:
+{
+    description : 8
+    type : number
+    uncaught : false
+    value : 8
+}
+paused on exception:
+{
+    description : 7
+    type : number
+    uncaught : false
+    value : 7
+}
+paused on exception:
+{
+    className : SuppressedError
+    description : SuppressedError: An error was suppressed during disposal     at disposalCaughtSuppressedError (test.js:84:15)     at <anonymous>:177:194
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+Running test: testBreakOnUncaughtException
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+paused on exception:
+{
+    description : 1
+    type : number
+    uncaught : true
+    value : 1
+}
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+paused on exception:
+{
+    description : 2
+    type : number
+    uncaught : true
+    value : 2
+}
+
+evaluate 'disposalUncaughtSuppressedError()'..
+paused on exception:
+{
+    className : SuppressedError
+    description : SuppressedError: An error was suppressed during disposal     at disposalUncaughtSuppressedError (test.js:44:13)     at <anonymous>:177:194
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : true
+}
+
+evaluate 'disposalCaughtUsingSyntax()'..
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+
+evaluate 'disposalCaughtSuppressedError()'..
+
+Running test: testBreakOnAll
+
+evaluate 'disposalUncaughtUsingSyntax()'..
+paused on exception:
+{
+    description : 1
+    type : number
+    uncaught : false
+    value : 1
+}
+paused on exception:
+{
+    description : 1
+    type : number
+    uncaught : true
+    value : 1
+}
+
+evaluate 'disposalUncaughtAwaitUsingSyntax()'..
+paused on exception:
+{
+    description : 2
+    type : number
+    uncaught : false
+    value : 2
+}
+paused on exception:
+{
+    description : 2
+    type : number
+    uncaught : true
+    value : 2
+}
+
+evaluate 'disposalUncaughtSuppressedError()'..
+paused on exception:
+{
+    description : 4
+    type : number
+    uncaught : false
+    value : 4
+}
+paused on exception:
+{
+    description : 3
+    type : number
+    uncaught : false
+    value : 3
+}
+paused on exception:
+{
+    className : SuppressedError
+    description : SuppressedError: An error was suppressed during disposal     at disposalUncaughtSuppressedError (test.js:44:13)     at <anonymous>:177:194
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : true
+}
+
+evaluate 'disposalCaughtUsingSyntax()'..
+paused on exception:
+{
+    description : 5
+    type : number
+    uncaught : false
+    value : 5
+}
+paused on exception:
+{
+    description : 5
+    type : number
+    uncaught : false
+    value : 5
+}
+
+evaluate 'disposalCaughtAwaitUsingSyntax()'..
+paused on exception:
+{
+    description : 6
+    type : number
+    uncaught : false
+    value : 6
+}
+paused on exception:
+{
+    description : 6
+    type : number
+    uncaught : false
+    value : 6
+}
+
+evaluate 'disposalCaughtSuppressedError()'..
+paused on exception:
+{
+    description : 8
+    type : number
+    uncaught : false
+    value : 8
+}
+paused on exception:
+{
+    description : 7
+    type : number
+    uncaught : false
+    value : 7
+}
+paused on exception:
+{
+    className : SuppressedError
+    description : SuppressedError: An error was suppressed during disposal     at disposalCaughtSuppressedError (test.js:84:15)     at <anonymous>:177:194
+    objectId : <objectId>
+    subtype : error
+    type : object
+    uncaught : false
+}
+
+Running test: testBreakOnExceptionInSilentMode
+evaluate 'disposalUncaughtUsingSyntax()'
+evaluate 'disposalUncaughtAwaitUsingSyntax()'
+evaluate 'disposalUncaughtSuppressedError()'
+evaluate 'disposalCaughtUsingSyntax()'
+evaluate 'disposalCaughtAwaitUsingSyntax()'
+evaluate 'disposalCaughtSuppressedError()'
