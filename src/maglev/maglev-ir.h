@@ -513,15 +513,15 @@ constexpr bool IsTerminalControlNode(Opcode opcode) {
 // Simple field stores are stores which do nothing but change a field value
 // (i.e. no map transitions or calls into user code).
 constexpr bool IsSimpleFieldStore(Opcode opcode) {
-  return opcode == Opcode::kStoreTaggedFieldWithWriteBarrier ||
-         opcode == Opcode::kStoreTaggedFieldNoWriteBarrier ||
-         opcode == Opcode::kStoreDoubleField ||
-         opcode == Opcode::kStoreFloat64 ||
-         opcode == Opcode::kUpdateJSArrayLength ||
-         opcode == Opcode::kStoreFixedArrayElementWithWriteBarrier ||
+  return opcode == Opcode::kStoreDoubleField ||
          opcode == Opcode::kStoreFixedArrayElementNoWriteBarrier ||
+         opcode == Opcode::kStoreFixedArrayElementWithWriteBarrier ||
          opcode == Opcode::kStoreFixedDoubleArrayElement ||
-         opcode == Opcode::kStoreTrustedPointerFieldWithWriteBarrier;
+         opcode == Opcode::kStoreFloat64 ||
+         opcode == Opcode::kStoreTaggedFieldNoWriteBarrier ||
+         opcode == Opcode::kStoreTrustedPointerFieldWithWriteBarrier ||
+         opcode == Opcode::kStoreTaggedFieldWithWriteBarrier ||
+         opcode == Opcode::kUpdateJSArrayLength;
 }
 constexpr bool IsElementsArrayWrite(Opcode opcode) {
   return opcode == Opcode::kMaybeGrowFastElements ||
@@ -530,6 +530,10 @@ constexpr bool IsElementsArrayWrite(Opcode opcode) {
 constexpr bool IsTypedArrayStore(Opcode opcode) {
   return opcode == Opcode::kStoreIntTypedArrayElement ||
          opcode == Opcode::kStoreDoubleTypedArrayElement;
+}
+constexpr bool IsTransition(Opcode opcode) {
+  return opcode == Opcode::kTransitionElementsKindOrCheckMap ||
+         opcode == Opcode::kTransitionElementsKind;
 }
 
 // Forward-declare NodeBase sub-hierarchies.

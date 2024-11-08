@@ -1716,7 +1716,12 @@ class MaglevGraphBuilder {
       // loaded properties and context slots, and we invalidate these already as
       // part of emitting the store.
       node->ClearUnstableNodeAspects(known_node_aspects());
-      if (is_loop_effect_tracking()) {
+      if (is_loop_effect_tracking() &&
+          // Don't clear unstable aspects in non-optimisticly-peeled loop
+          // iterations for transitions, since those transitions may not happen
+          // anymore in the actual loop once they are done before the loop.
+          (!in_peeled_iteration() || in_optimistic_peeling_iteration() ||
+           !IsTransition(Node::opcode_of<NodeT>))) {
         loop_effects_->unstable_aspects_cleared = true;
       }
     }
