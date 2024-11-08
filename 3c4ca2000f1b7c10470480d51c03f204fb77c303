@@ -361,6 +361,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72002e00_a1a8f33a",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-08T18:43:26Z",
+      "side": 1,
+      "message": "Shu and I have a discussion about break on exception cases and we realized that more than one pause is expected and correct. The way this new feature is implemented is as follow:\n```\ntry {\n  using x \u003d ..;\n  using y \u003d ..;\n} finally {\n  try {\n     dispose y;\n     dispose x;\n  } catch (e) {\n     if e is the first thrown exception, save it for later. Otherwise create a new suppressed error with e and prior existing exception(s) and save it.\n  }\n}\nif there is any saved e:\n   throw e;\n``` \n\nSo, we have an implicit try/catch that is catching every exception thrown during disposal and that is why we have caught exceptions even in uncaught test cases. If the user code has a try/catch, the outer e with be caught otherwise it will be uncaught. So, if one error occurs during disposal without user code try/catch, we will see one caught exception and one uncaught exception (disposalUncaughtUsingSyntax() and disposalUncaughtAwaitUsingSyntax()). The second exception will be caught if user code has a try/catch (disposalCaughtUsingSyntax() and disposalCaughtAwaitUsingSyntax()). If there are more than one exception during disposal without user code try/catch, we will see one caught exception for each thrown exception and the outer e will be one uncaught suppressed error (disposalUncaughtSuppressedError()). If the user code has a try/catch, the suppressed error will be caught as well (disposalCaughtSuppressedError()).\nSo, the expected test result is correct now. Please let us know if you have any questions or concerns.",
+      "parentUuid": "ec90b9bd_48db575b",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abf9f8cd_dc4dd735",
