@@ -33,6 +33,24 @@
       "message": "Did you check if we can use `base::IsValueInRangeForNumericType` instead?\nIf so, that seems simpler than having to think about those edge cases where min/max are not representable in the destination type.",
       "revId": "f7610711949308919b43209519349dec0a157a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f58f6ca7_adb44956",
+        "filename": "src/d8/d8-test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-08T14:49:25Z",
+      "side": 1,
+      "message": "Ha, actually Zhi did exactly this before, to solve the same problem (in 2020): https://crrev.com/c/2466377 :D",
+      "parentUuid": "64664c18_098c513f",
+      "revId": "f7610711949308919b43209519349dec0a157a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
