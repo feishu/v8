@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd6ee73c_9dbdb3ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1519522
+      },
+      "writtenOn": "2024-11-08T08:38:14Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "5125290e101495b40124817ef5a690d78aeb79d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90deb507_7dbb50e9",
@@ -41,6 +58,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56a2d89b_1de423f1",
+        "filename": "test/mjsunit/sandbox/regress/regress-376071292-1.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1519522
+      },
+      "writtenOn": "2024-11-08T08:38:14Z",
+      "side": 1,
+      "message": "I feel like the first one is easier to read (\"create array of size 0x100, fill with A\u0027s, join into a string\"), and we probably don\u0027t need to optimize for shortness here, so I\u0027ll leave it as it is. Nice trick though! :)",
+      "parentUuid": "90deb507_7dbb50e9",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "5125290e101495b40124817ef5a690d78aeb79d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a81fde40_a199a815",
@@ -54,6 +95,30 @@
       "writtenOn": "2024-11-07T17:21:40Z",
       "side": 1,
       "message": "nit: I like fast tests (even on simulator/sanitizer debug builds), so I\u0027d lower this by a factor of 10 or even 100.",
+      "range": {
+        "startLine": 41,
+        "startChar": 20,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "5125290e101495b40124817ef5a690d78aeb79d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be3b1a7b_9c55b276",
+        "filename": "test/mjsunit/sandbox/regress/regress-376071292-1.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1519522
+      },
+      "writtenOn": "2024-11-08T08:38:14Z",
+      "side": 1,
+      "message": "So in my local environment the crash triggers reliably with 1000 iteration and reliably *not* with 100. I think the `%StringToCString(string);` is just too fast and the worker thread doesn\u0027t start up quickly enough. In debug builds I even seem to need 10000, but I think it\u0027s good enough if it works well in one type of build. So I think I should leave this at 1000, otherwise the test is less useful.",
+      "parentUuid": "a81fde40_a199a815",
       "range": {
         "startLine": 41,
         "startChar": 20,
