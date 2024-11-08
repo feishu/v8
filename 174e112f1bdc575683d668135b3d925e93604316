@@ -39,6 +39,24 @@
       "message": "The `has_non_empty_context_extension` bit is updated concurrently.",
       "revId": "174e112f1bdc575683d668135b3d925e93604316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13582a4b_e3e4bc8f",
+        "filename": "src/objects/scope-info.tq",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-08T11:25:48Z",
+      "side": 1,
+      "message": "Update: `some_context_has_extension`.",
+      "parentUuid": "b53c45ea_ec98c754",
+      "revId": "174e112f1bdc575683d668135b3d925e93604316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

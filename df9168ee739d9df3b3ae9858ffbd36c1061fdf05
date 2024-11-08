@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48ebd255_a91f0ae0",
+        "filename": "src/compiler/compilation-dependencies.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-08T11:25:48Z",
+      "side": 1,
+      "message": "Renamed to `SomeContextHasExtension`.",
+      "parentUuid": "04217964_389da9ae",
+      "revId": "df9168ee739d9df3b3ae9858ffbd36c1061fdf05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54a57d7b_3a42fb7d",
@@ -35,6 +53,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc5dec78_daa05712",
+        "filename": "src/objects/scope-info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-08T11:25:48Z",
+      "side": 1,
+      "message": "You are right. Relying on `sloppy_eval_can_extend_vars` is more correct.",
+      "parentUuid": "54a57d7b_3a42fb7d",
+      "revId": "df9168ee739d9df3b3ae9858ffbd36c1061fdf05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c8db37f_dc1563fc",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-11-07T10:22:51Z",
       "side": 1,
       "message": "ScopeInfo can technically be in RO_SPACE and we can\u0027t add dependencies there. We could avoid allocating the slot and just pessimistically mark them as having extensions...\n\nIn fact all of those bootstrapper scope infos will be in that category. There\u0027s no point in tracking them anyway.",
+      "revId": "df9168ee739d9df3b3ae9858ffbd36c1061fdf05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c22df01c_4d60f2a8",
+        "filename": "src/objects/scope-info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-08T11:25:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c8db37f_dc1563fc",
       "revId": "df9168ee739d9df3b3ae9858ffbd36c1061fdf05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
