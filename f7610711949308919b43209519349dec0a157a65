@@ -16,6 +16,23 @@
       "message": "PTAL. I misunderstood the issue originally. It\u0027s actually just a bug in test code.",
       "revId": "f7610711949308919b43209519349dec0a157a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64664c18_098c513f",
+        "filename": "src/d8/d8-test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-08T14:21:37Z",
+      "side": 1,
+      "message": "Did you check if we can use `base::IsValueInRangeForNumericType` instead?\nIf so, that seems simpler than having to think about those edge cases where min/max are not representable in the destination type.",
+      "revId": "f7610711949308919b43209519349dec0a157a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
