@@ -2210,6 +2210,12 @@ class TurboshaftGraphBuildingInterface : public WasmGraphBuilderBase {
              StoreOp::Kind::RawAligned(), MemoryRepresentation::UintPtr(),
              compiler::kNoWriteBarrier, Isolate::context_offset());
     BuildModifyThreadInWasmFlag(__ graph_zone(), false);
+    Variable result_var;
+    if (sig->return_count() > 0) {
+      result_var =
+          __ NewVariable(RegisterRepresentation::FromMachineRepresentation(
+              sig->GetReturn().machine_representation()));
+    }
     OpIndex ret_val = __ Call(target_address, OpIndex::Invalid(),
                               base::VectorOf(inputs), ts_call_descriptor);
 
@@ -2231,6 +2237,7 @@ class TurboshaftGraphBuildingInterface : public WasmGraphBuilderBase {
       CallBuiltinThroughJumptable<
           BuiltinCallDescriptor::WasmPropagateException>(
           decoder, {}, CheckForException::kCatchInThisFrame);
+      __ Unreachable();
     }
     BuildModifyThreadInWasmFlag(__ graph_zone(), true);
 
@@ -2255,6 +2262,7 @@ class TurboshaftGraphBuildingInterface : public WasmGraphBuilderBase {
           ret_val = __ ChangeUint64ToFloat32(ret_val);
         }
       }
+      __ SetVariable(result_var, ret_val);
     }
     Label<> done(&asm_);
     GOTO(done);
@@ -2262,10 +2270,14 @@ class TurboshaftGraphBuildingInterface : public WasmGraphBuilderBase {
     auto [target, implicit_arg] =
         BuildImportedFunctionTargetAndImplicitArg(decoder, imm.index);
     BuildWasmCall(decoder, imm.sig, target, implicit_arg, args, returns);
-    __ Unreachable();
+    if (sig->return_count() > 0) {
+      __ SetVariable(result_var, returns[0].op);
+    }
+    GOTO(done);
     BIND(done);
     if (sig->return_count()) {
-      returns[0].op = ret_val;
+      returns[0].op = __ GetVariable(result_var);
+      __ SetVariable(result_var, OpIndex::Invalid());
     }
   }
 
