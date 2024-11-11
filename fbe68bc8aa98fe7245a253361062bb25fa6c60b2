@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cda77999_4d67fd56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1344750
+      },
+      "writtenOn": "2024-11-11T15:15:53Z",
+      "side": 1,
+      "message": "lgtm, nice",
+      "revId": "fbe68bc8aa98fe7245a253361062bb25fa6c60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "326237ef_e5261626",
@@ -37,6 +54,95 @@
         "endLine": 417,
         "endChar": 8
       },
+      "revId": "fbe68bc8aa98fe7245a253361062bb25fa6c60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6c7ccc4_b16162c8",
+        "filename": "src/heap/memory-chunk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1344750
+      },
+      "writtenOn": "2024-11-11T15:15:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "326237ef_e5261626",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 8
+      },
+      "revId": "fbe68bc8aa98fe7245a253361062bb25fa6c60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edd7d23a_3f414732",
+        "filename": "src/heap/memory-chunk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1344750
+      },
+      "writtenOn": "2024-11-11T15:15:53Z",
+      "side": 1,
+      "message": "nit: a bit stylish, but wouldn\u0027t it be easier to read if they were inlined in the class as other short getters?",
+      "fixSuggestions": [
+        {
+          "fixId": "527fbf4a_a3b804a7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/heap/memory-chunk.h",
+              "range": {
+                "startLine": 350,
+                "startChar": 0,
+                "endLine": 351,
+                "endChar": 0
+              },
+              "replacement": "  static constexpr intptr_t FlagsOffset() {\n    return offsetof(MemoryChunk, main_thread_flags_);\n  }\n"
+            },
+            {
+              "path": "src/heap/memory-chunk.h",
+              "range": {
+                "startLine": 361,
+                "startChar": 0,
+                "endLine": 362,
+                "endChar": 0
+              },
+              "replacement": "  static constexpr intptr_t MetadataIndexOffset() {\n    return offsetof(MemoryChunk, metadata_index_);\n  }\n"
+            },
+            {
+              "path": "src/heap/memory-chunk.h",
+              "range": {
+                "startLine": 401,
+                "startChar": 0,
+                "endLine": 402,
+                "endChar": 0
+              },
+              "replacement": "  static constexpr intptr_t MetadataOffset() {\n    return offsetof(MemoryChunk, metadata_);\n  }\n"
+            },
+            {
+              "path": "src/heap/memory-chunk.h",
+              "range": {
+                "startLine": 423,
+                "startChar": 0,
+                "endLine": 440,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
       "revId": "fbe68bc8aa98fe7245a253361062bb25fa6c60b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
