@@ -5790,7 +5790,9 @@ int Name::GetIdentityHash() {
   return static_cast<int>(Utils::OpenDirectHandle(this)->EnsureHash());
 }
 
-int String::Length() const { return Utils::OpenDirectHandle(this)->length(); }
+uint32_t String::Length() const {
+  return Utils::OpenDirectHandle(this)->length();
+}
 
 bool String::IsOneByte() const {
   return Utils::OpenDirectHandle(this)->IsOneByteRepresentation();
