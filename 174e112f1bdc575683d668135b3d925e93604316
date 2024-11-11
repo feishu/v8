@@ -81,6 +81,24 @@
       "parentUuid": "b53c45ea_ec98c754",
       "revId": "174e112f1bdc575683d668135b3d925e93604316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2087bb4_51499ae1",
+        "filename": "src/objects/scope-info.tq",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-11T08:00:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "13582a4b_e3e4bc8f",
+      "revId": "174e112f1bdc575683d668135b3d925e93604316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
