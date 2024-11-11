@@ -18,6 +18,10 @@
 namespace v8 {
 namespace internal {
 
+namespace debug_helper_internal {
+class ReadStringVisitor;
+}  // namespace  debug_helper_internal
+
 class Heap;
 class MemoryChunkMetadata;
 class ReadOnlyPageMetadata;
@@ -141,7 +145,6 @@ class V8_EXPORT_PRIVATE MemoryChunk final {
   static constexpr MainThreadFlags kSkipEvacuationSlotsRecordingMask =
       MainThreadFlags(kEvacuationCandidateMask) |
       MainThreadFlags(kIsInYoungGenerationMask);
-
   static constexpr MainThreadFlags kIsOnlyOldOrMajorGCInProgressMask =
       MainThreadFlags(CONTAINS_ONLY_OLD) |
       MainThreadFlags(IS_MAJOR_GC_IN_PROGRESS);
@@ -342,14 +345,11 @@ class V8_EXPORT_PRIVATE MemoryChunk final {
 #endif
 
  private:
-  // Flags that are only mutable from the main thread when no concurrent
-  // component (e.g. marker, sweeper, compilation, allocation) is running.
-  MainThreadFlags main_thread_flags_;
-
+  // Keep offsets and masks private to only expose them with matchin friend
+  // declarations.
+  static constexpr intptr_t FlagsOffset();
 #ifdef V8_ENABLE_SANDBOX
-  uint32_t metadata_index_;
-#else
-  MemoryChunkMetadata* metadata_;
+  static constexpr intptr_t MetadataIndexOffset();
 #endif
 
   static constexpr intptr_t kAlignment =
@@ -391,10 +391,22 @@ class V8_EXPORT_PRIVATE MemoryChunk final {
     return reinterpret_cast<Address>(metadata_pointer_table_);
   }
 
-  // For access to the kMetadataPointerTableSizeMask;
+  // Flags that are only mutable from the main thread when no concurrent
+  // component (e.g. marker, sweeper, compilation, allocation) is running.
+  MainThreadFlags main_thread_flags_;
+
+#ifdef V8_ENABLE_SANDBOX
+  uint32_t metadata_index_;
+#else
+  MemoryChunkMetadata* metadata_;
+#endif
+
+  // For MetadataIndexOffset().
+  friend class debug_helper_internal::ReadStringVisitor;
+  // For kMetadataPointerTableSizeMask, FlagsOffset(), MetadataIndexOffset().
   friend class CodeStubAssembler;
   friend class MacroAssembler;
-  // For access to the MetadataTableAddress;
+  // For MetadataTableAddress().
   friend class ExternalReference;
   friend class TestDebugHelper;
 
@@ -402,6 +414,18 @@ class V8_EXPORT_PRIVATE MemoryChunk final {
 
   friend class MemoryChunkValidator;
 };
+
+// static
+constexpr intptr_t MemoryChunk::FlagsOffset() {
+  return offsetof(MemoryChunk, main_thread_flags_);
+}
+
+#ifdef V8_ENABLE_SANDBOX
+// static
+constexpr intptr_t MemoryChunk::MetadataIndexOffset() {
+  return offsetof(MemoryChunk, metadata_index_);
+}
+#endif
 
 DEFINE_OPERATORS_FOR_FLAGS(MemoryChunk::MainThreadFlags)
 
