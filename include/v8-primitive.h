@@ -134,7 +134,7 @@ class V8_EXPORT String : public Name {
   /**
    * Returns the number of characters (UTF-16 code units) in this string.
    */
-  int Length() const;
+  uint32_t Length() const;
 
   /**
    * Returns the number of bytes in the UTF-8 encoded
