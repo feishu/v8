@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a880560_c8fd69dd",
+        "filename": "src/heap/memory-chunk-layout.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2024-11-11T15:06:31Z",
+      "side": 0,
+      "message": "I am removing this part because we already align upwards in `ObjectStartOffsetInDataPage()` _and_ we already have uses of `sizeof(MemoryChunk)` which didn\u0027t know about the alignment in here.",
+      "range": {
+        "startLine": 57,
+        "startChar": 3,
+        "endLine": 62,
+        "endChar": 68
+      },
+      "revId": "416bdafb2ef44f97483379819bb7f45181077be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}

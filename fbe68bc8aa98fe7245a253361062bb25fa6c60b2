@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c5e060c_0ab1f2ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2024-11-11T15:06:31Z",
+      "side": 1,
+      "message": "Anton: ptal, this is the first part of two CLs that simplify our offset handling for memory chunks.\nStephen: FYI, or review, as you like",
+      "revId": "fbe68bc8aa98fe7245a253361062bb25fa6c60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "326237ef_e5261626",
+        "filename": "src/heap/memory-chunk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2024-11-11T15:06:31Z",
+      "side": 1,
+      "message": "This approach is similar to the runtime parts where we require `friend` decls to be able to use `offsetof()`, i.e., the offsets are kept as internals and we want to see the accessors that need to violate layering.\n\nThe difference to the runtime objets is that I added convenience helpers for the few `offsetof()` invocations that we need.",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 8
+      },
+      "revId": "fbe68bc8aa98fe7245a253361062bb25fa6c60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
