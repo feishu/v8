@@ -416,8 +416,6 @@ class V8_EXPORT_PRIVATE MemoryChunk final {
   // MetadataOffset().
   friend class CodeStubAssembler;
   friend class MacroAssembler;
-
-  friend class MemoryChunkValidator;
 };
 
 // static
