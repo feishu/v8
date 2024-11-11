@@ -137,8 +137,10 @@ RUNTIME_FUNCTION(Runtime_NewArray) {
       // just flip the bit on the global protector cell instead.
       // TODO(bmeurer): Find a better way to mark this. Global protectors
       // tend to back-fire over time...
-      if (Protectors::IsArrayConstructorIntact(isolate)) {
-        Protectors::InvalidateArrayConstructor(isolate);
+      if (!V8_UNLIKELY(v8_flags.turbofan_ignore_array_protector)) {
+        if (Protectors::IsArrayConstructorIntact(isolate)) {
+          Protectors::InvalidateArrayConstructor(isolate);
+        }
       }
     }
   }

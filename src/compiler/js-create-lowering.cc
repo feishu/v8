@@ -44,10 +44,6 @@ FrameState GetArgumentsFrameState(FrameState frame_state) {
              : frame_state;
 }
 
-// When initializing arrays, we'll unfold the loop if the number of
-// elements is known to be of this type.
-const int kElementLoopUnrollLimit = 16;
-
 // Limits up to which context allocations are inlined.
 const int kFunctionContextAllocationLimit = 16;
 const int kBlockContextAllocationLimit = 16;
@@ -685,7 +681,7 @@ Reduction JSCreateLowering::ReduceJSCreateArray(Node* node) {
                             slack_tracking_prediction);
     }
     if (length_type.Is(Type::SignedSmall()) && length_type.Min() >= 0 &&
-        length_type.Max() <= kElementLoopUnrollLimit &&
+        length_type.Max() <= JSArray::kInitialMaxFastElementArray &&
         length_type.Min() == length_type.Max()) {
       int capacity = static_cast<int>(length_type.Max());
       // Replace length with a constant in order to protect against a potential
