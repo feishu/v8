@@ -11028,22 +11028,57 @@ String::Value::~Value() { i::DeleteArray(str_); }
 String::ValueView::ValueView(v8::Isolate* v8_isolate,
                              v8::Local<v8::String> str) {
   i::Isolate* i_isolate = reinterpret_cast<i::Isolate*>(v8_isolate);
-  i::HandleScope scope(i_isolate);
   i::Handle<i::String> i_str = Utils::OpenHandle(*str);
-  i::Handle<i::String> i_flat_str = i::String::Flatten(i_isolate, i_str);
 
-  flat_str_ = Utils::ToLocal(i_flat_str);
-
-  i::DisallowGarbageCollectionInRelease* no_gc =
+  switch (i::StringShape{*i_str}.representation_and_encoding_tag()) {
+    case i::kSeqOneByteStringTag: {
+      i::DisallowGarbageCollectionInRelease* no_gc =
+          new (no_gc_debug_scope_) i::DisallowGarbageCollectionInRelease();
+      flat_str_ = str;
+      is_one_byte_ = true;
+      data8_ = Cast<i::SeqOneByteString>(*i_str)->GetChars(*no_gc);
+      length_ = i_str->length();
+      break;
+    }
+    case i::kSeqTwoByteStringTag: {
+      i::DisallowGarbageCollectionInRelease* no_gc =
+          new (no_gc_debug_scope_) i::DisallowGarbageCollectionInRelease();
+      flat_str_ = str;
+      is_one_byte_ = false;
+      data16_ = Cast<i::SeqTwoByteString>(*i_str)->GetChars(*no_gc);
+      length_ = i_str->length();
+      break;
+    }
+    case i::kExternalOneByteStringTag:
       new (no_gc_debug_scope_) i::DisallowGarbageCollectionInRelease();
-  i::String::FlatContent flat_content = i_flat_str->GetFlatContent(*no_gc);
-  DCHECK(flat_content.IsFlat());
-  is_one_byte_ = flat_content.IsOneByte();
-  length_ = flat_content.length();
-  if (is_one_byte_) {
-    data8_ = flat_content.ToOneByteVector().data();
-  } else {
-    data16_ = flat_content.ToUC16Vector().data();
+      flat_str_ = str;
+      is_one_byte_ = true;
+      data8_ = Cast<i::ExternalOneByteString>(*i_str)->GetChars();
+      length_ = i_str->length();
+      break;
+    case i::kExternalTwoByteStringTag:
+      new (no_gc_debug_scope_) i::DisallowGarbageCollectionInRelease();
+      flat_str_ = str;
+      is_one_byte_ = false;
+      data16_ = Cast<i::ExternalTwoByteString>(*i_str)->GetChars();
+      length_ = i_str->length();
+      break;
+    default: {
+      i::HandleScope scope(i_isolate);
+      i::Handle<i::String> i_flat_str = i::String::Flatten(i_isolate, i_str);
+      flat_str_ = Utils::ToLocal(i_flat_str);
+      i::DisallowGarbageCollectionInRelease* no_gc =
+          new (no_gc_debug_scope_) i::DisallowGarbageCollectionInRelease();
+      i::String::FlatContent flat_content = i_flat_str->GetFlatContent(*no_gc);
+      DCHECK(flat_content.IsFlat());
+      is_one_byte_ = flat_content.IsOneByte();
+      length_ = flat_content.length();
+      if (is_one_byte_) {
+        data8_ = flat_content.ToOneByteVector().data();
+      } else {
+        data16_ = flat_content.ToUC16Vector().data();
+      }
+    }
   }
 }
 
