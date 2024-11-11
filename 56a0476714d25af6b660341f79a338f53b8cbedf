@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ec69ad4_af4f40d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2024-11-11T14:20:46Z",
+      "side": 1,
+      "message": "PTAL -- some random changes in here from breaking the header include cycle between instance-types-inl and string-inl",
+      "revId": "56a0476714d25af6b660341f79a338f53b8cbedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
