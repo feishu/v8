@@ -16,6 +16,40 @@
       "message": "Igor, PTAL (this passes gcmole locally, let\u0027s hope the bot agrees)",
       "revId": "59ca39cb09f21a9d3ec5751b56e9fd058ab6bb3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fec796e4_3f44dabb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-11T10:25:25Z",
+      "side": 1,
+      "message": "lgtm with a nit. thanks!",
+      "revId": "59ca39cb09f21a9d3ec5751b56e9fd058ab6bb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d11fcf2c_81eed543",
+        "filename": "src/runtime/runtime-scopes.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1183889
+      },
+      "writtenOn": "2024-11-11T10:25:25Z",
+      "side": 1,
+      "message": "While you are here, could you please also drop this unnecessary block?",
+      "revId": "59ca39cb09f21a9d3ec5751b56e9fd058ab6bb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
