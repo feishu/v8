@@ -21,7 +21,22 @@ namespace v8 {
 namespace internal {
 
 class FreeListCategory;
+class SlotSet;
 class Space;
+
+using ActiveSystemPages = ::heap::base::ActiveSystemPages;
+
+enum RememberedSetType {
+  OLD_TO_NEW,
+  OLD_TO_NEW_BACKGROUND,
+  OLD_TO_OLD,
+  OLD_TO_SHARED,
+  OLD_TO_CODE,
+  TRUSTED_TO_TRUSTED,
+  TRUSTED_TO_SHARED_TRUSTED,
+  SURVIVOR_TO_EXTERNAL_POINTER,
+  NUMBER_OF_REMEMBERED_SET_TYPES
+};
 
 // MutablePageMetadata represents a memory region owned by a specific space.
 // It is divided into the header and the body. Chunk start is always
@@ -41,11 +56,6 @@ class MutablePageMetadata : public MemoryChunkMetadata {
     kPendingIteration,
     kInProgress,
   };
-
-  static const size_t kHeaderSize = sizeof(MemoryChunk);
-
-  static const intptr_t kOldToNewSlotSetOffset =
-      MemoryChunkLayout::kSlotSetOffset;
 
   // Page size in bytes.  This must be a multiple of the OS page size.
   static const int kPageSize = kRegularPageSize;
@@ -266,10 +276,6 @@ class MutablePageMetadata : public MemoryChunkMetadata {
   // chunk is about to be freed.
   void ReleaseAllAllocatedMemory();
 
-#ifdef DEBUG
-  static void ValidateOffsets(MutablePageMetadata* chunk);
-#endif
-
   template <RememberedSetType type, AccessMode access_mode = AccessMode::ATOMIC>
   void set_slot_set(SlotSet* slot_set) {
     if (access_mode == AccessMode::ATOMIC) {
@@ -339,17 +345,34 @@ class MutablePageMetadata : public MemoryChunkMetadata {
   MarkingBitmap marking_bitmap_;
 
  private:
-  friend class ConcurrentMarkingState;
-  friend class MarkingState;
-  friend class AtomicMarkingState;
-  friend class NonAtomicMarkingState;
+  static constexpr intptr_t MarkingBitmapOffset();
+  static constexpr intptr_t SlotSetOffset(
+      RememberedSetType remembered_set_type);
+
   friend class MemoryAllocator;
-  friend class MemoryChunkValidator;
   friend class PagedSpace;
   template <RememberedSetType>
   friend class RememberedSet;
-  friend class YoungGenerationMarkingState;
+
+  // For MarkingBitmapOffset().
+  friend class CodeStubAssembler;
+  friend class MacroAssembler;
+  friend class MarkingBitmap;
+  // For SlotSetOffset().
+  friend class WriteBarrierCodeStubAssembler;
 };
+
+// static
+constexpr intptr_t MutablePageMetadata::MarkingBitmapOffset() {
+  return offsetof(MutablePageMetadata, marking_bitmap_);
+}
+
+// static
+constexpr intptr_t MutablePageMetadata::SlotSetOffset(
+    RememberedSetType remembered_set_type) {
+  return offsetof(MutablePageMetadata, slot_set_) +
+         sizeof(void*) * remembered_set_type;
+}
 
 }  // namespace internal
 
