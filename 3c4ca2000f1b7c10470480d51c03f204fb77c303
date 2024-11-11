@@ -435,6 +435,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d8cb0c82_87ec2327",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-11T19:11:59Z",
+      "side": 1,
+      "message": "Simon and Eric, if a developer types:\n\n```\n{\n  using x \u003d { [Symbol.dispose]() { throw 1; } };\n  using y \u003d { [Symbol.dispose]() { throw 2; } };\n}\n```\n\nWhat the console will print is something like \"uncaught exception: SuppressedError\", with no mention of `1` or `2`. If we pause during `throw 1` and `throw 2` with \"Pause on uncaught exceptions\" checked, would this disconnect not be confusing? Because it\u0027s not possible for the developer to ever see an \"uncaught exception: 1\".",
+      "parentUuid": "fd621878_1aaf494d",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf9f8cd_dc4dd735",
         "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
         "patchSetId": 19
