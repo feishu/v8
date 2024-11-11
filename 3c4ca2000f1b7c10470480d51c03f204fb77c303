@@ -459,6 +459,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ba48d992_e7086c20",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-11T19:14:21Z",
+      "side": 1,
+      "message": "Also FWIW when I polled some other TC39 delegates on what they expect the behavior of \"Pause of uncaught exceptions\" to be for these examples, the responses were mixed. One person said \"pause on rethrow only\", while another shared your intuition of \"never pause on rethrows\".",
+      "parentUuid": "d8cb0c82_87ec2327",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf9f8cd_dc4dd735",
         "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
         "patchSetId": 19
