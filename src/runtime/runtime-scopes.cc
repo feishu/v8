@@ -426,13 +426,11 @@ Tagged<Object> DeclareEvalHelper(Isolate* isolate, Handle<String> name,
     object =
         isolate->factory()->NewJSObject(isolate->context_extension_function());
     context->set_extension(*object);
-    {
-      Tagged<ScopeInfo> scope_info = context->scope_info();
-      if (!scope_info->SomeContextHasExtension()) {
-        scope_info->mark_some_context_has_extension();
-        DependentCode::DeoptimizeDependencyGroups(
-            isolate, scope_info, DependentCode::kEmptyContextExtensionGroup);
-      }
+    if (Tagged<ScopeInfo> scope_info = context->scope_info();
+        !scope_info->SomeContextHasExtension()) {
+      scope_info->mark_some_context_has_extension();
+      DependentCode::DeoptimizeDependencyGroups(
+          isolate, scope_info, DependentCode::kEmptyContextExtensionGroup);
     }
   } else {
     THROW_NEW_ERROR_RETURN_FAILURE(
