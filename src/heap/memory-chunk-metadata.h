@@ -23,6 +23,10 @@
 namespace v8 {
 namespace internal {
 
+namespace debug_helper_internal {
+class ReadStringVisitor;
+}  // namespace  debug_helper_internal
+
 class BaseSpace;
 
 class MemoryChunkMetadata {
@@ -138,12 +142,9 @@ class MemoryChunkMetadata {
 
   Address area_end_;
 
-  // TODO(sroettger): the following fields are accessed most often (AFAICT) and
-  // are moved to the end to occupy the same cache line as the slot set array.
-  // Without this change, there was a 0.5% performance impact after cache line
-  // aligning the metadata on x64 (before, the metadata started at offset 0x10).
-  // After reordering, the impact is still 0.1%/0.2% on jetstream2/speedometer3,
-  // so there should be some more optimization potential here.
+  // Most accessed fields start at heap_ and end at
+  // MutablePageMetadata::slot_set_. See
+  // MutablePageMetadata::MutablePageMetadata() for the assert.
 
   Heap* heap_;
 
@@ -162,14 +163,33 @@ class MemoryChunkMetadata {
   friend class MemoryChunk;
 #endif
 
+ private:
+  static constexpr intptr_t HeapOffset();
+  static constexpr intptr_t AreaStartOffset();
+
   friend class AtomicMarkingState;
   friend class ConcurrentMarkingState;
   friend class MarkingState;
   friend class MemoryAllocator;
-  friend class MemoryChunkValidator;
   friend class NonAtomicMarkingState;
   friend class PagedSpace;
+
+  // For HeapOffset().
+  friend class debug_helper_internal::ReadStringVisitor;
+  // For AreaStartOffset().
+  friend class CodeStubAssembler;
+  friend class MacroAssembler;
 };
+
+// static
+constexpr intptr_t MemoryChunkMetadata::HeapOffset() {
+  return offsetof(MemoryChunkMetadata, heap_);
+}
+
+// static
+constexpr intptr_t MemoryChunkMetadata::AreaStartOffset() {
+  return offsetof(MemoryChunkMetadata, area_start_);
+}
 
 }  // namespace internal
 
