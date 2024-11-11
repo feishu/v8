@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff2d68fc_3eae9af2",
+        "filename": "src/heap/large-page-metadata.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2024-11-11T15:24:10Z",
+      "side": 0,
+      "message": "I moved this part to `memory-chunk.cc` as it is really dependend on `sizeof(MemoryChunk)` which we don\u0027t branch between different page types.",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "fbe68bc8aa98fe7245a253361062bb25fa6c60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
