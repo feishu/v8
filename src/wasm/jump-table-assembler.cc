@@ -91,8 +91,7 @@ void JumpTableAssembler::emit(T value, RelaxedStoreTag) DISABLE_UBSAN {
             write_end >> kSystemPointerSizeLog2);
 #endif
 #endif
-  reinterpret_cast<std::atomic<T>*>(pc_)->store(value,
-                                                std::memory_order_relaxed);
+  *reinterpret_cast<T*>(pc_) = value;
   pc_ += sizeof(T);
 }
 
