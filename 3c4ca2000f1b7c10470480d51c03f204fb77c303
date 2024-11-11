@@ -483,6 +483,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5f270c08_b91b46ff",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-11T22:15:45Z",
+      "side": 1,
+      "message": "Recapping discussion between Rezvan and me, we\u0027re agreed on all the bullet points from Simon. This will involve removing DisposableStack\u0027s internal uses of `v8::TryCatch`.\n\nNote that to implement the behavior of \"the re-throw of the collected error itself never causes a pause\", we can\u0027t actually use `Isolate::ReThrow`, as I think that means we might never create a message object when we need to, and in the case of a collected `SuppressedError`, that\u0027s actually a new error. So, the plan is to implement the following:\n\n- When a block with `using` has exactly one error, and therefore no `SuppressedError` is created, that single error is rethrown with `ReThrow`.\n- When a block with `using` has multiple errors, the newly created `SuppressedError` still has to be thrown using `Throw`. To suppressed the pausing behavior in the debugger, we\u0027ll surround the `Throw` with a `SuppressDebug`.",
+      "parentUuid": "ba48d992_e7086c20",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf9f8cd_dc4dd735",
         "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
         "patchSetId": 19
