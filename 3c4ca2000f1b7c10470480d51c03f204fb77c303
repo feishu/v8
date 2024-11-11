@@ -387,6 +387,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c08ad99_3958bf58",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-11T06:08:03Z",
+      "side": 1,
+      "message": "I don\u0027t agree with your assessment here. What you describe is how it is implemented in the spec and de-sugared, not how developers are experiencing it. The fact that all errors thrown in dispose functions are collected and re-thrown is immaterial, what matters is whether that \"collected error\" is caught/uncaught later on by user code, and that caught/uncaught by the \"collected error\" state should be applied to the individual errors thrown in dispose handlers.\n\nA different way to think about this is the fact that \"catch prediction\" happens at the time of \"throw\". Not when errors are re-thrown/caught. What this means in particular:\n\n* Every error thrown from a dispose function, must at most cause one debugger pause. (For errors not caught by a user try/catch in the dispose function itself).\n* Whether that pause happens on `\u0027caught\u0027` or `\u0027uncaught\u0027` depends on whether \"the collected error\" is caught or uncaught by user code.\n* A corollary of the above is that the \"caught\" or \"uncaught\" determination is the same for all errors thrown in different dispose functions. This follows directly from the fact that caught/uncaught for an individual dispose error is determined by the caught/uncaught for the \"collected error\".\n* The re-throw of the collected error itself never causes a pause. \n* Another corollary is then that the number of pauses is equal to 0 or to the number of throwing dispose functions.\n\nMaybe you could pair with Eric for an hour or two and try to figure this out? The test cases are already excellent so once the test expectations meet the rules above (if technically possible) we should be done :)\n\nApologies for being pedantic here, but it\u0027s easier to fix all this up while there are three people with most/all of the context still paged in :)",
+      "parentUuid": "72002e00_a1a8f33a",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf9f8cd_dc4dd735",
         "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
         "patchSetId": 19
