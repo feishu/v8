@@ -411,6 +411,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fd621878_1aaf494d",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1369666
+      },
+      "writtenOn": "2024-11-11T12:51:38Z",
+      "side": 1,
+      "message": "Just want to add, the point of catch prediction is to take users straight to the source of the unexpected errors they set up no exception handling for without distracting them with lots of other stops all over the code, not to shed light on what is implicitly going on after desugaring. Treating everything as caught because there is a using statement on the callstack substantially reduces the usefulness of the feature. It is worth adding special case logic to the catch prediction code for this feature.",
+      "parentUuid": "6c08ad99_3958bf58",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf9f8cd_dc4dd735",
         "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
         "patchSetId": 19
