@@ -9,7 +9,7 @@
 #include "src/base/platform/memory.h"
 #include "src/common/globals.h"
 #include "src/heap/marking.h"
-#include "src/heap/memory-chunk-layout.h"
+#include "src/heap/mutable-page-metadata.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace v8::internal {
@@ -27,8 +27,8 @@ class TestWithBitmap : public ::testing::Test {
   ~TestWithBitmap() override { base::AlignedFree(memory_); }
 
   uint8_t* raw_bitmap() {
-    return reinterpret_cast<uint8_t*>(memory_ +
-                                      MemoryChunkLayout::kMarkingBitmapOffset);
+    return reinterpret_cast<uint8_t*>(
+        memory_ + MutablePageMetadata::MarkingBitmapOffset());
   }
   MarkingBitmap* bitmap() {
     return reinterpret_cast<MarkingBitmap*>(raw_bitmap());
