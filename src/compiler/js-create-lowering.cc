@@ -685,14 +685,21 @@ Reduction JSCreateLowering::ReduceJSCreateArray(Node* node) {
                             slack_tracking_prediction);
     }
     if (length_type.Is(Type::SignedSmall()) && length_type.Min() >= 0 &&
-        length_type.Max() <= kElementLoopUnrollLimit &&
+        length_type.Max() <= JSArray::kInitialMaxFastElementArray &&
         length_type.Min() == length_type.Max()) {
-      int capacity = static_cast<int>(length_type.Max());
+      int known_length = static_cast<int>(length_type.Max());
       // Replace length with a constant in order to protect against a potential
       // typer bug leading to length > capacity.
-      length = jsgraph()->ConstantNoHole(capacity);
-      return ReduceNewArray(node, length, capacity, *initial_map, elements_kind,
-                            allocation, slack_tracking_prediction);
+      length = jsgraph()->ConstantNoHole(known_length);
+      if (known_length <= kElementLoopUnrollLimit) {
+        int capacity = known_length;
+        return ReduceNewArray(node, length, capacity, *initial_map,
+                              elements_kind, allocation,
+                              slack_tracking_prediction);
+      } else {
+        return ReduceNewArray(node, length, *initial_map, elements_kind,
+                              allocation, slack_tracking_prediction);
+      }
     }
     if (length_type.Maybe(Type::UnsignedSmall()) && can_inline_call) {
       return ReduceNewArray(node, length, *initial_map, elements_kind,

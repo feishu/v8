@@ -1435,6 +1435,9 @@ DEFINE_EXPERIMENTAL_FEATURE(turboshaft_typed_optimizations,
                             "enable an additional Turboshaft phase that "
                             "performs optimizations based on type information")
 DEFINE_EXPERIMENTAL_FEATURE(
+    turbofan_ignore_array_protector,
+    "enable to inline array functions regardless of protector invalidation")
+DEFINE_EXPERIMENTAL_FEATURE(
     turboshaft_wasm_instruction_selection_experimental,
     "run instruction selection on Turboshaft IR directly for wasm, on "
     "architectures where the feature is experimental")
