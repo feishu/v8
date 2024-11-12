@@ -33,6 +33,24 @@
       "message": "Hm, I think we should have a more specific name than `IteratorMethods` and `SetMethods`, in case more get added in future proposals. Not sure what would be a better name though.",
       "revId": "36830dcad82c31016fcdeb19cf8c4ee8d84e4d93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ee7930a_971df0d4",
+        "filename": "include/v8-isolate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-12T22:33:38Z",
+      "side": 1,
+      "message": "Resolving this since it seems like the WebDXFeature names are set in stone already anyways, and this internal enum value won\u0027t be exposed.",
+      "parentUuid": "8d654452_4d7faefd",
+      "revId": "36830dcad82c31016fcdeb19cf8c4ee8d84e4d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
