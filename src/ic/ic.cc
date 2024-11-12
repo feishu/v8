@@ -23,6 +23,7 @@
 #include "src/handles/handles-inl.h"
 #include "src/handles/maybe-handles.h"
 #include "src/heap/heap-layout-inl.h"
+#include "src/heap/pretenuring-handler-inl.h"
 #include "src/ic/call-optimization.h"
 #include "src/ic/handler-configuration-inl.h"
 #include "src/ic/handler-configuration.h"
@@ -2238,18 +2239,62 @@ MaybeObjectHandle StoreIC::ComputeHandler(LookupIterator* lookup) {
   return MaybeObjectHandle();
 }
 
-void KeyedStoreIC::UpdateStoreElement(Handle<Map> receiver_map,
+// We have a monomorphic IC (with `ic_map`) and an incoming `receiver` with a
+// different map. However, if we find an AllocationSite which can be
+// transitioned to `ic_map`, we can keep the IC monomorphic.
+bool KeyedStoreIC::CanTransitionAllocationSiteToStayMonomorphic(
+    Handle<Map> ic_map, Handle<HeapObject> receiver) {
+  if (ic_map->is_abandoned_prototype_map()) {
+    return false;
+  }
+  if (!IsJSObject(*receiver)) return false;
+
+  ElementsKind ic_elements_kind = ic_map->elements_kind();
+  Handle<Map> receiver_map = handle(receiver->map(), isolate());
+  ElementsKind receiver_elements_kind = receiver_map->elements_kind();
+
+  if (!IsFastElementsKind(ic_elements_kind)) return false;
+
+  // This might happen if the store already transitioned the receiver. If
+  // there's an AllocationSite, it has been updated already.
+  if (*receiver_map == *ic_map) return true;
+
+  if (!IsMoreGeneralElementsKindTransition(receiver_elements_kind,
+                                           ic_elements_kind)) {
+    return false;
+  }
+
+  Handle<JSObject> receiver_jsobject =
+      handle(Cast<JSObject>(*receiver), isolate());
+
+  DirectHandle<Map> new_receiver_map =
+      JSObject::GetElementsTransitionMap(receiver_jsobject, ic_elements_kind);
+
+  if (*new_receiver_map != *ic_map) return false;
+
+  // If the store already transitioned the receiver, we don't need any updates.
+
+  if (!JSObject::UpdateAllocationSite(receiver_jsobject, ic_elements_kind))
+    return false;
+
+  JSObject::TransitionElementsKind(receiver_jsobject, ic_elements_kind);
+
+  return true;
+}
+
+void KeyedStoreIC::UpdateStoreElement(Handle<Map> old_receiver_map,
                                       KeyedAccessStoreMode store_mode,
-                                      Handle<Map> new_receiver_map) {
+                                      Handle<HeapObject> receiver) {
   std::vector<MapAndHandler> target_maps_and_handlers;
   nexus()->ExtractMapsAndHandlers(
       &target_maps_and_handlers,
       [this](Handle<Map> map) { return Map::TryUpdate(isolate(), map); });
+  Handle<Map> new_receiver_map = handle(receiver->map(), isolate());
   if (target_maps_and_handlers.empty()) {
-    DirectHandle<Map> monomorphic_map = receiver_map;
+    DirectHandle<Map> monomorphic_map = old_receiver_map;
     // If we transitioned to a map that is a more general map than incoming
     // then use the new map.
-    if (IsTransitionOfMonomorphicTarget(*receiver_map, *new_receiver_map)) {
+    if (IsTransitionOfMonomorphicTarget(*old_receiver_map, *new_receiver_map)) {
       monomorphic_map = new_receiver_map;
     }
     Handle<Object> handler = StoreElementHandler(monomorphic_map, store_mode);
@@ -2282,15 +2327,20 @@ void KeyedStoreIC::UpdateStoreElement(Handle<Map> receiver_map,
           StoreElementHandler(transitioned_receiver_map, store_mode);
       ConfigureVectorState(Handle<Name>(), transitioned_receiver_map, handler);
       return;
+    } else if (CanTransitionAllocationSiteToStayMonomorphic(
+                   previous_receiver_map, receiver)) {
+      // The handler doesn't need to be changed.
+      set_vector_set(true);
+      return;
     }
     // If there is no transition and if we have seen the same map earlier and
     // there is only a change in the store_mode we can still stay monomorphic.
-    if (receiver_map.is_identical_to(previous_receiver_map) &&
-        new_receiver_map.is_identical_to(receiver_map) &&
+    if (old_receiver_map.is_identical_to(previous_receiver_map) &&
+        new_receiver_map.is_identical_to(old_receiver_map) &&
         StoreModeIsInBounds(old_store_mode) &&
         !StoreModeIsInBounds(store_mode)) {
-      if (IsJSArrayMap(*receiver_map) &&
-          JSArray::MayHaveReadOnlyLength(*receiver_map)) {
+      if (IsJSArrayMap(*old_receiver_map) &&
+          JSArray::MayHaveReadOnlyLength(*old_receiver_map)) {
         set_slow_stub_reason(
             "can't generalize store mode (potentially read-only length)");
         return;
@@ -2298,17 +2348,18 @@ void KeyedStoreIC::UpdateStoreElement(Handle<Map> receiver_map,
       // A "normal" IC that handles stores can switch to a version that can
       // grow at the end of the array, handle OOB accesses or copy COW arrays
       // and still stay MONOMORPHIC.
-      Handle<Object> handler = StoreElementHandler(receiver_map, store_mode);
-      return ConfigureVectorState(Handle<Name>(), receiver_map, handler);
+      Handle<Object> handler =
+          StoreElementHandler(old_receiver_map, store_mode);
+      return ConfigureVectorState(Handle<Name>(), old_receiver_map, handler);
     }
   }
 
   DCHECK(state() != GENERIC);
 
   bool map_added =
-      AddOneReceiverMapIfMissing(&target_maps_and_handlers, receiver_map);
+      AddOneReceiverMapIfMissing(&target_maps_and_handlers, old_receiver_map);
 
-  if (IsTransitionOfMonomorphicTarget(*receiver_map, *new_receiver_map)) {
+  if (IsTransitionOfMonomorphicTarget(*old_receiver_map, *new_receiver_map)) {
     map_added |=
         AddOneReceiverMapIfMissing(&target_maps_and_handlers, new_receiver_map);
   }
@@ -2366,8 +2417,8 @@ void KeyedStoreIC::UpdateStoreElement(Handle<Map> receiver_map,
 
   StoreElementPolymorphicHandlers(&target_maps_and_handlers, store_mode);
   if (target_maps_and_handlers.empty()) {
-    Handle<Object> handler = StoreElementHandler(receiver_map, store_mode);
-    ConfigureVectorState(Handle<Name>(), receiver_map, handler);
+    Handle<Object> handler = StoreElementHandler(old_receiver_map, store_mode);
+    ConfigureVectorState(Handle<Name>(), old_receiver_map, handler);
   } else if (target_maps_and_handlers.size() == 1) {
     ConfigureVectorState(Handle<Name>(), target_maps_and_handlers[0].first,
                          target_maps_and_handlers[0].second);
@@ -2674,7 +2725,7 @@ MaybeHandle<Object> KeyedStoreIC::Store(Handle<JSAny> object,
           // from fast path keyed stores.
           DirectHandle<HeapObject> receiver = Cast<HeapObject>(object);
           UpdateStoreElement(old_receiver_map, store_mode,
-                             handle(receiver->map(), isolate()));
+                             handle(*receiver, isolate()));
         } else {
           set_slow_stub_reason("prototype with potentially read-only elements");
         }
@@ -2735,8 +2786,7 @@ MaybeHandle<Object> StoreInArrayLiteralIC::Store(Handle<JSArray> array,
 
   if (IsSmi(*index)) {
     DCHECK(!old_array_map->is_abandoned_prototype_map());
-    UpdateStoreElement(old_array_map, store_mode,
-                       handle(array->map(), isolate()));
+    UpdateStoreElement(old_array_map, store_mode, array);
   } else {
     set_slow_stub_reason("index out of Smi range");
   }
