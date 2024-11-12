@@ -2803,6 +2803,8 @@ void DeclarationScope::AllocateScopeInfos(ParseInfo* info,
             // that's failing currently.
             if (v8_flags.verify_scope_info_reuse) {
               CHECK_EQ(*it->second, scope_info);
+            } else {
+              DCHECK_EQ(*it->second, scope_info);
             }
             while (scope_info != duplicate) {
               CHECK_EQ(scope_info->scope_type(), duplicate->scope_type());
