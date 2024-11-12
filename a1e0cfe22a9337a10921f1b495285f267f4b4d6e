@@ -52,6 +52,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "038d6325_9f6ebc49",
+        "filename": "src/execution/isolate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3988,
+      "author": {
+        "id": 3313062
+      },
+      "writtenOn": "2024-11-12T13:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a615ddf6_b7689608",
+      "revId": "a1e0cfe22a9337a10921f1b495285f267f4b4d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b42b160_e1444514",
@@ -65,6 +83,24 @@
       "writtenOn": "2024-11-12T10:48:22Z",
       "side": 1,
       "message": "This is a duplicate of line 169.",
+      "revId": "a1e0cfe22a9337a10921f1b495285f267f4b4d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e59ec43d_d6acf7d0",
+        "filename": "src/init/isolate-group.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3313062
+      },
+      "writtenOn": "2024-11-12T13:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b42b160_e1444514",
       "revId": "a1e0cfe22a9337a10921f1b495285f267f4b4d6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
