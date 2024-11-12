@@ -131,7 +131,8 @@ class AllocationSite : public Struct {
   template <AllocationSiteUpdateMode update_or_check =
                 AllocationSiteUpdateMode::kUpdate>
   static bool DigestTransitionFeedback(DirectHandle<AllocationSite> site,
-                                       ElementsKind to_kind);
+                                       ElementsKind to_kind,
+                                       bool return_true_if_noop);
 
   DECL_PRINTER(AllocationSite)
   DECL_VERIFIER(AllocationSite)

@@ -5444,7 +5444,8 @@ Maybe<bool> JSObject::AddDataElement(Handle<JSObject> object, uint32_t index,
 
 template <AllocationSiteUpdateMode update_or_check>
 bool JSObject::UpdateAllocationSite(DirectHandle<JSObject> object,
-                                    ElementsKind to_kind) {
+                                    ElementsKind to_kind,
+                                    bool return_true_if_noop) {
   if (!IsJSArray(*object)) return false;
 
   if (!HeapLayout::InYoungGeneration(*object)) return false;
@@ -5464,16 +5465,18 @@ bool JSObject::UpdateAllocationSite(DirectHandle<JSObject> object,
     // Walk through to the Allocation Site
     site = handle(memento->GetAllocationSite(), heap->isolate());
   }
-  return AllocationSite::DigestTransitionFeedback<update_or_check>(site,
-                                                                   to_kind);
+  return AllocationSite::DigestTransitionFeedback<update_or_check>(
+      site, to_kind, return_true_if_noop);
 }
 
 template bool
 JSObject::UpdateAllocationSite<AllocationSiteUpdateMode::kCheckOnly>(
-    DirectHandle<JSObject> object, ElementsKind to_kind);
+    DirectHandle<JSObject> object, ElementsKind to_kind,
+    bool return_true_if_noop);
 
 template bool JSObject::UpdateAllocationSite<AllocationSiteUpdateMode::kUpdate>(
-    DirectHandle<JSObject> object, ElementsKind to_kind);
+    DirectHandle<JSObject> object, ElementsKind to_kind,
+    bool return_true_if_noop);
 
 void JSObject::TransitionElementsKind(Handle<JSObject> object,
                                       ElementsKind to_kind) {

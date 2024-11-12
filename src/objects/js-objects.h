@@ -625,7 +625,8 @@ class JSObject : public TorqueGeneratedJSObject<JSObject, JSReceiver> {
   template <AllocationSiteUpdateMode update_or_check =
                 AllocationSiteUpdateMode::kUpdate>
   static bool UpdateAllocationSite(DirectHandle<JSObject> object,
-                                   ElementsKind to_kind);
+                                   ElementsKind to_kind,
+                                   bool return_true_if_noop = false);
 
   // Lookup interceptors are used for handling properties controlled by host
   // objects.

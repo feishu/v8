@@ -211,7 +211,8 @@ Address AllocationMemento::GetAllocationSiteUnchecked() const {
 
 template <AllocationSiteUpdateMode update_or_check>
 bool AllocationSite::DigestTransitionFeedback(DirectHandle<AllocationSite> site,
-                                              ElementsKind to_kind) {
+                                              ElementsKind to_kind,
+                                              bool return_true_if_noop) {
   Isolate* isolate = site->GetIsolate();
   bool result = false;
 
@@ -263,6 +264,8 @@ bool AllocationSite::DigestTransitionFeedback(DirectHandle<AllocationSite> site,
       site->SetElementsKind(to_kind);
       DependentCode::DeoptimizeDependencyGroups(
           isolate, *site, DependentCode::kAllocationSiteTransitionChangedGroup);
+      result = true;
+    } else if (kind == to_kind && return_true_if_noop) {
       result = true;
     }
   }
