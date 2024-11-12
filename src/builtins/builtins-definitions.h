@@ -1303,6 +1303,7 @@ namespace internal {
   TFC(GetProperty, GetProperty)                                                \
   TFS(GetPropertyWithReceiver, NeedsContext::kYes, kObject, kKey, kReceiver,   \
       kOnNonExistent)                                                          \
+  TFS(PrivateGet, NeedsContext::kYes, kObject, kKey)                           \
   TFS(SetProperty, NeedsContext::kYes, kReceiver, kKey, kValue)                \
   TFS(CreateDataProperty, NeedsContext::kYes, kReceiver, kKey, kValue)         \
   TFS(GetOwnPropertyDescriptor, NeedsContext::kYes, kReceiver, kKey)           \

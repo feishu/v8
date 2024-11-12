@@ -100,6 +100,8 @@ namespace internal {
   T(DebuggerFrame, "Debugger: Invalid frame index.")                           \
   T(DebuggerType, "Debugger: Parameters have wrong types.")                    \
   T(DeclarationMissingInitializer, "Missing initializer in % declaration")     \
+  T(DecoratorAccessCalledOnNonObject,                                          \
+    "Decorator access function called on non-object")                          \
   T(DefineDisallowed, "Cannot define property %, object is not extensible")    \
   T(DefineDisallowedFixedLayout,                                               \
     "Cannot define property %, object has fixed layout")                       \
@@ -124,6 +126,9 @@ namespace internal {
   T(IncompatibleMethodReceiver, "Method % called on incompatible receiver %")  \
   T(InstanceofNonobjectProto,                                                  \
     "Function has non-object prototype '%' in instanceof check")               \
+  T(InvalidDecoratorAddInitializer,                                            \
+    "Cannot add initializers after decorators "                                \
+    "have been executed")                                                      \
   T(InvalidArgument, "invalid_argument")                                       \
   T(InvalidArgumentForTemporal, "Invalid argument for Temporal %")             \
   T(InvalidInOperatorUse, "Cannot use 'in' operator to search for '%' in %")   \
