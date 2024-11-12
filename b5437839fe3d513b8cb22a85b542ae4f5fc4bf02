@@ -16,6 +16,29 @@
       "message": "ptal",
       "revId": "b5437839fe3d513b8cb22a85b542ae4f5fc4bf02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a6ce6bb_0e893f01",
+        "filename": "src/codegen/compiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2464,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2024-11-12T13:01:37Z",
+      "side": 1,
+      "message": "should we do something more helpful to crash debugging here than printing, e.g. PrintParamsAndDie?",
+      "range": {
+        "startLine": 2462,
+        "startChar": 0,
+        "endLine": 2464,
+        "endChar": 30
+      },
+      "revId": "b5437839fe3d513b8cb22a85b542ae4f5fc4bf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
