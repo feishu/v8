@@ -66,14 +66,14 @@ void JumpTableAssembler::InitializeJumpsToLazyCompileTable(
     // We write nops here instead of skipping to avoid partial instructions in
     // the jump table. Partial instructions can cause problems for the
     // disassembler.
-    jtasm.NopBytes(kJumpTableSlotSize - written_bytes);
+    DCHECK_EQ(kJumpTableSlotSize, written_bytes);
   }
   FlushInstructionCache(base, jump_table_size);
 }
 
 template <typename T>
 void JumpTableAssembler::emit(T value) {
-  base::WriteUnalignedValue<T>(reinterpret_cast<Address>(pc_), value);
+  base::WriteUnalignedValue<T>(pc_, value);
   pc_ += sizeof(T);
 }
 
@@ -84,7 +84,7 @@ void JumpTableAssembler::emit(T value, RelaxedStoreTag) DISABLE_UBSAN {
   // will still be atomic since they don't cross a qword boundary.
 #if V8_TARGET_ARCH_X64
 #ifdef DEBUG
-  Address write_start = reinterpret_cast<Address>(pc_);
+  Address write_start = pc_;
   Address write_end = write_start + sizeof(T) - 1;
   // Check that the write doesn't cross a qword boundary.
   DCHECK_EQ(write_start >> kSystemPointerSizeLog2,
@@ -108,8 +108,7 @@ void JumpTableAssembler::EmitLazyCompileJumpSlot(uint32_t func_index,
   };
 
   intptr_t displacement =
-      static_cast<intptr_t>(reinterpret_cast<uint8_t*>(lazy_compile_target) -
-                            (pc_ + kLazyCompileTableSlotSize));
+      lazy_compile_target - (pc_ + kLazyCompileTableSlotSize);
 
   emit<uint8_t>(inst[0]);
   emit<uint32_t>(func_index);
@@ -126,8 +125,8 @@ bool JumpTableAssembler::EmitJumpSlot(Address target) {
   emit<uint32_t>(nop, kRelaxedStore);
 #endif
 
-  intptr_t displacement = static_cast<intptr_t>(
-      reinterpret_cast<uint8_t*>(target) - (pc_ + kIntraSegmentJmpInstrSize));
+  intptr_t displacement =
+      target - (pc_ + MacroAssembler::kIntraSegmentJmpInstrSize);
   if (!is_int32(displacement)) return false;
 
   const uint8_t inst[kJumpTableSlotSize] = {
@@ -170,10 +169,6 @@ void JumpTableAssembler::PatchFarJumpSlot(Address slot, Address target) {
   // cores. It's ok if they temporarily jump to the old target.
 }
 
-void JumpTableAssembler::NopBytes(int bytes) {
-  if (bytes) Nop(bytes);
-}
-
 void JumpTableAssembler::SkipUntil(int offset) {
   DCHECK_GE(offset, pc_offset());
   pc_ += offset - pc_offset();
@@ -198,8 +193,8 @@ void JumpTableAssembler::EmitLazyCompileJumpSlot(uint32_t func_index,
 }
 
 bool JumpTableAssembler::EmitJumpSlot(Address target) {
-  intptr_t displacement = static_cast<intptr_t>(
-      reinterpret_cast<uint8_t*>(target) - (pc_ + kJumpTableSlotSize));
+  intptr_t displacement =
+      target - (pc_ + kJumpTableSlotSize));
 
   const uint8_t inst[kJumpTableSlotSize] = {
       0xe9, 0, 0, 0, 0,  // near_jmp displacement
@@ -220,10 +215,6 @@ void JumpTableAssembler::EmitFarJumpSlot(Address target) {
 // static
 void JumpTableAssembler::PatchFarJumpSlot(Address slot, Address target) {
   UNREACHABLE();
-}
-
-void JumpTableAssembler::NopBytes(int bytes) {
-  if (bytes) Nop(bytes);
 }
 
 void JumpTableAssembler::SkipUntil(int offset) {
@@ -274,14 +265,6 @@ void JumpTableAssembler::EmitFarJumpSlot(Address target) {
 // static
 void JumpTableAssembler::PatchFarJumpSlot(Address slot, Address target) {
   UNREACHABLE();
-}
-
-void JumpTableAssembler::NopBytes(int bytes) {
-  DCHECK_LE(0, bytes);
-  DCHECK_EQ(0, bytes % kInstrSize);
-  for (; bytes > 0; bytes -= kInstrSize) {
-    nop();
-  }
 }
 
 void JumpTableAssembler::SkipUntil(int offset) {
@@ -370,14 +353,6 @@ void JumpTableAssembler::PatchFarJumpSlot(Address slot, Address target) {
   // coherence. It's ok if other cores temporarily jump to the old target.
 }
 
-void JumpTableAssembler::NopBytes(int bytes) {
-  DCHECK_LE(0, bytes);
-  DCHECK_EQ(0, bytes % kInstrSize);
-  for (; bytes > 0; bytes -= kInstrSize) {
-    nop();
-  }
-}
-
 void JumpTableAssembler::SkipUntil(int offset) {
   // On this platform the jump table is not zapped with valid instructions, so
   // skipping over bytes is not allowed.
@@ -411,7 +386,7 @@ void JumpTableAssembler::EmitFarJumpSlot(Address target) {
   lgrl(ip, &target_addr);  // 6 bytes
   b(ip);                   // 8 bytes
 
-  CHECK_EQ(reinterpret_cast<Address>(pc_) & 0x7, 0);  // Alignment
+  CHECK_EQ(pc_ & 0x7, 0);  // Alignment
   bind(&target_addr);
   dp(target);
 }
@@ -567,7 +542,7 @@ void JumpTableAssembler::EmitFarJumpSlot(Address target) {
   int used = end - start;
   CHECK(used < kFarJumpTableSlotSize - 8);
   NopBytes(kFarJumpTableSlotSize - 8 - used);
-  CHECK_EQ(reinterpret_cast<Address>(pc_) & 0x7, 0);  // Alignment
+  CHECK_EQ(pc_ & 0x7, 0);  // Alignment
   dp(target);
 }
 
