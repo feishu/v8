@@ -65,6 +65,17 @@ double BoundedThroughput(const ::heap::base::SmoothedBytesAndDuration& buffer) {
   return std::min(buffer.GetThroughput(), kMaxSpeedInBytesPerMs);
 }
 
+std::optional<double> BoundedThroughput(
+    const std::optional<::heap::base::BytesAndDuration>& bytes_and_duration) {
+  constexpr double kMaxSpeedInBytesPerMs = static_cast<double>(GB);
+  if (!bytes_and_duration) {
+    return std::nullopt;
+  }
+  return std::min(bytes_and_duration->bytes /
+                      bytes_and_duration->duration.InMillisecondsF(),
+                  kMaxSpeedInBytesPerMs);
+}
+
 }  // namespace
 
 GCTracer::Event::Event(Type type, State state,
@@ -346,8 +357,8 @@ void GCTracer::StopObservablePause(GarbageCollector collector,
   auto* long_task_stats = heap_->isolate()->GetCurrentLongTaskStats();
   const bool is_young = Heap::IsYoungGenerationCollector(collector);
   if (is_young) {
-    recorded_minor_gc_atomic_pause_.Push(
-        BytesAndDuration(current_.survived_young_object_size, duration));
+    recorded_minor_gc_atomic_pause_ =
+        BytesAndDuration(current_.survived_young_object_size, duration);
     long_task_stats->gc_young_wall_clock_duration_us +=
         duration.InMicroseconds();
   } else {
@@ -462,8 +473,8 @@ void GCTracer::StopCycle(GarbageCollector collector) {
 
     const v8::base::TimeDelta per_thread_wall_time =
         YoungGenerationWallTime(current_) / current_.concurrency_estimate;
-    recorded_minor_gc_per_thread_.Push(BytesAndDuration(
-        current_.survived_young_object_size, per_thread_wall_time));
+    recorded_minor_gc_per_thread_ = BytesAndDuration(
+        current_.survived_young_object_size, per_thread_wall_time);
 
     // If a young generation GC interrupted an unfinished full GC cycle, restore
     // the event corresponding to the full GC cycle.
@@ -871,7 +882,8 @@ void GCTracer::PrintNVP() const {
           incremental_scope(GCTracer::Scope::MC_INCREMENTAL).steps,
           current_scope(Scope::MC_INCREMENTAL),
           YoungGenerationSpeedInBytesPerMillisecond(
-              YoungGenerationSpeedMode::kOnlyAtomicPause),
+              YoungGenerationSpeedMode::kOnlyAtomicPause)
+              .value_or(0),
           current_.start_object_size, current_.end_object_size,
           current_.start_holes_size, current_.end_holes_size,
           allocated_since_last_gc, heap_->promoted_objects_size(),
@@ -1196,7 +1208,7 @@ std::optional<base::TimeDelta> GCTracer::AverageTimeToIncrementalMarkingTask()
 
 void GCTracer::RecordEmbedderMarkingSpeed(size_t bytes,
                                           base::TimeDelta duration) {
-  recorded_embedder_marking_.Push(BytesAndDuration(bytes, duration));
+  recorded_embedder_marking_ = BytesAndDuration(bytes, duration);
 }
 
 void GCTracer::RecordMutatorUtilization(base::TimeTicks mark_compact_end_time,
@@ -1248,17 +1260,17 @@ double GCTracer::IncrementalMarkingSpeedInBytesPerMillisecond() const {
   return kConservativeSpeedInBytesPerMillisecond;
 }
 
-double GCTracer::EmbedderSpeedInBytesPerMillisecond() const {
-  return BoundedAverageSpeed(recorded_embedder_marking_);
+std::optional<double> GCTracer::EmbedderSpeedInBytesPerMillisecond() const {
+  return BoundedThroughput(recorded_embedder_marking_);
 }
 
-double GCTracer::YoungGenerationSpeedInBytesPerMillisecond(
+std::optional<double> GCTracer::YoungGenerationSpeedInBytesPerMillisecond(
     YoungGenerationSpeedMode mode) const {
   switch (mode) {
     case YoungGenerationSpeedMode::kUpToAndIncludingAtomicPause:
-      return BoundedAverageSpeed(recorded_minor_gc_per_thread_);
+      return BoundedThroughput(recorded_minor_gc_per_thread_);
     case YoungGenerationSpeedMode::kOnlyAtomicPause:
-      return BoundedAverageSpeed(recorded_minor_gc_atomic_pause_);
+      return BoundedThroughput(recorded_minor_gc_atomic_pause_);
   }
   UNREACHABLE();
 }
@@ -1275,9 +1287,9 @@ double GCTracer::FinalIncrementalMarkCompactSpeedInBytesPerMillisecond() const {
   return BoundedAverageSpeed(recorded_incremental_mark_compacts_);
 }
 
-double GCTracer::OldGenerationSpeedInBytesPerMillisecond() {
+std::optional<double> GCTracer::OldGenerationSpeedInBytesPerMillisecond() {
   if (v8_flags.gc_speed_uses_counters) {
-    return BoundedAverageSpeed(recorded_major_totals_);
+    return BoundedThroughput(recorded_major_total_);
   }
 
   const double kMinimumMarkingSpeed = 0.5;
@@ -1416,8 +1428,8 @@ void GCTracer::RecordGCSumCounters() {
         background_scopes_[Scope::MC_BACKGROUND_MARKING];
   }
 
-  recorded_major_totals_.Push(
-      BytesAndDuration(current_.end_object_size, overall_duration));
+  recorded_major_total_ =
+      BytesAndDuration(current_.end_object_size, overall_duration);
 
   // Emit trace event counters.
   TRACE_EVENT_INSTANT2(

@@ -353,17 +353,13 @@ class V8_EXPORT_PRIVATE GCTracer {
   // Returns a conservative value if no events have been recorded.
   double IncrementalMarkingSpeedInBytesPerMillisecond() const;
 
-  // Compute the average embedder speed in bytes/millisecond.
-  // Returns a conservative value if no events have been recorded.
-  double EmbedderSpeedInBytesPerMillisecond() const;
-
   // Average estimaged young generation speed in bytes/millisecond. This factors
   // in concurrency and assumes that the level of concurrency provided by the
   // embedder is stable. E.g., receiving lower concurrency than previously
   // recorded events will yield in lower current speed.
   //
   // Returns 0 if no events have been recorded.
-  double YoungGenerationSpeedInBytesPerMillisecond(
+  std::optional<double> YoungGenerationSpeedInBytesPerMillisecond(
       YoungGenerationSpeedMode mode) const;
 
   // Compute the average compaction speed in bytes/millisecond.
@@ -381,7 +377,11 @@ class V8_EXPORT_PRIVATE GCTracer {
 
   // Compute the overall old generation mark compact speed including incremental
   // steps and the final mark-compact step.
-  double OldGenerationSpeedInBytesPerMillisecond();
+  std::optional<double> OldGenerationSpeedInBytesPerMillisecond();
+
+  // Compute the average embedder speed in bytes/millisecond.
+  // Returns a conservative value if no events have been recorded.
+  std::optional<double> EmbedderSpeedInBytesPerMillisecond() const;
 
   // Allocation throughput in the new space in bytes/millisecond.
   // Returns 0 if no allocation events have been recorded.
@@ -448,6 +448,7 @@ class V8_EXPORT_PRIVATE GCTracer {
 
  private:
   using BytesAndDurationBuffer = ::heap::base::BytesAndDurationBuffer;
+  using BytesAndDuration = ::heap::base::BytesAndDuration;
   using SmoothedBytesAndDuration = ::heap::base::SmoothedBytesAndDuration;
 
   struct BackgroundCounter {
@@ -547,8 +548,8 @@ class V8_EXPORT_PRIVATE GCTracer {
   BytesAndDurationBuffer recorded_compactions_;
   BytesAndDurationBuffer recorded_incremental_mark_compacts_;
   BytesAndDurationBuffer recorded_mark_compacts_;
-  BytesAndDurationBuffer recorded_major_totals_;
-  BytesAndDurationBuffer recorded_embedder_marking_;
+  std::optional<BytesAndDuration> recorded_major_total_;
+  std::optional<BytesAndDuration> recorded_embedder_marking_;
 
   static constexpr base::TimeDelta kSmoothedAllocationSpeedDecayRate =
       v8::base::TimeDelta::FromMilliseconds(100);
@@ -562,8 +563,8 @@ class V8_EXPORT_PRIVATE GCTracer {
 
   // Estimate for young generation speed. Based on walltime and concurrency
   // estimates.
-  BytesAndDurationBuffer recorded_minor_gc_per_thread_;
-  BytesAndDurationBuffer recorded_minor_gc_atomic_pause_;
+  std::optional<BytesAndDuration> recorded_minor_gc_per_thread_;
+  std::optional<BytesAndDuration> recorded_minor_gc_atomic_pause_;
   base::RingBuffer<double> recorded_survival_ratios_;
 
   // A full GC cycle stops only when both v8 and cppgc (if available) GCs have
