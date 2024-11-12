@@ -91,6 +91,30 @@
       ],
       "revId": "c3f33c17ec83da6a7c5345d10c7ae880311c1c0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "607d062e_8de92fa2",
+        "filename": "test/unittests/heap/marking-bitmap-unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2024-11-12T10:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a67ced4_6bf5ace9",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "c3f33c17ec83da6a7c5345d10c7ae880311c1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
