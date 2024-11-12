@@ -753,8 +753,14 @@ builtin CallRefIC(
 builtin CallIndirectIC(
     vector: FixedArray, vectorIndex: int32, target: WasmCodePointer,
     implicitArg: WasmTrustedInstanceData|WasmImportData): TargetAndImplicitArg {
-  const truncatedTarget =
-      SmiTag(Signed(Convert<uintptr>(target) & kSmiMaxValue));
+  // If this is a cross-instance call, don't track the precise target (which we
+  // may not inline anyway), but mark it as `Undefined`, so that we can prevent
+  // a deopt loop via `TransitiveTypeFeedbackProcessor::ProcessFunction`.
+  // See https://crrev.com/c/6011089.
+  const instance = LoadInstanceDataFromFrame();
+  const truncatedTarget = TaggedEqual(implicitArg, instance) ?
+      SmiTag(Signed(Convert<uintptr>(target) & kSmiMaxValue)) :
+      Undefined;
   UpdateCallRefOrIndirectIC(
       vector, Convert<intptr>(vectorIndex), truncatedTarget);
 
