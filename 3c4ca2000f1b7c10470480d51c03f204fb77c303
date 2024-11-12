@@ -507,6 +507,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3915b7ea_f20e9a3e",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1323977
+      },
+      "writtenOn": "2024-11-12T05:41:57Z",
+      "side": 1,
+      "message": "Thanks for sticking with this, we appreciate it :)\n\nIf a developer types\n\n```\n{\n  using x \u003d { [Symbol.dispose]() { throw 1; } };\n  using y \u003d { [Symbol.dispose]() { throw 2; } };\n}\n```\n\nThey would indeed see only one error message in the console. But I\u0027d argue that when they debug this, and attempt to find the actual root cause, it would serve them better if we pause on `throw 1` (and `throw 2`).\n\nDoes the `SuppressedError` carry the \"original errors\" forward in some form? If not, developers might not be able to tell what actually threw and how the throwing location was reached. Especially if we just pause on the `SuppressedError` re-throw site with nothing further to go on.",
+      "parentUuid": "5f270c08_b91b46ff",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf9f8cd_dc4dd735",
         "filename": "test/inspector/runtime/evaluate-repl-mode-using-await-using.js",
         "patchSetId": 19
