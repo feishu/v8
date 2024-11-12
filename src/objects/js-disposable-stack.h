@@ -55,6 +55,7 @@ class JSDisposableStackBase
   inline void set_state(DisposableStackState value);
   DECL_BOOLEAN_ACCESSORS(needsAwait)
   DECL_BOOLEAN_ACCESSORS(hasAwaited)
+  DECL_BOOLEAN_ACCESSORS(suppressedErrorCreated)
   DECL_INT_ACCESSORS(length)
 
   enum class AsyncDisposableStackContextSlots {
