@@ -753,6 +753,16 @@ builtin CallRefIC(
 builtin CallIndirectIC(
     vector: FixedArray, vectorIndex: int32, target: WasmCodePointer,
     implicitArg: WasmTrustedInstanceData|WasmImportData): TargetAndImplicitArg {
+<<<<<<< PATCH SET (eb4e65 [wasm] Fix deopt loop with cross-instance call_indirect)
+  // If this is a cross-instance call, don't track the precise target (which we
+  // may not inline anyway), but mark it as `Undefined`, so that we can prevent
+  // a deopt loop via `TransitiveTypeFeedbackProcessor::ProcessFunction`.
+  // See https://crrev.com/c/6011089.
+  const instance = LoadInstanceDataFromFrame();
+  const truncatedTarget = TaggedEqual(implicitArg, instance) ?
+      SmiTag(Signed(Convert<uintptr>(target) & kSmiMaxValue)) :
+      Undefined;
+=======
   // We increase the call counter for the target, regardless of whether the
   // instance (in `implicitArg`) matches the current instance or not.
   // Technically this overcounts feedback of cross-instance, same module
@@ -764,6 +774,7 @@ builtin CallIndirectIC(
 
   const truncatedTarget =
       SmiTag(Signed(Convert<uintptr>(target) & kSmiMaxValue));
+>>>>>>> BASE      (163c92 [wasm] Check instance before inlined call_indirect code)
   UpdateCallRefOrIndirectIC(
       vector, Convert<intptr>(vectorIndex), truncatedTarget);
 
