@@ -529,6 +529,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad24a3a3_5784776a",
+        "filename": "test/inspector/debugger/break-on-exception-explicit-resource-management-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-12T22:20:52Z",
+      "side": 1,
+      "message": "Yes, the `SuppressedError` does carry the original errors via the `.suppressed` property. (In fact it can form a tree.) Your argument makes sense, and we\u0027re going with yours and Eric\u0027s preferred semantics in this CL.",
+      "parentUuid": "3915b7ea_f20e9a3e",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "3c4ca2000f1b7c10470480d51c03f204fb77c303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abf9f8cd_dc4dd735",
