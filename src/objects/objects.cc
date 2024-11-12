@@ -6185,6 +6185,7 @@ void JSDisposableStackBase::InitializeJSDisposableStackBase(
   disposable_stack->set_stack(*array);
   disposable_stack->set_needsAwait(false);
   disposable_stack->set_hasAwaited(false);
+  disposable_stack->set_suppressedErrorCreated(false);
   disposable_stack->set_length(0);
   disposable_stack->set_state(DisposableStackState::kPending);
   disposable_stack->set_error(*(isolate->factory()->uninitialized_value()));
