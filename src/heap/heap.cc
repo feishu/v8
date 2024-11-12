@@ -2226,12 +2226,16 @@ void ClearStubCaches(Isolate* isolate) {
   isolate->load_stub_cache()->Clear();
   isolate->store_stub_cache()->Clear();
   isolate->define_own_stub_cache()->Clear();
+  isolate->keyed_load_stub_cache()->Clear();
+  isolate->keyed_store_stub_cache()->Clear();
 
   if (isolate->is_shared_space_isolate()) {
     isolate->global_safepoint()->IterateClientIsolates([](Isolate* client) {
       client->load_stub_cache()->Clear();
       client->store_stub_cache()->Clear();
       client->define_own_stub_cache()->Clear();
+      client->keyed_load_stub_cache()->Clear();
+      client->keyed_store_stub_cache()->Clear();
     });
   }
 }
