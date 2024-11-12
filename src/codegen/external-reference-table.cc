@@ -304,9 +304,10 @@ void ExternalReferenceTable::AddStubCache(Isolate* isolate, int* index) {
            *index);
 
   // Stub cache tables
-  std::array<StubCache*, 3> stub_caches{isolate->load_stub_cache(),
-                                        isolate->store_stub_cache(),
-                                        isolate->define_own_stub_cache()};
+  std::array<StubCache*, 5> stub_caches{
+      isolate->load_stub_cache(), isolate->store_stub_cache(),
+      isolate->define_own_stub_cache(), isolate->keyed_load_stub_cache(),
+      isolate->keyed_store_stub_cache()};
 
   for (StubCache* stub_cache : stub_caches) {
     Add(stub_cache->key_reference(StubCache::kPrimary).address(), index);

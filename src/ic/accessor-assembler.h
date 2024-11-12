@@ -537,7 +537,8 @@ class V8_EXPORT_PRIVATE AccessorAssembler : public CodeStubAssembler {
   void GenericPropertyLoad(TNode<HeapObject> lookup_start_object,
                            TNode<Map> lookup_start_object_map,
                            TNode<Int32T> lookup_start_object_instance_type,
-                           const LoadICParameters* p, Label* slow,
+                           const LoadICParameters* p, bool is_keyed,
+                           Label* slow,
                            UseStubCache use_stub_cache = kUseStubCache);
 
   // Low-level helpers.

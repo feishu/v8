@@ -1295,6 +1295,8 @@ class V8_EXPORT_PRIVATE Isolate final : private HiddenFactory {
   StubCache* load_stub_cache() const { return load_stub_cache_; }
   StubCache* store_stub_cache() const { return store_stub_cache_; }
   StubCache* define_own_stub_cache() const { return define_own_stub_cache_; }
+  StubCache* keyed_load_stub_cache() const { return keyed_load_stub_cache_; }
+  StubCache* keyed_store_stub_cache() const { return keyed_store_stub_cache_; }
   Deoptimizer* GetAndClearCurrentDeoptimizer() {
     Deoptimizer* result = current_deoptimizer_;
     CHECK_NOT_NULL(result);
@@ -2451,6 +2453,8 @@ class V8_EXPORT_PRIVATE Isolate final : private HiddenFactory {
   StubCache* load_stub_cache_ = nullptr;
   StubCache* store_stub_cache_ = nullptr;
   StubCache* define_own_stub_cache_ = nullptr;
+  StubCache* keyed_load_stub_cache_ = nullptr;
+  StubCache* keyed_store_stub_cache_ = nullptr;
   Deoptimizer* current_deoptimizer_ = nullptr;
   bool deoptimizer_lazy_throw_ = false;
   MaterializedObjectStore* materialized_object_store_ = nullptr;

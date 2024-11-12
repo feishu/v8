@@ -107,7 +107,7 @@ class KeyedStoreGenericAssembler : public AccessorAssembler {
   void EmitGenericPropertyStore(TNode<JSReceiver> receiver,
                                 TNode<Map> receiver_map,
                                 TNode<Uint16T> instance_type,
-                                const StoreICParameters* p,
+                                const StoreICParameters* p, bool is_keyed,
                                 ExitPoint* exit_point, Label* slow,
                                 Maybe<LanguageMode> maybe_language_mode,
                                 UseStubCache use_stub_cache);
@@ -115,9 +115,10 @@ class KeyedStoreGenericAssembler : public AccessorAssembler {
   void EmitGenericPropertyStore(TNode<JSReceiver> receiver,
                                 TNode<Map> receiver_map,
                                 TNode<Uint16T> instance_type,
-                                const StoreICParameters* p, Label* slow) {
+                                const StoreICParameters* p, bool is_keyed,
+                                Label* slow) {
     ExitPoint direct_exit(this);
-    EmitGenericPropertyStore(receiver, receiver_map, instance_type, p,
+    EmitGenericPropertyStore(receiver, receiver_map, instance_type, p, is_keyed,
                              &direct_exit, slow, Nothing<LanguageMode>(),
                              kDontUseStubCache);
   }
@@ -864,7 +865,7 @@ TNode<Map> KeyedStoreGenericAssembler::FindCandidateStoreICTransitionMapHandler(
 
 void KeyedStoreGenericAssembler::EmitGenericPropertyStore(
     TNode<JSReceiver> receiver, TNode<Map> receiver_map,
-    TNode<Uint16T> instance_type, const StoreICParameters* p,
+    TNode<Uint16T> instance_type, const StoreICParameters* p, bool is_keyed,
     ExitPoint* exit_point, Label* slow, Maybe<LanguageMode> maybe_language_mode,
     UseStubCache use_stub_cache) {
   CSA_DCHECK(this, IsSimpleObjectMap(receiver_map));
@@ -882,78 +883,83 @@ void KeyedStoreGenericAssembler::EmitGenericPropertyStore(
   BIND(&fast_properties);
   {
     Comment("fast property store");
-    TNode<DescriptorArray> descriptors = LoadMapDescriptors(receiver_map);
     Label descriptor_found(this), lookup_transition(this);
     TVARIABLE(IntPtrT, var_name_index);
-    DescriptorLookup(name, descriptors, bitfield3,
-                     IsAnyDefineOwn() ? slow : &descriptor_found,
-                     &var_name_index, &lookup_transition);
+    if (use_stub_cache == kUseStubCache) {
+      Goto(&try_stub_cache);
+    } else {
+      TNode<DescriptorArray> descriptors = LoadMapDescriptors(receiver_map);
+      DescriptorLookup(name, descriptors, bitfield3,
+                       IsAnyDefineOwn() ? slow : &descriptor_found,
+                       &var_name_index, &lookup_transition);
 
-    // When dealing with class fields defined with DefineKeyedOwnIC or
-    // DefineNamedOwnIC, use the slow path to check the existing property.
-    if (!IsAnyDefineOwn()) {
-      BIND(&descriptor_found);
-      {
-        TNode<IntPtrT> name_index = var_name_index.value();
-        TNode<Uint32T> details = LoadDetailsByKeyIndex(descriptors, name_index);
-        Label data_property(this);
-        JumpIfDataProperty(details, &data_property,
-                           ShouldReconfigureExisting() ? nullptr : &readonly);
-
-        if (ShouldCallSetter()) {
-          // Accessor case.
-          // TODO(jkummerow): Implement a trimmed-down
-          // LoadAccessorFromFastObject.
-          LoadPropertyFromFastObject(receiver, receiver_map, descriptors,
-                                     name_index, details, &var_accessor_pair);
-          var_accessor_holder = receiver;
-          Goto(&accessor);
-        } else {
-          // Handle accessor to data property reconfiguration in runtime.
-          Goto(slow);
-        }
-
-        BIND(&data_property);
+      // When dealing with class fields defined with DefineKeyedOwnIC or
+      // DefineNamedOwnIC, use the slow path to check the existing property.
+      if (!IsAnyDefineOwn()) {
+        BIND(&descriptor_found);
         {
-          Label shared(this);
-          GotoIf(IsJSSharedStructInstanceType(instance_type), &shared);
+          TNode<IntPtrT> name_index = var_name_index.value();
+          TNode<Uint32T> details =
+              LoadDetailsByKeyIndex(descriptors, name_index);
+          Label data_property(this);
+          JumpIfDataProperty(details, &data_property,
+                             ShouldReconfigureExisting() ? nullptr : &readonly);
 
-          CheckForAssociatedProtector(name, slow);
-          OverwriteExistingFastDataProperty(receiver, receiver_map, descriptors,
-                                            name_index, details, p->value(),
-                                            slow, false);
-          exit_point->Return(p->value());
+          if (ShouldCallSetter()) {
+            // Accessor case.
+            // TODO(jkummerow): Implement a trimmed-down
+            // LoadAccessorFromFastObject.
+            LoadPropertyFromFastObject(receiver, receiver_map, descriptors,
+                                       name_index, details, &var_accessor_pair);
+            var_accessor_holder = receiver;
+            Goto(&accessor);
+          } else {
+            // Handle accessor to data property reconfiguration in runtime.
+            Goto(slow);
+          }
 
-          BIND(&shared);
+          BIND(&data_property);
           {
-            StoreJSSharedStructField(p->context(), receiver, receiver_map,
-                                     descriptors, name_index, details,
-                                     p->value());
+            Label shared(this);
+            GotoIf(IsJSSharedStructInstanceType(instance_type), &shared);
+
+            CheckForAssociatedProtector(name, slow);
+            OverwriteExistingFastDataProperty(receiver, receiver_map,
+                                              descriptors, name_index, details,
+                                              p->value(), slow, false);
             exit_point->Return(p->value());
+
+            BIND(&shared);
+            {
+              StoreJSSharedStructField(p->context(), receiver, receiver_map,
+                                       descriptors, name_index, details,
+                                       p->value());
+              exit_point->Return(p->value());
+            }
           }
         }
       }
-    }
 
-    BIND(&lookup_transition);
-    {
-      Comment("lookup transition");
-      CheckForAssociatedProtector(name, slow);
+      BIND(&lookup_transition);
+      {
+        Comment("lookup transition");
+        CheckForAssociatedProtector(name, slow);
 
-      DCHECK_IMPLIES(use_stub_cache == kUseStubCache, IsSet());
-      Label* if_not_found =
-          use_stub_cache == kUseStubCache ? &try_stub_cache : slow;
+        DCHECK_IMPLIES(use_stub_cache == kUseStubCache, IsSet());
+        Label* if_not_found =
+            use_stub_cache == kUseStubCache ? &try_stub_cache : slow;
 
-      TNode<Map> transition_map = FindCandidateStoreICTransitionMapHandler(
-          receiver_map, name, if_not_found);
+        TNode<Map> transition_map = FindCandidateStoreICTransitionMapHandler(
+            receiver_map, name, if_not_found);
 
-      // Validate the transition handler candidate and apply the transition.
-      StoreTransitionMapFlags flags = kValidateTransitionHandler;
-      if (ShouldCheckPrototypeValidity()) {
-        flags = StoreTransitionMapFlags(flags | kCheckPrototypeValidity);
+        // Validate the transition handler candidate and apply the transition.
+        StoreTransitionMapFlags flags = kValidateTransitionHandler;
+        if (ShouldCheckPrototypeValidity()) {
+          flags = StoreTransitionMapFlags(flags | kCheckPrototypeValidity);
+        }
+        HandleStoreICTransitionMapHandlerCase(p, transition_map, slow, flags);
+        exit_point->Return(p->value());
       }
-      HandleStoreICTransitionMapHandlerCase(p, transition_map, slow, flags);
-      exit_point->Return(p->value());
     }
   }
 
@@ -1126,15 +1132,13 @@ void KeyedStoreGenericAssembler::EmitGenericPropertyStore(
   if (use_stub_cache == kUseStubCache) {
     DCHECK(IsSet());
     BIND(&try_stub_cache);
-    // Do megamorphic cache lookup only for Api objects where it definitely
-    // pays off.
-    GotoIfNot(IsJSApiObjectInstanceType(instance_type), slow);
-
     Comment("stub cache probe");
     TVARIABLE(MaybeObject, var_handler);
     Label found_handler(this, &var_handler), stub_cache_miss(this);
 
-    TryProbeStubCache(p->stub_cache(isolate()), receiver, name, &found_handler,
+    StubCache* local_stub_cache = is_keyed ? isolate()->keyed_store_stub_cache()
+                                           : isolate()->store_stub_cache();
+    TryProbeStubCache(local_stub_cache, receiver, name, &found_handler,
                       &var_handler, &stub_cache_miss);
 
     BIND(&found_handler);
@@ -1190,7 +1194,7 @@ void KeyedStoreGenericAssembler::KeyedStoreGeneric(
                         StoreICMode::kDefault);
     ExitPoint direct_exit(this);
     EmitGenericPropertyStore(CAST(receiver), receiver_map, instance_type, &p,
-                             &direct_exit, &slow, language_mode,
+                             true, &direct_exit, &slow, language_mode,
                              use_stub_cache);
   }
 
@@ -1286,7 +1290,7 @@ void KeyedStoreGenericAssembler::StoreIC_NoFeedback() {
                           IsDefineNamedOwn() ? StoreICMode::kDefineNamedOwn
                                              : StoreICMode::kDefault);
       EmitGenericPropertyStore(CAST(receiver), receiver_map, instance_type, &p,
-                               &miss);
+                               false, &miss);
     }
   }
 
@@ -1319,8 +1323,8 @@ void KeyedStoreGenericAssembler::StoreProperty(TNode<Context> context,
 
   TNode<Map> map = LoadMap(receiver);
   TNode<Uint16T> instance_type = LoadMapInstanceType(map);
-  EmitGenericPropertyStore(receiver, map, instance_type, &p, &exit_point, &slow,
-                           Just(language_mode), kDontUseStubCache);
+  EmitGenericPropertyStore(receiver, map, instance_type, &p, true, &exit_point,
+                           &slow, Just(language_mode), kDontUseStubCache);
 
   BIND(&slow);
   {
