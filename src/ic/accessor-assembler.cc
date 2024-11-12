@@ -339,6 +339,8 @@ void AccessorAssembler::HandleLoadICHandlerCase(
   TVARIABLE(Object, var_holder, p->lookup_start_object());
   TVARIABLE(MaybeObject, var_smi_handler, handler);
 
+  // Label if_smi_handler(this, {&var_holder, &var_smi_handler}),
+  // handler_miss(this);
   Label if_smi_handler(this, {&var_holder, &var_smi_handler});
   Label try_proto_handler(this, Label::kDeferred),
       call_code_handler(this, Label::kDeferred),
@@ -350,9 +352,10 @@ void AccessorAssembler::HandleLoadICHandlerCase(
   {
     GotoIf(IsWeakOrCleared(handler), &call_getter);
     GotoIf(IsCode(CAST(handler)), &call_code_handler);
-    HandleLoadICProtoHandler(p, CAST(handler), &var_holder, &var_smi_handler,
-                             &if_smi_handler, miss, exit_point, ic_mode,
-                             access_mode);
+    HandleLoadICProtoHandler(
+        p, CAST(handler), &var_holder, &var_smi_handler,
+        //&if_smi_handler, &handler_miss, exit_point, ic_mode,
+        &if_smi_handler, miss, exit_point, ic_mode, access_mode);
   }
 
   // |handler| is a Smi, encoding what to do. See SmiHandler methods
@@ -360,6 +363,8 @@ void AccessorAssembler::HandleLoadICHandlerCase(
   BIND(&if_smi_handler);
   {
     HandleLoadICSmiHandlerCase(
+        // p, var_holder.value(), CAST(var_smi_handler.value()), handler,
+        // &handler_miss,
         p, var_holder.value(), CAST(var_smi_handler.value()), handler, miss,
         exit_point, ic_mode, on_nonexistent, support_elements, access_mode);
   }
@@ -369,6 +374,8 @@ void AccessorAssembler::HandleLoadICHandlerCase(
     if (access_mode == LoadAccessMode::kHas) {
       exit_point->Return(TrueConstant());
     } else {
+      // TNode<HeapObject> strong_handler = GetHeapObjectAssumeWeak(handler,
+      // &handler_miss);
       TNode<HeapObject> strong_handler = GetHeapObjectAssumeWeak(handler, miss);
       TNode<JSFunction> getter =
           CAST(LoadAccessorPairGetter(CAST(strong_handler)));
@@ -391,6 +398,12 @@ void AccessorAssembler::HandleLoadICHandlerCase(
                                p->context(), p->lookup_start_object(),
                                p->name(), p->slot(), p->vector());
   }
+
+  /*BIND(&handler_miss);
+  {
+    Print("total handler miss");
+    Goto(miss);
+  }*/
 }
 
 void AccessorAssembler::HandleLoadCallbackProperty(
@@ -2847,7 +2860,7 @@ void AccessorAssembler::GenericElementLoad(
 void AccessorAssembler::GenericPropertyLoad(
     TNode<HeapObject> lookup_start_object, TNode<Map> lookup_start_object_map,
     TNode<Int32T> lookup_start_object_instance_type, const LoadICParameters* p,
-    Label* slow, UseStubCache use_stub_cache) {
+    bool is_keyed, Label* slow, UseStubCache use_stub_cache) {
   DCHECK_EQ(lookup_start_object, p->lookup_start_object());
   ExitPoint direct_exit(this);
 
@@ -2864,51 +2877,61 @@ void AccessorAssembler::GenericPropertyLoad(
   GotoIf(IsSpecialReceiverInstanceType(lookup_start_object_instance_type),
          &special_receiver);
 
-  // Check if the lookup_start_object has fast or slow properties.
   TNode<Uint32T> bitfield3 = LoadMapBitField3(lookup_start_object_map);
-  GotoIf(IsSetWord32<Map::Bits3::IsDictionaryMapBit>(bitfield3),
-         &if_property_dictionary);
-
   {
     // Try looking up the property on the lookup_start_object; if unsuccessful,
     // look for a handler in the stub cache.
-    TNode<DescriptorArray> descriptors =
-        LoadMapDescriptors(lookup_start_object_map);
+    Label try_stub_cache(this);
+    if (use_stub_cache == kUseStubCache) {
+      Goto(&try_stub_cache);
+    } else {
+      GotoIf(IsSetWord32<Map::Bits3::IsDictionaryMapBit>(bitfield3),
+             &if_property_dictionary);
+      TNode<DescriptorArray> descriptors =
+          LoadMapDescriptors(lookup_start_object_map);
+      Label if_descriptor_found(this), try_stub_cache(this);
+      TVARIABLE(IntPtrT, var_name_index);
+      DescriptorLookup(name, descriptors, bitfield3, &if_descriptor_found,
+                       &var_name_index, &lookup_prototype_chain);
 
-    Label if_descriptor_found(this), try_stub_cache(this);
-    TVARIABLE(IntPtrT, var_name_index);
-    Label* notfound = use_stub_cache == kUseStubCache ? &try_stub_cache
-                                                      : &lookup_prototype_chain;
-    DescriptorLookup(name, descriptors, bitfield3, &if_descriptor_found,
-                     &var_name_index, notfound);
-
-    BIND(&if_descriptor_found);
-    {
-      LoadPropertyFromFastObject(lookup_start_object, lookup_start_object_map,
-                                 descriptors, var_name_index.value(),
-                                 &var_details, &var_value);
-      Goto(&if_found_on_lookup_start_object);
+      BIND(&if_descriptor_found);
+      {
+        LoadPropertyFromFastObject(lookup_start_object, lookup_start_object_map,
+                                   descriptors, var_name_index.value(),
+                                   &var_details, &var_value);
+        Goto(&if_found_on_lookup_start_object);
+      }
     }
 
     if (use_stub_cache == kUseStubCache) {
       DCHECK_EQ(lookup_start_object, p->receiver_and_lookup_start_object());
       Label stub_cache(this);
       BIND(&try_stub_cache);
-      // When there is no feedback vector don't use stub cache.
+      // Print("try_stub_cache");
+      //  When there is no feedback vector don't use stub cache.
       GotoIfNot(IsUndefined(p->vector()), &stub_cache);
-      // Fall back to the slow path for private symbols.
-      Branch(IsPrivateSymbol(name), slow, &lookup_prototype_chain);
-
-      BIND(&stub_cache);
-      Comment("stub cache probe for fast property load");
       TVARIABLE(MaybeObject, var_handler);
       Label found_handler(this, &var_handler), stub_cache_miss(this);
-      TryProbeStubCache(isolate()->load_stub_cache(), lookup_start_object,
+      // Fall back to the slow path for private symbols.
+      Branch(IsPrivateSymbol(name), slow, &stub_cache_miss);
+
+      BIND(&stub_cache);
+      // Print("probe_stub_cache");
+      Comment("stub cache probe for fast property load");
+      // Label handler_found_but_miss(this);
+
+      StubCache* local_stub_cache = is_keyed
+                                        ? isolate()->keyed_load_stub_cache()
+                                        : isolate()->load_stub_cache();
+      TryProbeStubCache(local_stub_cache, lookup_start_object,
                         lookup_start_object_map, name, &found_handler,
                         &var_handler, &stub_cache_miss);
       BIND(&found_handler);
       {
+        // Print("found_handler");
         LazyLoadICParameters lazy_p(p);
+        // HandleLoadICHandlerCase(&lazy_p, var_handler.value(),
+        // &handler_found_but_miss,
         HandleLoadICHandlerCase(&lazy_p, var_handler.value(), &stub_cache_miss,
                                 &direct_exit);
       }
@@ -2918,10 +2941,19 @@ void AccessorAssembler::GenericPropertyLoad(
         // TODO(jkummerow): Check if the property exists on the prototype
         // chain. If it doesn't, then there's no point in missing.
         Comment("KeyedLoadGeneric_miss");
+        // Check if the lookup_start_object has fast or slow properties.
+        GotoIf(IsSetWord32<Map::Bits3::IsDictionaryMapBit>(bitfield3),
+               &if_property_dictionary);
         TailCallRuntime(Runtime::kKeyedLoadIC_Miss, p->context(),
                         p->receiver_and_lookup_start_object(), name, p->slot(),
                         p->vector());
       }
+
+      /*BIND(&handler_found_but_miss);
+      {
+        Print("handler_found_but_miss");
+        Goto(&stub_cache_miss);
+      }*/
     }
   }
 
@@ -3096,11 +3128,25 @@ void AccessorAssembler::TryProbeStubCacheTable(
       CAST(Load(MachineType::TaggedPointer(), key_base, entry_offset));
   GotoIf(TaggedNotEqual(name, cached_key), if_miss);
 
+  /*Label key_not_match(this), map_not_match(this);
+  GotoIf(TaggedNotEqual(name, cached_key), &key_not_match);
+  if(table_id == AccessorAssembler::StubCacheTable::kPrimary){
+    Print("primary key match!");
+  } else {
+    Print("second key match!");
+  }*/
+
   // Check that the map in the entry matches.
   TNode<Object> cached_map = Load<Object>(
       key_base,
       IntPtrAdd(entry_offset, IntPtrConstant(offsetof(StubCache::Entry, map))));
   GotoIf(TaggedNotEqual(map, cached_map), if_miss);
+  /*GotoIf(TaggedNotEqual(map, cached_map), &map_not_match);
+  if(table_id == AccessorAssembler::StubCacheTable::kPrimary){
+    Print("primary map match!");
+  } else {
+    Print("second map match!");
+  }*/
 
   TNode<MaybeObject> handler = ReinterpretCast<MaybeObject>(
       Load(MachineType::AnyTagged(), key_base,
@@ -3110,6 +3156,26 @@ void AccessorAssembler::TryProbeStubCacheTable(
   // We found the handler.
   *var_handler = handler;
   Goto(if_handler);
+
+  /*BIND(&key_not_match);
+  {
+    if(table_id == AccessorAssembler::StubCacheTable::kPrimary){
+      Print("primary key not match!");
+    } else {
+      Print("second key not match!");
+    }
+    Goto(if_miss);
+  }
+
+  BIND(&map_not_match);
+  {
+    if(table_id == AccessorAssembler::StubCacheTable::kPrimary){
+      Print("primary map not match!");
+    } else {
+      Print("second map not match!");
+    }
+    Goto(if_miss);
+  }*/
 }
 
 void AccessorAssembler::TryProbeStubCache(StubCache* stub_cache,
@@ -3122,10 +3188,12 @@ void AccessorAssembler::TryProbeStubCache(StubCache* stub_cache,
 
   Counters* counters = isolate()->counters();
   IncrementCounter(counters->megamorphic_stub_cache_probes(), 1);
+  // Print("TryProbeStubCache");
 
   // Probe the primary table.
   TNode<IntPtrT> primary_offset =
       StubCachePrimaryOffset(name, lookup_start_object_map);
+  // Print("primary_offset: ", ReinterpretCast<UintPtrT>(primary_offset));
   TryProbeStubCacheTable(stub_cache, kPrimary, primary_offset, name,
                          lookup_start_object_map, if_handler, var_handler,
                          &try_secondary);
@@ -3135,6 +3203,7 @@ void AccessorAssembler::TryProbeStubCache(StubCache* stub_cache,
     // Probe the secondary table.
     TNode<IntPtrT> secondary_offset =
         StubCacheSecondaryOffset(name, lookup_start_object_map);
+    // Print("secondary_offset: ", ReinterpretCast<UintPtrT>(secondary_offset));
     TryProbeStubCacheTable(stub_cache, kSecondary, secondary_offset, name,
                            lookup_start_object_map, if_handler, var_handler,
                            &miss);
@@ -3142,6 +3211,7 @@ void AccessorAssembler::TryProbeStubCache(StubCache* stub_cache,
 
   BIND(&miss);
   {
+    // Print("miss probe");
     IncrementCounter(counters->megamorphic_stub_cache_misses(), 1);
     Goto(if_miss);
   }
@@ -3392,7 +3462,7 @@ void AccessorAssembler::LoadIC_NoFeedback(const LoadICParameters* p,
   }
 
   GenericPropertyLoad(CAST(lookup_start_object), lookup_start_object_map,
-                      instance_type, p, &miss, kDontUseStubCache);
+                      instance_type, p, false, &miss, kDontUseStubCache);
 
   BIND(&miss);
   {
@@ -3413,7 +3483,7 @@ void AccessorAssembler::LoadSuperIC_NoFeedback(const LoadICParameters* p) {
   TNode<Uint16T> instance_type = LoadMapInstanceType(lookup_start_object_map);
 
   GenericPropertyLoad(CAST(lookup_start_object), lookup_start_object_map,
-                      instance_type, p, &miss, kDontUseStubCache);
+                      instance_type, p, false, &miss, kDontUseStubCache);
 
   BIND(&miss);
   {
@@ -3747,7 +3817,7 @@ void AccessorAssembler::KeyedLoadICGeneric(const LoadICParameters* p) {
       TNode<Map> lookup_start_object_map = LoadMap(CAST(lookup_start_object));
       GenericPropertyLoad(CAST(lookup_start_object), lookup_start_object_map,
                           LoadMapInstanceType(lookup_start_object_map), &pp,
-                          &if_runtime);
+                          false, &if_runtime);
     }
 
     BIND(&if_other);
@@ -3782,7 +3852,7 @@ void AccessorAssembler::KeyedLoadICGeneric(const LoadICParameters* p) {
           GenericPropertyLoad(CAST(lookup_start_object),
                               lookup_start_object_map,
                               LoadMapInstanceType(lookup_start_object_map), &pp,
-                              &if_runtime, kDontUseStubCache);
+                              false, &if_runtime, kDontUseStubCache);
         }
       } else {
         Goto(&if_runtime);

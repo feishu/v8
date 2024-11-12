@@ -4579,6 +4579,10 @@ Isolate::~Isolate() {
   store_stub_cache_ = nullptr;
   delete define_own_stub_cache_;
   define_own_stub_cache_ = nullptr;
+  delete keyed_load_stub_cache_;
+  keyed_load_stub_cache_ = nullptr;
+  delete keyed_store_stub_cache_;
+  keyed_store_stub_cache_ = nullptr;
 
   delete materialized_object_store_;
   materialized_object_store_ = nullptr;
@@ -5389,6 +5393,8 @@ bool Isolate::Init(SnapshotData* startup_snapshot_data,
   load_stub_cache_ = new StubCache(this);
   store_stub_cache_ = new StubCache(this);
   define_own_stub_cache_ = new StubCache(this);
+  keyed_load_stub_cache_ = new StubCache(this);
+  keyed_store_stub_cache_ = new StubCache(this);
   materialized_object_store_ = new MaterializedObjectStore(this);
   regexp_stack_ = new RegExpStack();
   date_cache_ = new DateCache();
@@ -5670,6 +5676,8 @@ bool Isolate::Init(SnapshotData* startup_snapshot_data,
   load_stub_cache_->Initialize();
   store_stub_cache_->Initialize();
   define_own_stub_cache_->Initialize();
+  keyed_load_stub_cache_->Initialize();
+  keyed_store_stub_cache_->Initialize();
   interpreter_->Initialize();
   heap_.NotifyDeserializationComplete();
 
