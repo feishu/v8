@@ -22,6 +22,30 @@
       },
       "revId": "fbe68bc8aa98fe7245a253361062bb25fa6c60b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "745dc3dd_22b69141",
+        "filename": "src/heap/large-page-metadata.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2024-11-12T10:35:54Z",
+      "side": 0,
+      "message": "Resolving",
+      "parentUuid": "ff2d68fc_3eae9af2",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "fbe68bc8aa98fe7245a253361062bb25fa6c60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
