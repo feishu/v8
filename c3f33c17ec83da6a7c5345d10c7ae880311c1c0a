@@ -33,6 +33,64 @@
       "message": "Thanks, any +1 will do :)",
       "revId": "c3f33c17ec83da6a7c5345d10c7ae880311c1c0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8edfc802_46cfebe1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1344750
+      },
+      "writtenOn": "2024-11-12T10:08:39Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "c3f33c17ec83da6a7c5345d10c7ae880311c1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a67ced4_6bf5ace9",
+        "filename": "test/unittests/heap/marking-bitmap-unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1344750
+      },
+      "writtenOn": "2024-11-12T10:08:39Z",
+      "side": 1,
+      "message": "nit: I guess you can omit this for readability if you like.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c97eddd3_6b60163b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "test/unittests/heap/marking-bitmap-unittest.cc",
+              "range": {
+                "startLine": 13,
+                "startChar": 0,
+                "endLine": 16,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "c3f33c17ec83da6a7c5345d10c7ae880311c1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
