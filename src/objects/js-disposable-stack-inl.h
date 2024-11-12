@@ -33,6 +33,8 @@ BIT_FIELD_ACCESSORS(JSDisposableStackBase, status, needsAwait,
                     JSDisposableStackBase::NeedsAwaitBit)
 BIT_FIELD_ACCESSORS(JSDisposableStackBase, status, hasAwaited,
                     JSDisposableStackBase::HasAwaitedBit)
+BIT_FIELD_ACCESSORS(JSDisposableStackBase, status, suppressedErrorCreated,
+                    JSDisposableStackBase::SuppressedErrorCreatedBit)
 BIT_FIELD_ACCESSORS(JSDisposableStackBase, status, length,
                     JSDisposableStackBase::LengthBits)
 
@@ -195,6 +197,7 @@ inline void JSDisposableStackBase::HandleErrorInDisposal(
     //    6. Set completion to ThrowCompletion(error).
     maybe_error = isolate->factory()->NewSuppressedErrorAtDisposal(
         isolate, current_error, maybe_error);
+    disposable_stack->set_suppressedErrorCreated(true);
 
   } else {
     //   ii. Else,
@@ -203,6 +206,7 @@ inline void JSDisposableStackBase::HandleErrorInDisposal(
   }
 
   disposable_stack->set_error(*maybe_error);
+  disposable_stack->set_error_message(isolate->pending_message());
 }
 
 }  // namespace internal
