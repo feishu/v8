@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0a3511c_4453c32d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2024-11-12T09:45:17Z",
+      "side": 1,
+      "message": "I noticed that some old tests were still based on the assumption that the bitmap is inlined in a MemoryChunk. I refactored the tests and simplified the file structure a bit.\n\nAnton: ptal",
+      "revId": "c3f33c17ec83da6a7c5345d10c7ae880311c1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
