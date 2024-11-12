@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b3f9919_7e0404b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1323125
+      },
+      "writtenOn": "2024-11-12T15:51:01Z",
+      "side": 1,
+      "message": "Hi,\n\nI noticed macro-asm is now removed from the jump table assembler and instructions are being hand coded into a buffer. Is it possible to put this feature behind a flag and continue supporting macor-asm? this method is very error prone considering endinaness and platforms s with variable instruction sizes.",
+      "revId": "f8bf16d9f877cd2634b9f54209c8bdfb77292f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
