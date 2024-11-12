@@ -33,6 +33,24 @@
       "message": "nit: Can we make this const?",
       "revId": "0cc37f2cf1070eb249f5dd7ec4d133c4025e0639",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6948a35d_ff46d9c6",
+        "filename": "src/wasm/jump-table-assembler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1120979
+      },
+      "writtenOn": "2024-11-12T14:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bbe2458_fe074d42",
+      "revId": "0cc37f2cf1070eb249f5dd7ec4d133c4025e0639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
