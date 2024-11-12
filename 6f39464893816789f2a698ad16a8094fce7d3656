@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c9ca607_e738af8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-12T18:13:25Z",
+      "side": 1,
+      "message": "Thanks you all for your reviews and feedbacks. I made changes as requested and updated test expected result. Please take a look.",
+      "revId": "6f39464893816789f2a698ad16a8094fce7d3656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
