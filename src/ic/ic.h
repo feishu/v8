@@ -78,6 +78,8 @@ class IC {
   Isolate* isolate() const { return isolate_; }
 
   bool is_vector_set() { return vector_set_; }
+  void set_vector_set(bool vector_set) { vector_set_ = vector_set; }
+
   inline bool vector_needs_update();
 
   // Configure for most states.
@@ -320,9 +322,12 @@ class KeyedStoreIC : public StoreIC {
                                                   Handle<Object> value);
 
  protected:
+  bool CanTransitionAllocationSiteToStayMonomorphic(
+      Handle<Map> map_in_ic, Handle<HeapObject> receiver);
+
   void UpdateStoreElement(Handle<Map> receiver_map,
                           KeyedAccessStoreMode store_mode,
-                          Handle<Map> new_receiver_map);
+                          Handle<HeapObject> new_receiver);
 
  private:
   Handle<Map> ComputeTransitionedMap(Handle<Map> map,
