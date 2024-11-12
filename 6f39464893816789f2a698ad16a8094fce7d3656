@@ -16,6 +16,57 @@
       "message": "Thanks you all for your reviews and feedbacks. I made changes as requested and updated test expected result. Please take a look.",
       "revId": "6f39464893816789f2a698ad16a8094fce7d3656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26cc3eb8_04129c66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-12T21:48:34Z",
+      "side": 1,
+      "message": "lgtm % rethrowing the original message as well.",
+      "revId": "6f39464893816789f2a698ad16a8094fce7d3656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94b43720_3d3bed2f",
+        "filename": "src/objects/js-disposable-stack.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-12T21:48:34Z",
+      "side": 1,
+      "message": "Hm, I think we should rethrow the original error plus the original message object `isolate-\u003epending_message()`, if one exists. This means adding another slot to `JSDisposableStackBase`, but oh well.",
+      "revId": "6f39464893816789f2a698ad16a8094fce7d3656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8175085_fb75f8cc",
+        "filename": "src/objects/js-disposable-stack.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-12T21:48:34Z",
+      "side": 1,
+      "message": "Oops, all these boolean fields should\u0027ve been underscore-cased (`suppressed_error_created`). No need to do it in this CL, but please do so in a follow-up.",
+      "revId": "6f39464893816789f2a698ad16a8094fce7d3656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
