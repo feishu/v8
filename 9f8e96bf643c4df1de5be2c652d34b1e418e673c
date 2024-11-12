@@ -33,6 +33,23 @@
       "message": "Thibaud will only be back on Wednesday; Eva can you review please?",
       "revId": "9f8e96bf643c4df1de5be2c652d34b1e418e673c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23539fb6_71e8c978",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1440073
+      },
+      "writtenOn": "2024-11-12T11:37:52Z",
+      "side": 1,
+      "message": "Thanks, LGTM",
+      "revId": "9f8e96bf643c4df1de5be2c652d34b1e418e673c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
