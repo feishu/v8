@@ -16,6 +16,40 @@
       "message": "Thanks for the review Shu!",
       "revId": "2adb856029a9416f038c4b21cce535245bdd156e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26659d6a_09742d4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-13T01:17:34Z",
+      "side": 1,
+      "message": "lgtm!",
+      "revId": "2adb856029a9416f038c4b21cce535245bdd156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "282a8b4e_bc7011a0",
+        "filename": "src/objects/js-disposable-stack.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-13T01:17:34Z",
+      "side": 1,
+      "message": "Style nit: there\u0027s an asymmetry in how `current_error` is passed in as an argument, but `HandleErrorInDisposal` itself gets `pending_message()` from the `isolate`. I\u0027d prefer to also pass in the message as an argument.",
+      "revId": "2adb856029a9416f038c4b21cce535245bdd156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
