@@ -758,7 +758,6 @@ struct StaticReadOnlyRoot {
   static constexpr Tagged_t kwasm_exception_tag_symbol = 0x5f25;
   static constexpr Tagged_t kwasm_exception_values_symbol = 0x5f35;
   static constexpr Tagged_t kwasm_uncatchable_symbol = 0x5f45;
-  static constexpr Tagged_t kwasm_wrapped_object_symbol = 0x5f55;
   static constexpr Tagged_t kwasm_debug_proxy_cache_symbol = 0x5f65;
   static constexpr Tagged_t kwasm_debug_proxy_names_symbol = 0x5f75;
   static constexpr Tagged_t kasync_iterator_symbol = 0x5f85;
@@ -801,7 +800,7 @@ struct StaticReadOnlyRoot {
   static constexpr Tagged_t kLastAllocatedRoot = 0x2006d;
 };
 
-static constexpr std::array<Tagged_t, 767> StaticReadOnlyRootsPointerTable = {
+static constexpr std::array<Tagged_t, 766> StaticReadOnlyRootsPointerTable = {
     StaticReadOnlyRoot::kFreeSpaceMap,
     StaticReadOnlyRoot::kOnePointerFillerMap,
     StaticReadOnlyRoot::kTwoPointerFillerMap,
@@ -1461,7 +1460,6 @@ static constexpr std::array<Tagged_t, 767> StaticReadOnlyRootsPointerTable = {
     StaticReadOnlyRoot::kwasm_exception_tag_symbol,
     StaticReadOnlyRoot::kwasm_exception_values_symbol,
     StaticReadOnlyRoot::kwasm_uncatchable_symbol,
-    StaticReadOnlyRoot::kwasm_wrapped_object_symbol,
     StaticReadOnlyRoot::kwasm_debug_proxy_cache_symbol,
     StaticReadOnlyRoot::kwasm_debug_proxy_names_symbol,
     StaticReadOnlyRoot::kasync_iterator_symbol,
