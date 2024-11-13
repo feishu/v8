@@ -67,6 +67,24 @@
       "message": "Style nit: there\u0027s an asymmetry in how `current_error` is passed in as an argument, but `HandleErrorInDisposal` itself gets `pending_message()` from the `isolate`. I\u0027d prefer to also pass in the message as an argument.",
       "revId": "2adb856029a9416f038c4b21cce535245bdd156e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed30d1d7_24dd8475",
+        "filename": "src/objects/js-disposable-stack.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-13T19:45:20Z",
+      "side": 1,
+      "message": "We have called `HandleErrorInDisposal` from other places too. So there are unreviewed changes in the CL now. PTAL. Thanks. (I also need your +1 again)",
+      "parentUuid": "282a8b4e_bc7011a0",
+      "revId": "2adb856029a9416f038c4b21cce535245bdd156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
