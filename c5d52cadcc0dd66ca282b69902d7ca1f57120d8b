@@ -100,6 +100,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b129b1d_49f5f4e3",
+        "filename": "src/common/code-memory-access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-13T12:57:12Z",
+      "side": 1,
+      "message": "I would have thought that moving is enough for that use case, maybe with a few `std::move` here and there, but the new solution also LGTM.",
+      "parentUuid": "b857c8c4_51d8145b",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "785a531a_9b96eae9",
