@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0be99e0_64fe08ed",
+        "filename": "src/builtins/builtins-async-disposable-stack.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-13T19:56:59Z",
+      "side": 1,
+      "message": "This seems incorrect for the rejection handler to be getting the pending message at the time the handler is called. Let\u0027s put a FIXME here to be fixed in a followup.",
+      "revId": "c1247d88e79e8b40a0b0da2c656296dd3052005e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3869e79b_99555bf7",
+        "filename": "src/runtime/runtime-scopes.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1362925
+      },
+      "writtenOn": "2024-11-13T19:56:59Z",
+      "side": 1,
+      "message": "I think this is incorrect for the bytecode, which should be clearing the pending message and passing in the previous pending message as an argument. Let\u0027s fix this in a followup.",
+      "revId": "c1247d88e79e8b40a0b0da2c656296dd3052005e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
