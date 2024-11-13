@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "996dd6a6_a81caece",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1557311
+      },
+      "writtenOn": "2024-11-13T11:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57b2f576_177d27dc",
+      "revId": "09158c34ee0e81ba830e618504a15231077d2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "af37fa67_fdbadee3",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
@@ -58,6 +76,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c2e32f4_99f4d7b0",
+        "filename": "src/builtins/wasm.tq",
+        "patchSetId": 6
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1557311
+      },
+      "writtenOn": "2024-11-13T11:05:40Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll do that as a follow-up cleanup.",
+      "parentUuid": "0b1a4935_12945e14",
+      "range": {
+        "startLine": 759,
+        "startChar": 68,
+        "endLine": 759,
+        "endChar": 77
+      },
+      "revId": "09158c34ee0e81ba830e618504a15231077d2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06c0c87d_b2e87afd",
@@ -81,6 +123,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d78efb76_f77862a3",
+        "filename": "src/builtins/wasm.tq",
+        "patchSetId": 6
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1557311
+      },
+      "writtenOn": "2024-11-13T11:05:40Z",
+      "side": 1,
+      "message": "As discussed offline: This builtin is only called when speculative call_indirect inlining is on (via `--wasm-inlining-call-indirect`), hence I am not worried about Liftoff cost. So let\u0027s land as-is and improve performance later.",
+      "parentUuid": "06c0c87d_b2e87afd",
+      "range": {
+        "startLine": 761,
+        "startChar": 8,
+        "endLine": 761,
+        "endChar": 47
+      },
+      "revId": "09158c34ee0e81ba830e618504a15231077d2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d25597f_e9567c33",
@@ -94,6 +160,30 @@
       "writtenOn": "2024-11-13T10:10:40Z",
       "side": 1,
       "message": "Nit: Maybe rename this to `feedbackValue` (as `undefined` isn\u0027t really a target).",
+      "range": {
+        "startLine": 762,
+        "startChar": 8,
+        "endLine": 762,
+        "endChar": 23
+      },
+      "revId": "09158c34ee0e81ba830e618504a15231077d2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcd8426c_0ead11d5",
+        "filename": "src/builtins/wasm.tq",
+        "patchSetId": 6
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1557311
+      },
+      "writtenOn": "2024-11-13T11:05:40Z",
+      "side": 1,
+      "message": "We had names such as feedbackValue at some point earlier, which I changed to make it unambiguous whether the \"value\" is the target or the associated call count or both. I changed it to `truncatedTargetOrCrossInstance`.",
+      "parentUuid": "6d25597f_e9567c33",
       "range": {
         "startLine": 762,
         "startChar": 8,
