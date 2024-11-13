@@ -16,6 +16,24 @@
       "message": "Hi,\n\nI noticed macro-asm is now removed from the jump table assembler and instructions are being hand coded into a buffer. Is it possible to put this feature behind a flag and continue supporting macor-asm? this method is very error prone considering endinaness and platforms s with variable instruction sizes.",
       "revId": "f8bf16d9f877cd2634b9f54209c8bdfb77292f45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d284694_127bdbe6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120979
+      },
+      "writtenOn": "2024-11-13T08:17:10Z",
+      "side": 1,
+      "message": "We removed the MacroAssembler dependency since we want to have control over the writes. The JumpTableAssembler writes to executable memory and we need to have full control over the memory layout, ensure atomicity of some of the writes and want to pass it through JIT validation for CFI.\nInstead of adding the assembler as a base class behind a build flag, can you just create your own MacroAssembler instance to perform the writes?",
+      "parentUuid": "4b3f9919_7e0404b6",
+      "revId": "f8bf16d9f877cd2634b9f54209c8bdfb77292f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
