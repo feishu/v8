@@ -52,6 +52,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ede992f_eeee0f83",
+        "filename": "src/objects/js-disposable-stack.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-13T00:54:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57a6bcb5_2e83870d",
+      "revId": "6f39464893816789f2a698ad16a8094fce7d3656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94b43720_3d3bed2f",
@@ -69,6 +87,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c538d84_9c0d727c",
+        "filename": "src/objects/js-disposable-stack.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-13T00:54:05Z",
+      "side": 1,
+      "message": "That\u0027s a good point. I have added the slot and rethrow the mssage as well.",
+      "parentUuid": "94b43720_3d3bed2f",
+      "revId": "6f39464893816789f2a698ad16a8094fce7d3656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8175085_fb75f8cc",
@@ -82,6 +118,24 @@
       "writtenOn": "2024-11-12T21:48:34Z",
       "side": 1,
       "message": "Oops, all these boolean fields should\u0027ve been underscore-cased (`suppressed_error_created`). No need to do it in this CL, but please do so in a follow-up.",
+      "revId": "6f39464893816789f2a698ad16a8094fce7d3656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12afbdc5_f8403e1c",
+        "filename": "src/objects/js-disposable-stack.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1569532
+      },
+      "writtenOn": "2024-11-13T00:54:05Z",
+      "side": 1,
+      "message": "Oh no. I\u0027ll make a follow-up CL. Thanks for catching this.",
+      "parentUuid": "d8175085_fb75f8cc",
       "revId": "6f39464893816789f2a698ad16a8094fce7d3656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
