@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e764196c_20b1f0bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-13T10:44:45Z",
+      "side": 1,
+      "message": "Generally LGTM, but we should try to restrict copying of the scoped classes if possible. Left some comments.",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47fed54c_974f70a8",
+        "filename": "src/common/code-memory-access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-13T10:44:45Z",
+      "side": 1,
+      "message": "`return it !\u003d jit_page_-\u003eallocations_.end() \u0026\u0026 it-\u003esecond.Size() \u003d\u003d size \u0026\u0026 it-\u003esecond.Type() \u003d\u003d type;`?\nOr split out the first check and keep the others in the `return`? Or is there a reason to spell it out like this?",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 14
+      },
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbbc0efe_f054e3c7",
+        "filename": "src/common/code-memory-access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-13T10:44:45Z",
+      "side": 1,
+      "message": "Where is this needed? Would it be enough to allow moving, but not copying?",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "785a531a_9b96eae9",
+        "filename": "src/common/code-memory-access.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-13T10:44:45Z",
+      "side": 1,
+      "message": "nit: make this method `const`.",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e00063a5_7ddcc40e",
+        "filename": "src/common/code-memory-access.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-13T10:44:45Z",
+      "side": 1,
+      "message": "Can we also disallow copying for this class?",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5c28a5a_101d43a4",
+        "filename": "src/common/code-memory-access.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-13T10:44:45Z",
+      "side": 1,
+      "message": "Please add a comment that this is only used for testing.",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
