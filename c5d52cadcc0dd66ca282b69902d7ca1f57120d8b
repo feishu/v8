@@ -41,6 +41,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b15b861_93f08895",
+        "filename": "src/common/code-memory-access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1120979
+      },
+      "writtenOn": "2024-11-13T12:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47fed54c_974f70a8",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 14
+      },
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbbc0efe_f054e3c7",
@@ -54,6 +78,24 @@
       "writtenOn": "2024-11-13T10:44:45Z",
       "side": 1,
       "message": "Where is this needed? Would it be enough to allow moving, but not copying?",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b857c8c4_51d8145b",
+        "filename": "src/common/code-memory-access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1120979
+      },
+      "writtenOn": "2024-11-13T12:00:43Z",
+      "side": 1,
+      "message": "It was needed for the ForTesting() constructor (and moving didn\u0027t work since the RwxScope doesn\u0027t have a move constructor).\nI changed it so that the copy is not needed, instead I changed the constructor to take a ForTestingTag parameter now. PTAL",
+      "parentUuid": "dbbc0efe_f054e3c7",
       "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -75,6 +117,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53ec7da9_5ae7abc7",
+        "filename": "src/common/code-memory-access.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1120979
+      },
+      "writtenOn": "2024-11-13T12:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "785a531a_9b96eae9",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e00063a5_7ddcc40e",
@@ -92,6 +152,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fec8a0e2_6f86b592",
+        "filename": "src/common/code-memory-access.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1120979
+      },
+      "writtenOn": "2024-11-13T12:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e00063a5_7ddcc40e",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5c28a5a_101d43a4",
@@ -105,6 +183,24 @@
       "writtenOn": "2024-11-13T10:44:45Z",
       "side": 1,
       "message": "Please add a comment that this is only used for testing.",
+      "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecfbf796_3decf350",
+        "filename": "src/common/code-memory-access.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1120979
+      },
+      "writtenOn": "2024-11-13T12:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c28a5a_101d43a4",
       "revId": "c5d52cadcc0dd66ca282b69902d7ca1f57120d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
