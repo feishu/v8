@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57b2f576_177d27dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-13T10:10:40Z",
+      "side": 1,
+      "message": "If we want to backmerge it, we\u0027d probably want to include `377744184` here as well",
+      "revId": "09158c34ee0e81ba830e618504a15231077d2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af37fa67_fdbadee3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-13T10:10:40Z",
+      "side": 1,
+      "message": "LGTM with comments.",
+      "revId": "09158c34ee0e81ba830e618504a15231077d2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b1a4935_12945e14",
+        "filename": "src/builtins/wasm.tq",
+        "patchSetId": 6
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-13T10:10:40Z",
+      "side": 1,
+      "message": "Fine for this CL (so can be done in a follow-up) but how do you feel about trying to add a new value like `MegamorphicSymbol`, call it `CrossInstanceFeedbackSymbol` or `CrossInstanceCallFeedbackSymbol` and use that instead of `undefined` which has a very different semantic meaning? (This isn\u0027t anything technical but more of a readability / understandability / maintenance point of view)",
+      "range": {
+        "startLine": 759,
+        "startChar": 68,
+        "endLine": 759,
+        "endChar": 77
+      },
+      "revId": "09158c34ee0e81ba830e618504a15231077d2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06c0c87d_b2e87afd",
+        "filename": "src/builtins/wasm.tq",
+        "patchSetId": 6
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-13T10:10:40Z",
+      "side": 1,
+      "message": "Given the very local change with little impact, I\u0027d like to backmerge this with the `call_indirect` fix. Are you concerned about the liftoff cost? I still think the overhead of adding a temporary builtin for the deopt-disabled call_indirect would be fine to get better results on the costs of the deopt feature vs. the \"current\" state but that\u0027s up to you.",
+      "range": {
+        "startLine": 761,
+        "startChar": 8,
+        "endLine": 761,
+        "endChar": 47
+      },
+      "revId": "09158c34ee0e81ba830e618504a15231077d2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d25597f_e9567c33",
+        "filename": "src/builtins/wasm.tq",
+        "patchSetId": 6
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-13T10:10:40Z",
+      "side": 1,
+      "message": "Nit: Maybe rename this to `feedbackValue` (as `undefined` isn\u0027t really a target).",
+      "range": {
+        "startLine": 762,
+        "startChar": 8,
+        "endLine": 762,
+        "endChar": 23
+      },
+      "revId": "09158c34ee0e81ba830e618504a15231077d2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
