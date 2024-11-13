@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83676ac9_da67dddc",
+        "filename": "test/intl/locale/locale-und.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1132654
+      },
+      "writtenOn": "2024-11-13T23:54:44Z",
+      "side": 1,
+      "message": "Maybe let\u0027s another variant here?\n```suggestion\nlocale \u003d new Intl.Locale(\u0027und-US\u0027);\n```",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "1185120b976cb32ffc5b1994356773b2cb149bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
