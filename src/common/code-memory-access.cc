@@ -324,6 +324,22 @@ ThreadIsolation::JitPageReference::LookupAllocation(base::Address addr,
   return it->second;
 }
 
+bool ThreadIsolation::JitPageReference::Contains(base::Address addr,
+                                                 size_t size,
+                                                 JitAllocationType type) {
+  auto it = jit_page_->allocations_.find(addr);
+  if (it == jit_page_->allocations_.end()) {
+    return false;
+  }
+  if (it->second.Size() != size) {
+    return false;
+  }
+  if (it->second.Type() != type) {
+    return false;
+  }
+  return true;
+}
+
 void ThreadIsolation::JitPageReference::UnregisterAllocation(
     base::Address addr) {
   // TODO(sroettger): check that the memory is not in use (scan shadow stacks).
@@ -662,6 +678,33 @@ WritableJitAllocation WritableJitAllocation::ForInstructionStream(
       istream->address(), istream->Size(),
       ThreadIsolation::JitAllocationType::kInstructionStream,
       JitAllocationSource::kLookup);
+}
+
+WritableJitAllocation::WritableJitAllocation(const WritableJitAllocation& other)
+    V8_NOEXCEPT : address_(other.address_),
+                  allocation_(other.allocation_) {
+  // We only support copying a WritableJitAllocation if it doesn't hold a write
+  // scope.
+  CHECK(!write_scope_.has_value());
+}
+
+WritableJumpTablePair::WritableJumpTablePair(
+    WritableJitAllocation jump_table, WritableJitAllocation far_jump_table)
+    : write_scope_("for testing"),
+      writable_jump_table_(jump_table),
+      writable_far_jump_table_(far_jump_table) {}
+
+// static
+WritableJumpTablePair WritableJumpTablePair::ForTesting(
+    Address jump_table_address, size_t jump_table_size,
+    Address far_jump_table_address, size_t far_jump_table_size) {
+  return WritableJumpTablePair{
+      WritableJitAllocation::ForNonExecutableMemory(
+          jump_table_address, jump_table_size,
+          ThreadIsolation::JitAllocationType::kWasmJumpTable),
+      WritableJitAllocation::ForNonExecutableMemory(
+          far_jump_table_address, far_jump_table_size,
+          ThreadIsolation::JitAllocationType::kWasmFarJumpTable)};
 }
 
 template <size_t offset>
