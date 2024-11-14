@@ -33,6 +33,47 @@
       "message": "btw do you have a benchmark that you were measuring this on? For our own profiling.",
       "revId": "ddebb9a0fc006f15837a72694b9e82109b540db3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df3bcffa_8973be84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2024-11-14T15:44:12Z",
+      "side": 1,
+      "message": "I would also be interested in the benchmark. My own measurements suggested that for short strings, `FastOneByteString` is faster, but for longer strings, `ValueView` is actually faster.",
+      "parentUuid": "c6f72f05_f11cdf1e",
+      "revId": "ddebb9a0fc006f15837a72694b9e82109b540db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42c82a1f_5dd1add6",
+        "filename": "src/api/api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11053,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2024-11-14T15:44:12Z",
+      "side": 1,
+      "message": "It\u0027s not necessary to create this scope here, is it? Could we put a marker into `no_gc_debug_scope_` instead, so that we know in the destructor that nothing has to be done?",
+      "range": {
+        "startLine": 11053,
+        "startChar": 34,
+        "endLine": 11053,
+        "endChar": 68
+      },
+      "revId": "ddebb9a0fc006f15837a72694b9e82109b540db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
