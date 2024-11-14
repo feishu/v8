@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cb185ed_9f03d92c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1437132
+      },
+      "writtenOn": "2024-11-14T19:24:57Z",
+      "side": 1,
+      "message": "I just added a function to d8 with fast/slow impl:\n```\nvoid Slow(const v8::FunctionCallbackInfo\u003cv8::Value\u003e\u0026 info) {\n  v8::String::ValueView view(info.GetIsolate(), info[0].As\u003cv8::String\u003e());\n  info.GetReturnValue().Set(view.length());\n}\n\nint Fast(v8::Local\u003cv8::Object\u003e recv, Local\u003cValue\u003e arg) {\n  v8::Isolate* isolate \u003d v8::Isolate::GetCurrent();\n  v8::String::ValueView view(isolate, arg.As\u003cv8::String\u003e());\n  return view.length();\n}\n```\nand then I profile various loops calling it with `prof`. It is definitely faster to use v8::Value+ValueView in a fast call for non-flat/2byte strings, since SeqOneByteString can\u0027t handle those cases. The only regression we observe is with flat 1byte strings, and string length does not seem to be a factor.",
+      "parentUuid": "df3bcffa_8973be84",
+      "revId": "ddebb9a0fc006f15837a72694b9e82109b540db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c82a1f_5dd1add6",
         "filename": "src/api/api.cc",
         "patchSetId": 1
