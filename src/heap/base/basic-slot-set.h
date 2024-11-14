@@ -17,11 +17,12 @@ namespace base {
 
 enum SlotCallbackResult { KEEP_SLOT, REMOVE_SLOT };
 
-// Data structure for maintaining a set of slots in a standard (non-large)
-// page.
-// The data structure assumes that the slots are pointer size aligned and
-// splits the valid slot offset range into buckets.
-// Each bucket is a bitmap with a bit corresponding to a single slot offset.
+// Data structure for maintaining a set of slots.
+//
+// On a high-level the set implements a 2-level bitmap. The set assumes that the
+// slots are `SlotGranularity`-aligned and splits the valid slot offset range
+// into buckets. Each bucket is a bitmap with a bit corresponding to a single
+// slot offset.
 template <size_t SlotGranularity>
 class BasicSlotSet {
   static constexpr auto kSystemPointerSize = sizeof(void*);
@@ -46,7 +47,7 @@ class BasicSlotSet {
     //                           |
     //                           v
     //         +-----------------+-------------------------+
-    //         | initial buckets |     buckets array       |
+    //         |       size      |     buckets array       |
     //         +-----------------+-------------------------+
     //            pointer-sized    pointer-sized * buckets
     //
@@ -54,17 +55,15 @@ class BasicSlotSet {
     // The BasicSlotSet pointer points to the beginning of the buckets array for
     // faster access in the write barrier. The number of buckets is needed for
     // calculating the size of this data structure.
-    size_t buckets_size = buckets * sizeof(Bucket*);
-    size_t size = kInitialBucketsSize + buckets_size;
+    const size_t buckets_size = buckets * sizeof(Bucket*);
+    const size_t size = kInitialBucketsSize + buckets_size;
     void* allocation = v8::base::AlignedAlloc(size, kSystemPointerSize);
     CHECK(allocation);
     BasicSlotSet* slot_set = reinterpret_cast<BasicSlotSet*>(
         reinterpret_cast<uint8_t*>(allocation) + kInitialBucketsSize);
     DCHECK(
         IsAligned(reinterpret_cast<uintptr_t>(slot_set), kSystemPointerSize));
-#ifdef DEBUG
     *slot_set->initial_buckets() = buckets;
-#endif
     for (size_t i = 0; i < buckets; i++) {
       *slot_set->bucket(i) = nullptr;
     }
@@ -441,11 +440,14 @@ class BasicSlotSet {
   }
 
   // Converts the slot offset into bucket/cell/bit index.
-  static void SlotToIndices(size_t slot_offset, size_t* bucket_index,
-                            int* cell_index, int* bit_index) {
+  void SlotToIndices(size_t slot_offset, size_t* bucket_index, int* cell_index,
+                     int* bit_index) {
     DCHECK(IsAligned(slot_offset, SlotGranularity));
     size_t slot = slot_offset / SlotGranularity;
     *bucket_index = slot >> kBitsPerBucketLog2;
+    // No SBXCHECK() in base.
+    // This is +1 to temporarily passing in an exclusive end slot_offset.
+    CHECK(*bucket_index < (*initial_buckets() + 1));
     *cell_index =
         static_cast<int>((slot >> kBitsPerCellLog2) & (kCellsPerBucket - 1));
     *bit_index = static_cast<int>(slot & (kBitsPerCell - 1));
@@ -454,12 +456,8 @@ class BasicSlotSet {
   Bucket** buckets() { return reinterpret_cast<Bucket**>(this); }
   Bucket** bucket(size_t bucket_index) { return buckets() + bucket_index; }
 
-#ifdef DEBUG
   size_t* initial_buckets() { return reinterpret_cast<size_t*>(this) - 1; }
   static const int kInitialBucketsSize = sizeof(size_t);
-#else
-  static const int kInitialBucketsSize = 0;
-#endif
 };
 
 }  // namespace base
