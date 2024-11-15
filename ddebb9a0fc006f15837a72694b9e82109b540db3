@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "560d5cef_a73ca62c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2024-11-15T11:17:35Z",
+      "side": 1,
+      "message": "Ah, the reason why `FastOneByteString` got slower with increasing string length for me was that I increased `FastOneByteString::length` in a loop.",
+      "parentUuid": "b619e310_8f4720b8",
+      "revId": "ddebb9a0fc006f15837a72694b9e82109b540db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c82a1f_5dd1add6",
         "filename": "src/api/api.cc",
         "patchSetId": 1
