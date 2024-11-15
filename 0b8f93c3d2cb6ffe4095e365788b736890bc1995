@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e72c712_707f9e0e",
+        "filename": "src/heap/base/basic-slot-set.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2024-11-15T09:54:20Z",
+      "side": 0,
+      "message": "I removed this parameter already as it\u0027s convenient, easy to do, and gives the size field another use despite the CHECKs.",
+      "range": {
+        "startLine": 74,
+        "startChar": 52,
+        "endLine": 74,
+        "endChar": 59
+      },
+      "revId": "0b8f93c3d2cb6ffe4095e365788b736890bc1995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
