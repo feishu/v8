@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5972b25_d99085b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2024-11-15T08:48:18Z",
+      "side": 1,
+      "message": "Ah, okay, in my measurements I accessed the string and summed up all letters, and I loaded the isolate from the `FastApiCallbackOptions`, which I think is slightly faster. Did you try to measure with a PGO build? And on what device did you measure?\n\nBtw, I\u0027m just asking because I\u0027m interested, not to block this CL.",
+      "parentUuid": "8cb185ed_9f03d92c",
+      "revId": "ddebb9a0fc006f15837a72694b9e82109b540db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c82a1f_5dd1add6",
         "filename": "src/api/api.cc",
         "patchSetId": 1
