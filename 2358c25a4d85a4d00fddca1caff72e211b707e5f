@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "18604819_40deb929",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1344750
+      },
+      "writtenOn": "2024-11-15T12:31:10Z",
+      "side": 1,
+      "message": "nit: competitive",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "2358c25a4d85a4d00fddca1caff72e211b707e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "e7dc8579_3690f281",
@@ -14,6 +37,104 @@
       "writtenOn": "2024-11-15T09:54:20Z",
       "side": 1,
       "message": "Anton, Dominik: PTAL\nSamuel: FYI",
+      "revId": "2358c25a4d85a4d00fddca1caff72e211b707e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c028d035_26dbf3a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1344750
+      },
+      "writtenOn": "2024-11-15T12:31:10Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "2358c25a4d85a4d00fddca1caff72e211b707e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57604759_df715f0a",
+        "filename": "src/heap/base/basic-slot-set.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1344750
+      },
+      "writtenOn": "2024-11-15T12:31:10Z",
+      "side": 1,
+      "message": "nit: perhaps return `size_t` and make the function const?",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 71
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "81b255f8_e2182b67",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/heap/base/basic-slot-set.h",
+              "range": {
+                "startLine": 70,
+                "startChar": 0,
+                "endLine": 71,
+                "endChar": 0
+              },
+              "replacement": "    slot_set-\u003enum_buckets_ \u003d buckets;\n"
+            },
+            {
+              "path": "src/heap/base/basic-slot-set.h",
+              "range": {
+                "startLine": 82,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "    for (size_t i \u003d 0; i \u003c slot_set-\u003enum_buckets_; i++) {\n"
+            },
+            {
+              "path": "src/heap/base/basic-slot-set.h",
+              "range": {
+                "startLine": 335,
+                "startChar": 0,
+                "endLine": 336,
+                "endChar": 0
+              },
+              "replacement": "  size_t num_buckets() const { return num_buckets_; }\n"
+            },
+            {
+              "path": "src/heap/base/basic-slot-set.h",
+              "range": {
+                "startLine": 456,
+                "startChar": 0,
+                "endLine": 457,
+                "endChar": 0
+              },
+              "replacement": "    CHECK(*bucket_index \u003c num_buckets());\n"
+            },
+            {
+              "path": "src/heap/base/basic-slot-set.h",
+              "range": {
+                "startLine": 465,
+                "startChar": 0,
+                "endLine": 465,
+                "endChar": 0
+              },
+              "replacement": "  size_t num_buckets_ \u003d 0;\n"
+            }
+          ]
+        }
+      ],
       "revId": "2358c25a4d85a4d00fddca1caff72e211b707e5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
