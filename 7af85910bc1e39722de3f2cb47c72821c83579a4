@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "062c31ab_6b222f80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1519522
+      },
+      "writtenOn": "2024-11-15T13:20:29Z",
+      "side": 1,
+      "message": "Stephen is OOO, so Igor, PTAL :)",
+      "revId": "7af85910bc1e39722de3f2cb47c72821c83579a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
