@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2f017974_b7afe815",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1437132
+      },
+      "writtenOn": "2024-11-15T09:06:19Z",
+      "side": 1,
+      "message": "\u003e I accessed the string and summed up all letters\n\nSo you measured it being slower with longer strings because your benchmark case is O(n)? Or are you saying something else?\n\n\u003e I loaded the isolate from the FastApiCallbackOptions, which I think is slightly faster.\n\nThis is a good point, I\u0027ll update my code. But either way since I am pulling timing data out of `perf`, I can ignore the time taken by parts I don\u0027t care about.\n\n\u003e PGO\n\nI\u0027m not sure how to set this up, but if all my comparisons are without PGO it should be ok I think? We don\u0027t build rusty_v8 with PGO right now anyway, though we\u0027d like to at some point...\n\n\u003e On what device did you measure?\n\nAMD Ryzen 7 7840U w/ Radeon 780M Graphics\nSODIMM 2x32 GB at 5600 MT/s\n\n\u003e not to block this CL\n\nIf you\u0027ve been working on this problem and come up with more effective changes I\u0027d be happy to take those instead of this CL. Ultimately we\u0027d just like to get something that works well on all string types in fast calls.",
+      "parentUuid": "b5972b25_d99085b9",
+      "revId": "ddebb9a0fc006f15837a72694b9e82109b540db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c82a1f_5dd1add6",
         "filename": "src/api/api.cc",
         "patchSetId": 1
