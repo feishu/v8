@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ecb01e89_d219f0e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2024-11-15T14:34:46Z",
+      "side": 1,
+      "message": "I investigated the performance difference between `FastOneByteString` and `String::ValueView` further, and it boils down to the function calls that happen for `String::ValueView` and don\u0027t happen for `FastOneByteString`. The most prominent calls are the calls to the `String::ValueView` constructor and destructor, and the calls to the constructor and destructor of the `DisallowGarbageCollection` scope.\n\nI think if inlining happened with link time optimizations or PGO, \u0027String::ValueView` would be as fast as `FastOneByteString`.\n\nI\u0027m not sure about the use of `DisallowGarbageCollectionInRelease` instead of `DisallowGarbageCollection`, as this is performance sensitive code (actually it\u0027s not yet, but I assume `String::ValueView` exists to be used in performance sensitive cases).",
+      "parentUuid": "560d5cef_a73ca62c",
+      "revId": "ddebb9a0fc006f15837a72694b9e82109b540db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c82a1f_5dd1add6",
         "filename": "src/api/api.cc",
         "patchSetId": 1
