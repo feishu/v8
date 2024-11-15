@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b619e310_8f4720b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2024-11-15T09:17:12Z",
+      "side": 1,
+      "message": "\u003e If you\u0027ve been working on this problem and come up with more effective changes I\u0027d be happy to take those instead of this CL. Ultimately we\u0027d just like to get something that works well on all string types in fast calls.\n\nI only did performance measurements so far, to see how far we are off from deprecating `FastOneByteString`. I saw some issues that you fixed now in your CL, like the unnecessary `String::Flatten` and the unnecessary `Handle::Scope`, but the performance is still not the same, and I didn\u0027t figure out yet what\u0027s the problem.",
+      "parentUuid": "2f017974_b7afe815",
+      "revId": "ddebb9a0fc006f15837a72694b9e82109b540db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c82a1f_5dd1add6",
         "filename": "src/api/api.cc",
         "patchSetId": 1
