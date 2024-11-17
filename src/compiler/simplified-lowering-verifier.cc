@@ -634,6 +634,7 @@ void SimplifiedLoweringVerifier::VisitNode(Node* node,
       CASE(BitcastWordToTagged)
       CASE(BitcastWordToTaggedSigned)
       CASE(TruncateFloat64ToWord32)
+      CASE(ChangeFloat16ToFloat64)
       CASE(ChangeFloat64ToInt32)
       CASE(ChangeFloat64ToUint32)
       CASE(ChangeFloat64ToUint64)

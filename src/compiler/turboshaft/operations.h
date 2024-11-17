@@ -5784,7 +5784,9 @@ inline constexpr RegisterRepresentation RegisterRepresentationForArrayType(
     case kExternalUint16Array:
     case kExternalInt32Array:
     case kExternalUint32Array:
+      // MAYBE
       return RegisterRepresentation::Word32();
+    case kExternalFloat16Array:
     case kExternalFloat32Array:
       return RegisterRepresentation::Float32();
     case kExternalFloat64Array:
@@ -5792,7 +5794,6 @@ inline constexpr RegisterRepresentation RegisterRepresentationForArrayType(
     case kExternalBigInt64Array:
     case kExternalBigUint64Array:
       return RegisterRepresentation::Word64();
-    case kExternalFloat16Array:
       UNIMPLEMENTED();
   }
 }

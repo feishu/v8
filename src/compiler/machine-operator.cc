@@ -880,33 +880,34 @@ std::ostream& operator<<(std::ostream& os, TruncateKind kind) {
 
 // The format is:
 // V(Name, properties, value_input_count, control_input_count, output_count)
-#define PURE_OPTIONAL_OP_LIST(V)                            \
-  V(Word32Ctz, Operator::kNoProperties, 1, 0, 1)            \
-  V(Word64Ctz, Operator::kNoProperties, 1, 0, 1)            \
-  V(Word64CtzLowerable, Operator::kNoProperties, 1, 1, 1)   \
-  V(Word32Rol, Operator::kNoProperties, 2, 0, 1)            \
-  V(Word64Rol, Operator::kNoProperties, 2, 0, 1)            \
-  V(Word64RolLowerable, Operator::kNoProperties, 2, 1, 1)   \
-  V(Word32ReverseBits, Operator::kNoProperties, 1, 0, 1)    \
-  V(Word64ReverseBits, Operator::kNoProperties, 1, 0, 1)    \
-  V(Int32AbsWithOverflow, Operator::kNoProperties, 1, 0, 2) \
-  V(Int64AbsWithOverflow, Operator::kNoProperties, 1, 0, 2) \
-  V(Word32Popcnt, Operator::kNoProperties, 1, 0, 1)         \
-  V(Word64Popcnt, Operator::kNoProperties, 1, 0, 1)         \
-  V(Float32RoundDown, Operator::kNoProperties, 1, 0, 1)     \
-  V(Float64RoundDown, Operator::kNoProperties, 1, 0, 1)     \
-  V(Float32RoundUp, Operator::kNoProperties, 1, 0, 1)       \
-  V(Float64RoundUp, Operator::kNoProperties, 1, 0, 1)       \
-  V(Float32RoundTruncate, Operator::kNoProperties, 1, 0, 1) \
-  V(Float64RoundTruncate, Operator::kNoProperties, 1, 0, 1) \
-  V(Float64RoundTiesAway, Operator::kNoProperties, 1, 0, 1) \
-  V(Float32RoundTiesEven, Operator::kNoProperties, 1, 0, 1) \
-  V(Float64RoundTiesEven, Operator::kNoProperties, 1, 0, 1) \
-  V(Word32Select, Operator::kNoProperties, 3, 0, 1)         \
-  V(Word64Select, Operator::kNoProperties, 3, 0, 1)         \
-  V(Float32Select, Operator::kNoProperties, 3, 0, 1)        \
-  V(Float64Select, Operator::kNoProperties, 3, 0, 1)        \
-  V(TruncateFloat64ToFloat16RawBits, Operator::kNoProperties, 1, 0, 1)
+#define PURE_OPTIONAL_OP_LIST(V)                                       \
+  V(Word32Ctz, Operator::kNoProperties, 1, 0, 1)                       \
+  V(Word64Ctz, Operator::kNoProperties, 1, 0, 1)                       \
+  V(Word64CtzLowerable, Operator::kNoProperties, 1, 1, 1)              \
+  V(Word32Rol, Operator::kNoProperties, 2, 0, 1)                       \
+  V(Word64Rol, Operator::kNoProperties, 2, 0, 1)                       \
+  V(Word64RolLowerable, Operator::kNoProperties, 2, 1, 1)              \
+  V(Word32ReverseBits, Operator::kNoProperties, 1, 0, 1)               \
+  V(Word64ReverseBits, Operator::kNoProperties, 1, 0, 1)               \
+  V(Int32AbsWithOverflow, Operator::kNoProperties, 1, 0, 2)            \
+  V(Int64AbsWithOverflow, Operator::kNoProperties, 1, 0, 2)            \
+  V(Word32Popcnt, Operator::kNoProperties, 1, 0, 1)                    \
+  V(Word64Popcnt, Operator::kNoProperties, 1, 0, 1)                    \
+  V(Float32RoundDown, Operator::kNoProperties, 1, 0, 1)                \
+  V(Float64RoundDown, Operator::kNoProperties, 1, 0, 1)                \
+  V(Float32RoundUp, Operator::kNoProperties, 1, 0, 1)                  \
+  V(Float64RoundUp, Operator::kNoProperties, 1, 0, 1)                  \
+  V(Float32RoundTruncate, Operator::kNoProperties, 1, 0, 1)            \
+  V(Float64RoundTruncate, Operator::kNoProperties, 1, 0, 1)            \
+  V(Float64RoundTiesAway, Operator::kNoProperties, 1, 0, 1)            \
+  V(Float32RoundTiesEven, Operator::kNoProperties, 1, 0, 1)            \
+  V(Float64RoundTiesEven, Operator::kNoProperties, 1, 0, 1)            \
+  V(Word32Select, Operator::kNoProperties, 3, 0, 1)                    \
+  V(Word64Select, Operator::kNoProperties, 3, 0, 1)                    \
+  V(Float32Select, Operator::kNoProperties, 3, 0, 1)                   \
+  V(Float64Select, Operator::kNoProperties, 3, 0, 1)                   \
+  V(TruncateFloat64ToFloat16RawBits, Operator::kNoProperties, 1, 0, 1) \
+  V(ChangeFloat16ToFloat64, Operator::kNoProperties, 1, 0, 1)
 
 // The format is:
 // V(Name, properties, value_input_count, control_input_count, output_count)

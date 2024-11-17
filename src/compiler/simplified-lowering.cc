@@ -99,7 +99,7 @@ MachineRepresentation MachineRepresentationFromArrayType(
     case kExternalBigUint64Array:
       return MachineRepresentation::kWord64;
     case kExternalFloat16Array:
-      UNIMPLEMENTED();
+      return MachineRepresentation::kFloat16;
   }
   UNREACHABLE();
 }
@@ -158,8 +158,9 @@ UseInfo TruncatingUseInfoFromRepresentation(MachineRepresentation rep) {
       return UseInfo::Float32();
     case MachineRepresentation::kWord8:
     case MachineRepresentation::kWord16:
-    case MachineRepresentation::kWord32:
+    case MachineRepresentation::kWord32: {
       return UseInfo::TruncatingWord32();
+    }
     case MachineRepresentation::kWord64:
       return UseInfo::TruncatingWord64();
     case MachineRepresentation::kBit:
