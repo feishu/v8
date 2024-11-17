@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Flags: --turbofan --no-always-turbofan --js-float16array
+// Flags: --allow-natives-syntax --turbofan --no-always-turbofan --js-float16array
 
 function storeAndLoad (x) {
   var a = new Float16Array(1)
@@ -30,7 +30,12 @@ assertAlmostEquals(123, storeAndLoad(123))
 
 assertAlmostEquals(12.12, storeAndLoad(12.12), 0.01)
 assertAlmostEquals(32.333, storeAndLoad(32.333), 0.015)
+
+
+%PrepareFunctionForOptimization(storeAndLoad);
 assertAlmostEquals(123.11, storeAndLoad(123.11), 0.0151)
+
+
 
 assertEquals(NaN, storeAndLoad(NaN))
 assertEquals(Infinity, storeAndLoad(Infinity))

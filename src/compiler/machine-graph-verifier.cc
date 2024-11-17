@@ -284,6 +284,7 @@ class MachineRepresentationInferrer {
           case IrOpcode::kRoundInt64ToFloat64:
           case IrOpcode::kRoundUint64ToFloat64:
           case IrOpcode::kBitcastInt64ToFloat64:
+          case IrOpcode::kChangeFloat16ToFloat64:
           case IrOpcode::kChangeFloat32ToFloat64:
           case IrOpcode::kChangeInt32ToFloat64:
           case IrOpcode::kChangeUint32ToFloat64:

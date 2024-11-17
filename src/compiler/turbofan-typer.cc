@@ -195,6 +195,7 @@ class Typer::Visitor : public Reducer {
       DECLARE_IMPOSSIBLE_CASE(BitcastWordToTagged)
       DECLARE_IMPOSSIBLE_CASE(BitcastWordToTaggedSigned)
       DECLARE_IMPOSSIBLE_CASE(TruncateFloat64ToWord32)
+      DECLARE_IMPOSSIBLE_CASE(ChangeFloat16ToFloat64)
       DECLARE_IMPOSSIBLE_CASE(ChangeFloat32ToFloat64)
       DECLARE_IMPOSSIBLE_CASE(ChangeFloat64ToInt32)
       DECLARE_IMPOSSIBLE_CASE(ChangeFloat64ToInt64)

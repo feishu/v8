@@ -814,6 +814,8 @@ Node* RepresentationChanger::GetFloat64RepresentationFor(
     }
   } else if (output_rep == MachineRepresentation::kFloat32) {
     op = machine()->ChangeFloat32ToFloat64();
+  } else if (output_rep == MachineRepresentation::kFloat16) {
+    op = machine()->ChangeFloat16ToFloat64().op();
   } else if (output_rep == MachineRepresentation::kWord64) {
     if (output_type.Is(cache_->kSafeInteger)) {
       op = machine()->ChangeInt64ToFloat64();
