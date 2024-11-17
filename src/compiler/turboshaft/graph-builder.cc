@@ -2259,6 +2259,38 @@ OpIndex GraphBuilder::Process(
           Map(node->InputAt(3)), dominating_frame_state, params.mode(),
           params.feedback());
     }
+      /**
+      Initially, about 5 months ago, I wrote code here to call a builtin
+      function by creating a builtin-call-description.
+      Because the compiler backend did not support float16 operations at
+      that time.
+
+      After Ilya's work, I may not need to call
+      Builtin::TruncateFloat16ToFloat64 anymore.
+
+      Therefore, I change the plan to call or create a turboshaft node
+      to handle type transformations.
+      But when I pop the stash,
+        I saw the duplication of the above line
+      "UNARY_CASE(TruncateFloat64ToFloat16RawBits,
+                 TruncateFloat64ToFloat16RawBits)"
+
+
+      So my plan was to create ChangeFloat16ToFloat64 and
+      TruncateFloat64ToFloat16 turboshaft nodes and connect the compiler
+      backend.
+      But something has changed, I need to do more research on the change
+      about UNARY_CASE and how it works.
+
+    */
+
+      // case IrOpcode::kTruncateFloat64ToFloat16RawBits: {
+      //   return OpIndex::Invalid();
+      // }
+
+    case IrOpcode::kChangeFloat16ToFloat64: {
+      return OpIndex::Invalid();
+    }
 
     case IrOpcode::kTransitionElementsKind:
       __ TransitionElementsKind(Map(node->InputAt(0)),

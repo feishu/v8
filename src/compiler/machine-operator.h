@@ -378,7 +378,7 @@ class V8_EXPORT_PRIVATE MachineOperatorBuilder final
  public:
   // Flags that specify which operations are available. This is useful
   // for operations that are unsupported by some back-ends.
-  enum Flag : unsigned {
+  enum Flag : unsigned long long {
     kNoFlags = 0u,
     kFloat32RoundDown = 1u << 0,
     kFloat64RoundDown = 1u << 1,
@@ -412,6 +412,7 @@ class V8_EXPORT_PRIVATE MachineOperatorBuilder final
     kLoadStorePairs = 1u << 29,
     kFloat16 = 1u << 30,
     kTruncateFloat64ToFloat16RawBits = 1u << 31,
+    kChangeFloat16ToFloat64 = 1ull << 32,
     kAllOptionalOps =
         kFloat32RoundDown | kFloat64RoundDown | kFloat32RoundUp |
         kFloat64RoundUp | kFloat32RoundTruncate | kFloat64RoundTruncate |
@@ -421,7 +422,8 @@ class V8_EXPORT_PRIVATE MachineOperatorBuilder final
         kInt32AbsWithOverflow | kInt64AbsWithOverflow | kWord32Rol |
         kWord64Rol | kWord64RolLowerable | kSatConversionIsSafe |
         kFloat32Select | kFloat64Select | kWord32Select | kWord64Select |
-        kLoadStorePairs | kFloat16 | kTruncateFloat64ToFloat16RawBits
+        kLoadStorePairs | kFloat16 | kTruncateFloat64ToFloat16RawBits |
+        kChangeFloat16ToFloat64
   };
   using Flags = base::Flags<Flag, unsigned>;
 
@@ -647,6 +649,7 @@ class V8_EXPORT_PRIVATE MachineOperatorBuilder final
   const Operator* ChangeFloat64ToUint64();
   const Operator* TruncateFloat64ToInt64(TruncateKind kind);
   const Operator* TruncateFloat64ToUint32();
+  const OptionalOperator ChangeFloat16ToFloat64();
   const Operator* TruncateFloat32ToInt32(TruncateKind kind);
   const Operator* TruncateFloat32ToUint32(TruncateKind kind);
   const Operator* TryTruncateFloat32ToInt64();
