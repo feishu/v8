@@ -58,6 +58,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7aaf1df9_d0a6163c",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T15:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c656847f_219a8f51",
+      "range": {
+        "startLine": 79,
+        "startChar": 24,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "0cbdf814b7c9af156f0a8b26bfa37f9547811c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "368a27a3_39af8840",
@@ -75,6 +99,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bdaead9_9e77b30d",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T15:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "368a27a3_39af8840",
+      "revId": "0cbdf814b7c9af156f0a8b26bfa37f9547811c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc5ed9d1_dbb6c26f",
@@ -88,6 +130,30 @@
       "writtenOn": "2024-11-18T15:15:38Z",
       "side": 1,
       "message": "nit: Can you use consistent names for this argument (in all `REDUCE` as well as operation constructor). Previously you used `spill_caller_frame_slots`.",
+      "range": {
+        "startLine": 195,
+        "startChar": 30,
+        "endLine": 195,
+        "endChar": 55
+      },
+      "revId": "0cbdf814b7c9af156f0a8b26bfa37f9547811c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "502e363b_2404ed75",
+        "filename": "src/compiler/turboshaft/int64-lowering-reducer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T15:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc5ed9d1_dbb6c26f",
       "range": {
         "startLine": 195,
         "startChar": 30,
