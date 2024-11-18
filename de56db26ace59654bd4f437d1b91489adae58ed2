@@ -16,6 +16,29 @@
       "message": "Thank you for the review, Nico!",
       "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3b7a6a3_9fcfd68a",
+        "filename": "src/compiler/pipeline.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3609,
+      "author": {
+        "id": 1535927
+      },
+      "writtenOn": "2024-11-18T16:06:15Z",
+      "side": 1,
+      "message": "Might be worth putting the reducer on an existing phase to avoid a full graph copy just to lower stack checks.\n\nIt could probably go in WasmDeadCodeEliminationPhase.",
+      "range": {
+        "startLine": 3609,
+        "startChar": 0,
+        "endLine": 3609,
+        "endChar": 63
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
