@@ -128,6 +128,30 @@
       },
       "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91502ed8_e3030723",
+        "filename": "src/compiler/pipeline.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3609,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T17:44:37Z",
+      "side": 1,
+      "message": "On the second thought it is not what hard to support other contexts by not running reducer if a function signature is not present. Refactored.",
+      "parentUuid": "42ef9910_199fe43e",
+      "range": {
+        "startLine": 3609,
+        "startChar": 0,
+        "endLine": 3609,
+        "endChar": 63
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
