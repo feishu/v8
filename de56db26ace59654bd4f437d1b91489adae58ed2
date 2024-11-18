@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0ebfed9_34947e4b",
+        "filename": "src/compiler/backend/instruction-selector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2808,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "Before introduction of growable stacks change caller stack frame return values had been spilled implicitly by adding them as memory located inputs for `kArchRet` opcode. With growable stacks this approach doesn\u0027t work for a frame on the border of old and new stack segments. When we are returning from a new stack segment we need make a C call to find out \"old fp\" and we need to do it only one for all stack based return values. So, it couldn\u0027t be efficiently performed by `UseLocation` approach even if a special `CallerFrameOnOldStack` location would be introduced.\nSo\n1) It was spilled after instruction selection by operand allocator, but it is not possible in the case of growable stacks so now it shifted higher in the stack to the graph building phase\n2) Only caller frame slot values should be spilled in the special way because of segmented stacks.",
+      "parentUuid": "b0e76c29_93b5fce6",
+      "range": {
+        "startLine": 2808,
+        "startChar": 39,
+        "endLine": 2808,
+        "endChar": 63
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c3b7a6a3_9fcfd68a",
         "filename": "src/compiler/pipeline.cc",
         "patchSetId": 4
@@ -194,6 +218,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ba425b9_5bf4d43c",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4583c3f8_d3f00708",
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b70143db_f92a1416",
@@ -207,6 +249,30 @@
       "writtenOn": "2024-11-18T19:33:02Z",
       "side": 1,
       "message": "`CHECK_EQ(kind, WasmStackCheckOp::Kind::kFunctionEntry)`?",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6edc92df_d6a72b35",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b70143db_f92a1416",
       "range": {
         "startLine": 35,
         "startChar": 33,
@@ -240,6 +306,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36c80f5d_33b20e8c",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cccd8096_5f987adf",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7e52d5d_94d405c3",
@@ -263,6 +353,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaa47590_44506b73",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7e52d5d_94d405c3",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 69
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59443cbe_46e0f54f",
@@ -276,6 +390,30 @@
       "writtenOn": "2024-11-18T19:33:02Z",
       "side": 1,
       "message": "`V\u003cWord32\u003e`",
+      "range": {
+        "startLine": 66,
+        "startChar": 25,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eb32f0d_933656bc",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59443cbe_46e0f54f",
       "range": {
         "startLine": 66,
         "startChar": 25,
@@ -311,6 +449,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7678d321_9ad6b0e1",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "I considered to introduce a dedicated stack slot for what flag(and old fp value at the same time), but it is extremely hard to implement because of WasmLiftoff frames add more slots(for feedback vector) conditionally and so many splaces should be refactored to be ready for that change. Another consideration is it could be useful to have some externally(from the perspective of generated code) observable marker to allow special handling in stack iteration(and I actually use it in `WasmFrame::Iterate`). But if you have any suggestion how to do it in a more idiomatic way I open for discussion.",
+      "parentUuid": "f056c091_4c34cb18",
+      "range": {
+        "startLine": 80,
+        "startChar": 37,
+        "endLine": 80,
+        "endChar": 67
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3d966629_2748394c",
         "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
         "patchSetId": 4
@@ -322,6 +484,30 @@
       "writtenOn": "2024-11-18T19:33:02Z",
       "side": 1,
       "message": "`register_return_values`?",
+      "range": {
+        "startLine": 100,
+        "startChar": 34,
+        "endLine": 100,
+        "endChar": 49
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "528e2308_78a11473",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d966629_2748394c",
       "range": {
         "startLine": 100,
         "startChar": 34,
@@ -345,6 +531,30 @@
       "writtenOn": "2024-11-18T19:33:02Z",
       "side": 1,
       "message": "`loc.IsRegister()`?",
+      "range": {
+        "startLine": 103,
+        "startChar": 10,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57c62dd0_839a52c8",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "I think `!loc.IsCallerFrameSlot()` works better because semantically it is exactly what I care about. If we have other stack locations, not in the caller stack in the future it will be fine to leave them as is.",
+      "parentUuid": "9a4a64d7_96fee90d",
       "range": {
         "startLine": 103,
         "startChar": 10,
@@ -380,6 +590,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "caeabaaf_c6f2cfc8",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "That\u0027s correct.\nTo be honest, I think using the instruction selection phase for implicitly moving stack allocated values to caller slots is a clever but not semantically correct trick. Wasn\u0027t it abstraction leakage in the first place?",
+      "parentUuid": "83fe8869_dba167bb",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 56
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1f0ee949_5781b0e0",
         "filename": "src/compiler/turboshaft/operations.h",
         "patchSetId": 4
@@ -391,6 +625,30 @@
       "writtenOn": "2024-11-18T19:33:02Z",
       "side": 1,
       "message": "This has very non-obvious semantics. Please add a comment explaining what this does.",
+      "range": {
+        "startLine": 4319,
+        "startChar": 7,
+        "endLine": 4319,
+        "endChar": 31
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2267f4f_a168d704",
+        "filename": "src/compiler/turboshaft/operations.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 4319,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f0ee949_5781b0e0",
       "range": {
         "startLine": 4319,
         "startChar": 7,
@@ -414,6 +672,30 @@
       "writtenOn": "2024-11-18T19:33:02Z",
       "side": 1,
       "message": "So what is the reason to lower all stack checks in the `StackCheckLoweringReducer` but not the if we have growable stacks but do it in a different phase then for the function entry stack check?",
+      "range": {
+        "startLine": 86,
+        "startChar": 13,
+        "endLine": 86,
+        "endChar": 46
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad34113_c35dee54",
+        "filename": "src/compiler/turboshaft/stack-check-lowering-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T22:45:57Z",
+      "side": 1,
+      "message": "My reasoning was:\n1) to have all stack switching related transformations in one place\n2) I need incoming descriptor lowered by Int64 lowering to handle stack check properly. It is already computed here, and in case of `StackCheckLoweringReducer` I would need it to compute it again.",
+      "parentUuid": "6b2da896_c69fc0d5",
       "range": {
         "startLine": 86,
         "startChar": 13,
