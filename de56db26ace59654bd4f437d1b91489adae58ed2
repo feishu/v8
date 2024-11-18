@@ -63,6 +63,30 @@
       },
       "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "743b9b8b_eb7aa079",
+        "filename": "src/compiler/pipeline.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3609,
+      "author": {
+        "id": 1535927
+      },
+      "writtenOn": "2024-11-18T16:43:15Z",
+      "side": 1,
+      "message": "\"Should I add it unconditionally and bail down earlier inside the reducer if v8_flags.experimental_wasm_growable_stacks is not set?\" --\u003e yes, exactly :)",
+      "parentUuid": "beca74f6_cfe9755b",
+      "range": {
+        "startLine": 3609,
+        "startChar": 0,
+        "endLine": 3609,
+        "endChar": 63
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
