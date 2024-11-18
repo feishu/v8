@@ -87,6 +87,30 @@
       },
       "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42ef9910_199fe43e",
+        "filename": "src/compiler/pipeline.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3609,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T17:31:18Z",
+      "side": 1,
+      "message": "Playing around a little bit I figured out `WasmDeadCodeEliminationPhase` runs in many contexts(such as wrappers pipelines), but `GrowableStacksReducer` doesn\u0027t make sense anywhere except compiling Wasm functions. Taking it in account I wouldn\u0027t include it here and at least for a while(at least until is in experimental state and disabled by default) keep it in own phase.",
+      "parentUuid": "743b9b8b_eb7aa079",
+      "range": {
+        "startLine": 3609,
+        "startChar": 0,
+        "endLine": 3609,
+        "endChar": 63
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
