@@ -125,6 +125,7 @@
 
 #if V8_ENABLE_WEBASSEMBLY
 #include "src/compiler/int64-lowering.h"
+#include "src/compiler/turboshaft/growable-stacks-phase.h"
 #include "src/compiler/turboshaft/int64-lowering-phase.h"
 #include "src/compiler/turboshaft/wasm-dead-code-elimination-phase.h"
 #include "src/compiler/turboshaft/wasm-gc-optimize-phase.h"
@@ -3602,6 +3603,10 @@ bool Pipeline::GenerateWasmCodeFromTurboshaftGraph(
 
   if (mcgraph->machine()->Is32()) {
     turboshaft_pipeline.Run<turboshaft::Int64LoweringPhase>();
+  }
+
+  if (v8_flags.experimental_wasm_growable_stacks) {
+    turboshaft_pipeline.Run<turboshaft::GrowableStacksPhase>();
   }
 
   // This is more than an optimization currently: We need it to sort blocks to
