@@ -16,6 +16,86 @@
       "message": "Thibaud, could you review the change from semantic point of view.\nNico, please take a look from the idiomatic Turboshaft approach point of view.",
       "revId": "0cbdf814b7c9af156f0a8b26bfa37f9547811c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d43efe0c_91baca7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1374077
+      },
+      "writtenOn": "2024-11-18T15:15:38Z",
+      "side": 1,
+      "message": "Leaving Wasm details aside, Turboshaft stuff looks good to me except for a few small comments.",
+      "revId": "0cbdf814b7c9af156f0a8b26bfa37f9547811c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c656847f_219a8f51",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1374077
+      },
+      "writtenOn": "2024-11-18T15:15:38Z",
+      "side": 1,
+      "message": "nit: You can just pass `this` inside reducers.",
+      "range": {
+        "startLine": 79,
+        "startChar": 24,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "0cbdf814b7c9af156f0a8b26bfa37f9547811c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "368a27a3_39af8840",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1374077
+      },
+      "writtenOn": "2024-11-18T15:15:38Z",
+      "side": 1,
+      "message": "nit: Prefer using `Word32Equal()` instead. Then you can also just pass `StackFrame::TypeToMarker(StackFrame::WASM_SEGMENT_START)` directly without the need for an additional `__ Word32Constant()`.",
+      "revId": "0cbdf814b7c9af156f0a8b26bfa37f9547811c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc5ed9d1_dbb6c26f",
+        "filename": "src/compiler/turboshaft/int64-lowering-reducer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1374077
+      },
+      "writtenOn": "2024-11-18T15:15:38Z",
+      "side": 1,
+      "message": "nit: Can you use consistent names for this argument (in all `REDUCE` as well as operation constructor). Previously you used `spill_caller_frame_slots`.",
+      "range": {
+        "startLine": 195,
+        "startChar": 30,
+        "endLine": 195,
+        "endChar": 55
+      },
+      "revId": "0cbdf814b7c9af156f0a8b26bfa37f9547811c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
