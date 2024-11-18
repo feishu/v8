@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04d9607a_0e4f8441",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1545467
+      },
+      "writtenOn": "2024-11-18T02:28:20Z",
+      "side": 1,
+      "message": "Thibaud, could you review the change from semantic point of view.\nNico, please take a look from the idiomatic Turboshaft approach point of view.",
+      "revId": "0cbdf814b7c9af156f0a8b26bfa37f9547811c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
