@@ -37,6 +37,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b0e76c29_93b5fce6",
+        "filename": "src/compiler/backend/instruction-selector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2808,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "I still don\u0027t think I understand what this flag means.\n1) Where / when does this spilling happen?\n2) Which values do we spill? Isn\u0027t a \"frame slot\" by definition some kind of \"spilled\" value already as the value is on the stack? Where do we spill it to? Onto the same stack?",
+      "range": {
+        "startLine": 2808,
+        "startChar": 39,
+        "endLine": 2808,
+        "endChar": 63
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c3b7a6a3_9fcfd68a",
         "filename": "src/compiler/pipeline.cc",
         "patchSetId": 4
@@ -149,6 +172,253 @@
         "startChar": 0,
         "endLine": 3609,
         "endChar": 63
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4583c3f8_d3f00708",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "`CHECK(v8_flags.experimental_wasm_growable_stacks`?",
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b70143db_f92a1416",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "`CHECK_EQ(kind, WasmStackCheckOp::Kind::kFunctionEntry)`?",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cccd8096_5f987adf",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "This is incredibly confusing. Below we use both `call_descriptor` as well as `call_descriptor_` and they have very different meanings.",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7e52d5d_94d405c3",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "```suggestion\n      const stack_parameter_count \u003d 0;\n      const CallDescriptor* call_descriptor \u003d\n          compiler::Linkage::GetStubCallDescriptor(\n              __ graph_zone(),\n              WasmGrowableStackGuardDescriptor{},\n              stack_parameter_count,\n              CallDescriptor::kNoFlags,\n              Operator::kNoProperties,\n              StubCallMode::kCallWasmRuntimeStub);\n```\nThose comments don\u0027t add a lot of value if they just repeat some part of what is included in the argument.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 69
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59443cbe_46e0f54f",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "`V\u003cWord32\u003e`",
+      "range": {
+        "startLine": 66,
+        "startChar": 25,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f056c091_4c34cb18",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "I missed the introduction of a new frame type. Are we sure this is a good idea?\nThere are so many places that care about the frame kind and this is \"just the same\" as a wasm frame in most cases but uses a different type. That might be a significant issue. Looking at frames.cc we seem to address this by making `WasmSegmentStartFrame` actually return `WASM` because \n\u003e WasmSegmentStartFrame behaves exactly like regular WasmFrame in all scenarios.\n\nIf it behaves the same \"in all scenarios\" why do we overwrite the frame type?\nDon\u0027t we have any other quickly accessible memory location where we could figure out if we are at a segment start which doesn\u0027t conflict with everything else that uses stack frame types?",
+      "range": {
+        "startLine": 80,
+        "startChar": 37,
+        "endLine": 80,
+        "endChar": 67
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d966629_2748394c",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "`register_return_values`?",
+      "range": {
+        "startLine": 100,
+        "startChar": 34,
+        "endLine": 100,
+        "endChar": 49
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a4a64d7_96fee90d",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "`loc.IsRegister()`?",
+      "range": {
+        "startLine": 103,
+        "startChar": 10,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83fe8869_dba167bb",
+        "filename": "src/compiler/turboshaft/growable-stacks-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "So just to clarify: Previously the `return` inputs were aligned with the signature of any given function we generate.\nWith this change, the inputs for all returns in all wasm functions are going to only include the register values as the values returned on the stack are always handled by this reducer (when growable stacks are enabled)?\n\nI am somewhat concerned about this, I\u0027d feel tempted to argue that this further reduces the separation of concerns between the compiler and instruction selection.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 56
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f0ee949_5781b0e0",
+        "filename": "src/compiler/turboshaft/operations.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 4319,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "This has very non-obvious semantics. Please add a comment explaining what this does.",
+      "range": {
+        "startLine": 4319,
+        "startChar": 7,
+        "endLine": 4319,
+        "endChar": 31
+      },
+      "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b2da896_c69fc0d5",
+        "filename": "src/compiler/turboshaft/stack-check-lowering-reducer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1549182
+      },
+      "writtenOn": "2024-11-18T19:33:02Z",
+      "side": 1,
+      "message": "So what is the reason to lower all stack checks in the `StackCheckLoweringReducer` but not the if we have growable stacks but do it in a different phase then for the function entry stack check?",
+      "range": {
+        "startLine": 86,
+        "startChar": 13,
+        "endLine": 86,
+        "endChar": 46
       },
       "revId": "de56db26ace59654bd4f437d1b91489adae58ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
