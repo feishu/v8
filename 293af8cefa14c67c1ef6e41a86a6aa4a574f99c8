@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16df7f00_49dd7184",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1177599
+      },
+      "writtenOn": "2024-11-18T11:24:23Z",
+      "side": 1,
+      "message": "PTAL (just a little cleanup, saw this on an unrelated change)",
+      "revId": "293af8cefa14c67c1ef6e41a86a6aa4a574f99c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
